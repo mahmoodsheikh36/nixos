@@ -1,21 +1,41 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
-  # main system config
+  # filesystem
+  fileSystems = {
+    "/" = {
+      label = "nixos";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      label = "boot";
+      fsType = "vfat";
+    };
+  };
+  swapDevices = [{
+    label = "swap";
+  }];
+
+  # networking
   networking.hostName = "mahmooz";
   networking.networkmanager.enable = true;
   networking.enableIPv6 = false;
   networking.resolvconf.dnsExtensionMechanism = false;
+
+  # general system config
   time.timeZone = "Asia/Jerusalem";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave"; # no idae what that is lol
 
   # users
   users.users.mahmooz = {
@@ -117,7 +137,7 @@
     neovim vimPlugins.Vundle-vim
 
     # networking tools
-    curl
+    curl wget
     wpa_supplicant
     networkmanager
     # required for wireless AP setup
@@ -128,6 +148,7 @@
     spotify spotify-tui
     feh # i use it to set wallpaper
     my_sxiv
+    zathura
 
     # media manipulation tools
     imagemagick
@@ -156,9 +177,10 @@
     nix-index # helps finding the package that contains a specific file
     vifm # file manager
     gnumake
+    gnupg
     gcc
     file
-    youtube-dl
+    youtube-dl yt-dlp
     iw
     transmission
     acpi
@@ -166,6 +188,8 @@
     unzip
     pciutils
     linux-router
+    sqlite
+    irssi
 
     # x11 tools
     xorg.xinit
@@ -179,11 +203,13 @@
     # python
     (python38.withPackages(ps: with ps; [ 
        numpy requests beautifulsoup4 flask mysql-connector
+       pip
     ]))
     # other programming languages
     yarn nodejs
     lua
-    dart flutter android-studio
+    openjdk8
+    flutter dart android-studio genymotion
 
     # libs
     imlib2 x11 libexif giflib # required to compile sxiv
