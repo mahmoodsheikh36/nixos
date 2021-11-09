@@ -2,30 +2,17 @@
 
 {
   imports = [
+    ./hardware-configuration.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  #boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" "iwlwifi" ];
   boot.extraModulePackages = [ ];
-
-  # filesystem
-  fileSystems = {
-    "/" = {
-      label = "nixos";
-      fsType = "ext4";
-    };
-    "/boot" = {
-      label = "boot";
-      fsType = "vfat";
-    };
-  };
-  swapDevices = [{
-    label = "swap";
-  }];
+  hardware.enableRedistributableFirmware = true;
 
   # networking
   networking.hostName = "mahmooz";
@@ -35,13 +22,14 @@
 
   # general system config
   time.timeZone = "Asia/Jerusalem";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave"; # no idae what that is lol
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave"; # no idea what that is lol
 
   # users
   users.users.mahmooz = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "audio" ];
     shell = pkgs.zsh;
+    password = "mahmooz";
   };
   security.sudo.configFile = ''
     mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
@@ -102,13 +90,6 @@
     ];
   };
 
-  # the NUR
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  };
-
   # my overlays
   nixpkgs.overlays = [
     (self: super:
@@ -129,9 +110,6 @@
 
   # packages
   environment.systemPackages = with pkgs; [
-    # (import ./scripts.nix).hello
-    # (import ./scripts.nix).what
-
     # text editors
     emacs
     neovim vimPlugins.Vundle-vim
@@ -156,21 +134,19 @@
     gimp
 
     # general tools
-    firefox
+    firefox brave
     awesome
     discord
     scrcpy
     tdesktop
-    tor-browser-bundle-bin
     pavucontrol
     git
+    libreoffice
 
     # commandline tools
-    alacritty kitty # terminal emulator
-    zsh
-    bat
-    lsd
-    tmux
+    kitty # terminal emulator
+    zsh tmux
+    bat lsd file
     cmake
     pulsemixer # tui for pulseaudio control
     playerctl # media control
@@ -179,7 +155,6 @@
     gnumake
     gnupg
     gcc
-    file
     youtube-dl yt-dlp
     iw
     transmission
@@ -187,9 +162,9 @@
     fzf
     unzip
     pciutils
-    linux-router
     sqlite
     irssi
+    gptfdisk parted
 
     # x11 tools
     xorg.xinit
@@ -218,7 +193,6 @@
     # nix specific tools
     nixos-generators
     nix-prefetch-git
-    nur.repos.mic92.hello-nur
   ];
 
   # This value determines the NixOS release from which the default
