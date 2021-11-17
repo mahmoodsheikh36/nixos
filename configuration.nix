@@ -10,8 +10,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
   #boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "iwlwifi" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    rtl88xxau-aircrack
+  ];
+  boot.kernelModules = [ "kvm-intel" "iwlwifi" "rtl8812au" ];
   hardware.enableRedistributableFirmware = true;
 
   # networking
@@ -115,15 +117,11 @@
     neovim vimPlugins.Vundle-vim
 
     # networking tools
-    curl wget
-    wpa_supplicant
-    networkmanager
-    # required for wireless AP setup
-    # hostapd dnsmasq bridge-utils
+    curl wget macchanger
 
     # media tools
     mpv
-    spotify spotify-tui
+    spotify
     feh # i use it to set wallpaper
     my_sxiv
     zathura
@@ -165,6 +163,9 @@
     sqlite
     irssi
     gptfdisk parted
+    ag # the silver searcher i use it for emacs
+    ghostscript # i use this to view pdfs in emacs
+    xdotool
 
     # x11 tools
     xorg.xinit
@@ -178,13 +179,14 @@
     # python
     (python38.withPackages(ps: with ps; [ 
        numpy requests beautifulsoup4 flask mysql-connector
-       pip
+       pip redis
     ]))
     # other programming languages
     yarn nodejs
     lua
     openjdk8
     flutter dart android-studio genymotion
+    texlive.combined.scheme-basic
 
     # libs
     imlib2 x11 libexif giflib # required to compile sxiv
