@@ -5,11 +5,12 @@
     ./hardware-configuration.nix
   ];
 
-  # Use the systemd-boot EFI boot loader.
+  # bootloader/kernel
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
-  #boot.initrd.kernelModules = [ ];
+  #boot.initrd.kernelModules = [];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl88xxau-aircrack
   ];
@@ -72,9 +73,9 @@
       enable = true;
       touchpad.disableWhileTyping = true;
     };
-    displayManager.startx.enable = true;
     layout = "us";
     xkbOptions = "caps:swapescape";
+    displayManager.startx.enable = true;
     windowManager.awesome = {
       enable = true;
       luaModules = with pkgs.luaPackages; [
@@ -82,6 +83,14 @@
         luadbi-mysql
       ];
     };
+  };
+
+  # tty configs
+  console = {
+    #earlySetup = true;
+    font = "ter-i14b";
+    packages = with pkgs; [ terminus_font ];
+    useXkbConfig = true; # remap caps to escape
   };
 
   fonts = {
@@ -117,7 +126,7 @@
     neovim vimPlugins.Vundle-vim
 
     # networking tools
-    curl wget macchanger
+    curl wget macchanger arp-scan nmap iftop
 
     # media tools
     mpv
@@ -132,7 +141,7 @@
     gimp
 
     # general tools
-    firefox brave
+    firefox brave qutebrowser
     awesome
     discord
     scrcpy
@@ -185,7 +194,7 @@
     yarn nodejs
     lua
     openjdk8
-    flutter dart android-studio genymotion
+    flutter dart
     texlive.combined.scheme-basic
 
     # libs
