@@ -5,8 +5,10 @@
     ./hardware-configuration.nix
   ];
 
+  # enable experimental features to avoid problems when running "nix search"
+  nix.extraOptions = "extra-experimental-features = nix-command flakes";
+
   # bootloader/kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
@@ -83,6 +85,17 @@
         luadbi-mysql
       ];
     };
+  };
+
+  # nvidia config
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.prime = {
+    offload.enable = true;
+    # bus id of the intel gpu, can be obtained using lspci/lshw
+    intelBusId = "PCI:0:2:0";
+    # bus id of the nvidia gpu, can be obtained using lspci/lshw
+    nvidiaBusId = "PCI:1:0:0";
   };
 
   # tty configs
@@ -184,6 +197,9 @@
     xclip
     scrot
     picom
+
+    # other
+    redis
 
     # python
     (python38.withPackages(ps: with ps; [ 
