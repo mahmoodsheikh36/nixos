@@ -211,7 +211,7 @@
     lua
     openjdk8
     flutter dart
-    texlive.combined.scheme-basic
+    texlive.combined.scheme-full
 
     # libs
     imlib2 x11 libexif giflib # required to compile sxiv
