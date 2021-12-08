@@ -9,21 +9,26 @@
   nix.extraOptions = "extra-experimental-features = nix-command flakes";
 
   # bootloader/kernel
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      efiSupport = true;
+      device = "nodev";
+    };
+  };
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
-  #boot.initrd.kernelModules = [];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl88xxau-aircrack
   ];
   boot.kernelModules = [ "kvm-intel" "iwlwifi" "rtl8812au" ];
   hardware.enableRedistributableFirmware = true;
 
-  # networking
-  networking.hostName = "mahmooz";
-  networking.networkmanager.enable = true;
-  networking.enableIPv6 = false;
-  networking.resolvconf.dnsExtensionMechanism = false;
+  networking = {
+    hostName = "mahmooz";
+    enableIPv6 = false;
+    resolvconf.dnsExtensionMechanism = false;
+    networkmanager.enable = true;
+  };
 
   # general system config
   time.timeZone = "Asia/Jerusalem";
@@ -32,7 +37,7 @@
   # users
   users.users.mahmooz = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "audio" ];
+    extraGroups = [ "audio" "libvirtd" ];
     shell = pkgs.zsh;
     password = "mahmooz";
   };
@@ -114,6 +119,11 @@
     ];
   };
 
+  # virtualization
+  virtualisation.libvirtd.enable = true;
+  #programs.dconf.enable = true;
+
+
   # my overlays
   nixpkgs.overlays = [
     (self: super:
@@ -124,6 +134,17 @@
           repo = "sxiv";
           rev = "e10d3683bf9b26f514763408c86004a6593a2b66";
           sha256 = "161l59balzh3q8vlya1rs8g97s5s8mwc5lfspxcb2sv83d35410a";
+        };
+      });
+    })
+    (self: super:
+    {
+      awesomewm_git = super.sxiv.overrideAttrs (oldAttrs: rec {
+        src = super.fetchFromGitHub {
+          owner = "awesomeWM";
+          repo = "awesome";
+          rev = "1932bd017f1fd433a74f621d9fe836e355ec054a";
+          sha256 = "07w4h7lzkq9drckn511qybskcx8cr9hmjmnxzdrxvyyda5lkcfmk";
         };
       });
     })
@@ -188,6 +209,8 @@
     ag # the silver searcher i use it for emacs
     ghostscript # i use this to view pdfs in emacs
     xdotool
+    htop
+    docker
 
     # x11 tools
     xorg.xinit
@@ -200,6 +223,10 @@
 
     # other
     redis
+    virt-manager
+
+    # science
+    gnuplot
 
     # python
     (python38.withPackages(ps: with ps; [ 
