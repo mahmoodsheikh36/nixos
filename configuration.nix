@@ -37,7 +37,7 @@
   # users
   users.users.mahmooz = {
     isNormalUser = true;
-    extraGroups = [ "audio" "libvirtd" ];
+    extraGroups = [ "audio" ];
     shell = pkgs.zsh;
     password = "mahmooz";
   };
@@ -93,15 +93,15 @@
   };
 
   # nvidia config
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.prime = {
-    offload.enable = true;
-    # bus id of the intel gpu, can be obtained using lspci/lshw
-    intelBusId = "PCI:0:2:0";
-    # bus id of the nvidia gpu, can be obtained using lspci/lshw
-    nvidiaBusId = "PCI:1:0:0";
-  };
+  #services.xserver.videoDrivers = [ "nvidia" ];
+  #hardware.nvidia.modesetting.enable = true;
+  #hardware.nvidia.prime = {
+  #  offload.enable = true;
+  #  # bus id of the intel gpu, can be obtained using lspci/lshw
+  #  intelBusId = "PCI:0:2:0";
+  #  # bus id of the nvidia gpu, can be obtained using lspci/lshw
+  #  nvidiaBusId = "PCI:1:0:0";
+  #};
 
   # tty configs
   console = {
@@ -118,11 +118,6 @@
       google-fonts
     ];
   };
-
-  # virtualization
-  virtualisation.libvirtd.enable = true;
-  #programs.dconf.enable = true;
-
 
   # my overlays
   nixpkgs.overlays = [
@@ -168,6 +163,7 @@
     feh # i use it to set wallpaper
     my_sxiv
     zathura
+    discord
 
     # media manipulation tools
     imagemagick
@@ -177,9 +173,7 @@
     # general tools
     firefox brave qutebrowser
     awesome
-    discord
     scrcpy
-    tdesktop
     pavucontrol
     git
     libreoffice
@@ -211,6 +205,7 @@
     xdotool
     htop
     docker
+    zip
 
     # x11 tools
     xorg.xinit
@@ -223,7 +218,6 @@
 
     # other
     redis
-    virt-manager
 
     # science
     gnuplot
@@ -234,11 +228,12 @@
        pip redis
     ]))
     # other programming languages
-    yarn nodejs
+    nodejs nodePackages.node2nix
     lua
     openjdk8
     flutter dart
     texlive.combined.scheme-full
+    rustc meson ninja
 
     # libs
     imlib2 x11 libexif giflib # required to compile sxiv
@@ -248,6 +243,9 @@
     nixos-generators
     nix-prefetch-git
   ];
+
+  # enable local spotify discovery
+  networking.firewall.allowedTCPPorts = [ 57621 ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
