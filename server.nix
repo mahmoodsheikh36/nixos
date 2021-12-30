@@ -5,7 +5,7 @@
     ./base.nix
   ];
 
-  goot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.device = "/dev/vda";
 
   environment.systemPackages = with pkgs; [
     redis
