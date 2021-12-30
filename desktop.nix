@@ -5,6 +5,16 @@
     ./base.nix
   ];
 
+  # bootloader
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      efiSupport = true;
+      device = "nodev";
+    };
+  };
+
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl88xxau-aircrack

@@ -5,15 +5,6 @@
     ./hardware-configuration.nix
   ];
 
-  # bootloader
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    grub = {
-      efiSupport = true;
-      device = "nodev";
-    };
-  };
-
   networking = {
     hostName = "mahmooz";
     enableIPv6 = false;
