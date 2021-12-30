@@ -40,6 +40,7 @@
   programs.adb.enable = true;
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
+  services.openssh.enable = true;
 
   # tty configs
   console = {
