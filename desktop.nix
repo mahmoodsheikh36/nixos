@@ -22,10 +22,6 @@
   boot.kernelModules = [ "kvm-intel" "iwlwifi" "rtl8812au" ];
   hardware.enableRedistributableFirmware = true;
 
-  services.openvpn.servers = {
-    myvpn = { config = '' config openvpn-client.conf ''; };
-  };
-
   # ask for password in terminal instead of x11-ash-askpass
   programs.ssh.askPassword = "";
 
