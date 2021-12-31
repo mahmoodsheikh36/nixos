@@ -84,6 +84,7 @@
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop
     transmission gcc youtube-dl fzf acpi gnupg
+    wireguard
 
     # some build systems
     cmake gnumake
