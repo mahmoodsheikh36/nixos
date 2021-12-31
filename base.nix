@@ -10,6 +10,10 @@
     enableIPv6 = false;
     resolvconf.dnsExtensionMechanism = false;
     networkmanager.enable = true;
+    extraHosts = ''
+        157.230.112.219 server
+        45.32.253.181 server2
+    '';
   };
 
   # general system config
