@@ -50,7 +50,7 @@
 
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop
-    transmission gcc yt-dlp fzf acpi gnupg
+    transmission gcc youtube-dl fzf acpi gnupg
 
     # some build systems
     cmake gnumake
