@@ -11,7 +11,7 @@
     resolvconf.dnsExtensionMechanism = false;
     networkmanager.enable = true;
     extraHosts = ''
-        157.230.112.219 server
+        157.230.112.219 server1
         45.32.253.181 server2
     '';
   };
@@ -45,9 +45,38 @@
     useXkbConfig = true; # remap caps to escape
   };
 
-  # allow non-free packages to be installed
-  nixpkgs.config.allowUnfree = true; 
+  # setup my dotfiles
+  #system.activationScripts = {
+  #  setup_dotfiles = {
+  #    text = ''
+  #      dir=/home/mahmooz/workspace
+  #      home=/home/mahmooz
+  #      if [ ! -d "$dir/dotfiles" ]; then
+  #        echo setting up dotfiles
+  #        mkdir -p "$dir" || true
+  #        cd "$dir"
+  #        ${pkgs.git}/bin/git clone https://github.com/mahmoodsheikh36/dotfiles
+  #        for filename in .xinitrc .zshrc .zprofile .Xresources .vimrc .emacs .tmux.conf; do
+  #          ln -sf "$dir/dotfiles/$filename" "/home/mahmooz/"
+  #        done
 
+  #        mkdir "$home/.config/" || true
+  #        for filename in alacritty compton.conf gtk-3.0 mimeapps.list mpv vifm qutebrowser kitty\
+  #          rofi sxhkd sxiv user-dirs.dirs transmission-daemon zathura; do
+  #          ln -sf "$dir/dotfiles/.config/$filename" "$home/.config/"
+  #        done
+
+  #        mkdir "$home/.config/nvim/" || true
+  #        ln -sf "$dir/dotfiles/.vimrc" "$home/.config/nvim/init.vim"
+  #      else
+  #        echo dotfiles already setup
+  #      fi
+  #    '';
+  #  };
+  #};
+
+  # package management
+  nixpkgs.config.allowUnfree = true; 
   environment.systemPackages = with pkgs; [
     neovim
     curl wget nmap # networking tools
@@ -61,8 +90,8 @@
 
     # python
     (python38.withPackages(ps: with ps; [ 
-       numpy requests beautifulsoup4 flask mysql-connector
-       pip redis
+      numpy requests beautifulsoup4 flask mysql-connector
+      pip redis
     ]))
 
     # nodejs
