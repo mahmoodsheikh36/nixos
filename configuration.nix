@@ -1,1 +1,1 @@
-/etc/nixos/desktop.nix
+/etc/nixos/server.nix
