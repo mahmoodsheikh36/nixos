@@ -3,7 +3,6 @@
 {
   imports = [
     ./base.nix
-    ./wireguard-server.nix
   ];
 
   boot.loader.grub.device = "/dev/vda";
