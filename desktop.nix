@@ -14,7 +14,6 @@
     };
   };
 
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl88xxau-aircrack
@@ -58,6 +57,7 @@
     xkbOptions = "caps:swapescape";
     displayManager.startx.enable = true;
     windowManager.awesome = {
+      package = with pkgs; awesomewm_git;
       enable = true;
       luaModules = with pkgs.luaPackages; [
         luarocks
@@ -100,7 +100,7 @@
     })
     (self: super:
     {
-      awesomewm_git = super.sxiv.overrideAttrs (oldAttrs: rec {
+      awesomewm_git = super.awesome.overrideAttrs (oldAttrs: rec {
         src = super.fetchFromGitHub {
           owner = "awesomeWM";
           repo = "awesome";
@@ -131,7 +131,6 @@
 
     # general tools
     firefox brave qutebrowser
-    awesome
     scrcpy
     pavucontrol
     libreoffice
@@ -170,7 +169,7 @@
     # some programming languages/environments
     lua
     openjdk8
-    flutter dart
+    android-studio flutter dart
     texlive.combined.scheme-full
     rustc meson ninja
   ];
