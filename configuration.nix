@@ -1,1 +1,1 @@
-/etc/nixos/server.nix
+/home/mahmooz/workspace/nixos/desktop.nix
