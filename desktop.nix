@@ -130,7 +130,7 @@
     gimp
 
     # general tools
-    firefox brave qutebrowser
+    firefox brave qutebrowser chromium
     scrcpy
     pavucontrol
     libreoffice
