@@ -130,7 +130,7 @@
     gimp
 
     # general tools
-    firefox brave qutebrowser chromium
+    firefox qutebrowser google-chrome
     scrcpy
     pavucontrol
     libreoffice
@@ -142,7 +142,7 @@
     nix-index # helps finding the package that contains a specific file
     sqlite
     gptfdisk parted
-    ag # the silver searcher i use it for emacs
+    silver-searcher # the silver searcher i use it for emacs
     ghostscript # i use this to view pdfs in emacs
     xdotool
     docker
@@ -159,17 +159,24 @@
     # other
     redis
     bluetooth_battery # command to get battery percentage of current headset
+    zoom-us
 
     # virtualization tools
     qemu virt-manager
 
     # science
     gnuplot
+    sage
+
+    (python38.withPackages(ps: with ps; [ 
+      numpy requests beautifulsoup4 flask mysql-connector
+      pip redis sage
+    ]))
 
     # some programming languages/environments
     lua
     openjdk8
-    android-studio flutter dart
+    flutter dart #android-studio
     texlive.combined.scheme-full
     rustc meson ninja
   ];
