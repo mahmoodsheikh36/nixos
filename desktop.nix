@@ -35,7 +35,7 @@
   };
   hardware.pulseaudio = {
     enable = true;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
+    # extraModules = [ pkgs.pulseaudio-modules-bt ];
     package = pkgs.pulseaudioFull;
     extraConfig = "
       load-module module-switch-on-connect
@@ -82,6 +82,8 @@
     fonts = with pkgs; [
       fantasque-sans-mono
       google-fonts
+      cascadia-code
+      inconsolata-nerdfont
     ];
   };
 
@@ -130,7 +132,7 @@
     gimp
 
     # general tools
-    firefox qutebrowser google-chrome
+    google-chrome qutebrowser firefox
     scrcpy
     pavucontrol
     libreoffice
@@ -181,5 +183,5 @@
     rustc meson ninja
   ];
 
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "22.05"; # Did you read the comment?
 }
