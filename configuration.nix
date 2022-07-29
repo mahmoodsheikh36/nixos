@@ -1,1 +1,0 @@
-/home/mahmooz/workspace/nixos/desktop.nix
