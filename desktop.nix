@@ -57,13 +57,18 @@
     xkbOptions = "caps:swapescape";
     displayManager.startx.enable = true;
     windowManager.awesome = {
-      package = with pkgs; awesomewm_git;
+      #package = with pkgs; awesomewm_git;
       enable = true;
       luaModules = with pkgs.luaPackages; [
         luarocks
         luadbi-mysql
       ];
     };
+  };
+
+  services.syncthing = {
+    enable = true;
+    user = "mahmooz";
   };
 
   # nvidia config
@@ -100,17 +105,17 @@
         };
       });
     })
-    (self: super:
-    {
-      awesomewm_git = super.awesome.overrideAttrs (oldAttrs: rec {
-        src = super.fetchFromGitHub {
-          owner = "awesomeWM";
-          repo = "awesome";
-          rev = "1932bd017f1fd433a74f621d9fe836e355ec054a";
-          sha256 = "07w4h7lzkq9drckn511qybskcx8cr9hmjmnxzdrxvyyda5lkcfmk";
-        };
-      });
-    })
+    #(self: super:
+    #{
+      #awesomewm_git = super.awesome.overrideAttrs (oldAttrs: rec {
+        #src = super.fetchFromGitHub {
+          #owner = "awesomeWM";
+          #repo = "awesome";
+          #rev = "1932bd017f1fd433a74f621d9fe836e355ec054a";
+          #sha256 = "07w4h7lzkq9drckn511qybskcx8cr9hmjmnxzdrxvyyda5lkcfmk";
+        #};
+      #});
+    #})
   ];
 
   # packages
@@ -145,7 +150,7 @@
     sqlite
     gptfdisk parted
     silver-searcher # the silver searcher i use it for emacs
-    ghostscript # i use this to view pdfs in emacs
+    # ghostscript # i use this to view pdfs in emacs
     xdotool
     docker
 
@@ -157,18 +162,23 @@
     xclip
     scrot
     picom
+    parcellite
+
 
     # other
     redis
     bluetooth_battery # command to get battery percentage of current headset
     zoom-us
+    hugo
+    syncthing
+    adb-sync
 
     # virtualization tools
     qemu virt-manager
 
     # science
     gnuplot
-    sage
+    sage sagetex
 
     (python38.withPackages(ps: with ps; [ 
       numpy requests beautifulsoup4 flask mysql-connector
@@ -183,5 +193,5 @@
     rustc meson ninja
   ];
 
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05";
 }
