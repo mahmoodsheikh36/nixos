@@ -13,6 +13,10 @@
     extraHosts = ''
         157.230.112.219 server1
         45.32.253.181 server2
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
+        127.0.0.1 www.reddit.com
+        127.0.0.1 reddit.com
     '';
   };
 
@@ -83,7 +87,7 @@
 
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop
-    transmission gcc youtube-dl fzf acpi gnupg
+    transmission gcc clang youtube-dl yt-dlp fzf acpi gnupg
 
     # some build systems
     cmake gnumake
