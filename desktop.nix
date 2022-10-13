@@ -67,7 +67,7 @@
   };
 
   services.syncthing = {
-    enable = true;
+    enable = false;
     user = "mahmooz";
   };
 
@@ -118,6 +118,12 @@
     #})
   ];
 
+#  programs.gnupg.agent = {
+#     enable = true;
+#     pinentryFlavor = "gtk2";
+#     #enableSSHSupport = true;
+#  };
+
   # packages
   environment.systemPackages = with pkgs; [
     # text editors
@@ -129,15 +135,15 @@
     feh # i use it to set wallpaper
     my_sxiv
     zathura
-    discord
+    #discord
 
     # media manipulation tools
     imagemagick
     ffmpeg
-    gimp
+    gimp inkscape
 
     # general tools
-    google-chrome qutebrowser firefox
+    google-chrome qutebrowser firefox tor-browser-bundle-bin
     scrcpy
     pavucontrol
     libreoffice
@@ -151,6 +157,7 @@
     gptfdisk parted
     silver-searcher # the silver searcher i use it for emacs
     # ghostscript # i use this to view pdfs in emacs
+    libtool # to compile vterm
     xdotool
     docker
 
@@ -164,14 +171,17 @@
     picom
     parcellite
 
-
     # other
     redis
     bluetooth_battery # command to get battery percentage of current headset
-    zoom-us
+    #zoom-us
     hugo
     syncthing
     adb-sync
+    woeusb-ng
+    ntfs3g
+    gnupg1orig
+    pigz pinentry
 
     # virtualization tools
     qemu virt-manager
@@ -180,9 +190,10 @@
     gnuplot
     sage sagetex
 
-    (python38.withPackages(ps: with ps; [ 
+    (python38.withPackages(ps: with ps; [
       numpy requests beautifulsoup4 flask mysql-connector
       pip redis sage
+      # qtpy # needed for emacs' eaf package
     ]))
 
     # some programming languages/environments

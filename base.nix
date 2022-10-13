@@ -13,10 +13,8 @@
     extraHosts = ''
         157.230.112.219 server1
         45.32.253.181 server2
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
-        127.0.0.1 www.reddit.com
-        127.0.0.1 reddit.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
     '';
   };
 
@@ -80,20 +78,20 @@
   #};
 
   # package management
-  nixpkgs.config.allowUnfree = true; 
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     neovim
     curl wget nmap # networking tools
 
     # some helpful programs / other
-    git tmux file vifm zip unzip fzf htop
-    transmission gcc clang youtube-dl yt-dlp fzf acpi gnupg
+    git tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
+    transmission gcc clang youtube-dl yt-dlp fzf acpi gnupg tree-sitter clang-tools
 
     # some build systems
     cmake gnumake
 
     # python
-    (python38.withPackages(ps: with ps; [ 
+    (python38.withPackages(ps: with ps; [
       numpy requests beautifulsoup4 flask mysql-connector
       pip redis
     ]))
