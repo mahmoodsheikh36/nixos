@@ -89,6 +89,7 @@
       google-fonts
       cascadia-code
       inconsolata-nerdfont
+      iosevka
     ];
   };
 
