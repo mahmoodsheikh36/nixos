@@ -129,6 +129,7 @@
   environment.systemPackages = with pkgs; [
     # text editors
     emacs
+    vscode
 
     # media tools
     mpv
@@ -183,6 +184,7 @@
     ntfs3g
     gnupg1orig
     pigz pinentry
+    SDL2
 
     # virtualization tools
     qemu virt-manager
@@ -190,11 +192,8 @@
     # science
     gnuplot
     sage sagetex
-
     (python38.withPackages(ps: with ps; [
-      numpy requests beautifulsoup4 flask mysql-connector
-      pip redis sage
-      # qtpy # needed for emacs' eaf package
+      sage
     ]))
 
     # some programming languages/environments
