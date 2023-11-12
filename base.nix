@@ -13,8 +13,8 @@
     extraHosts = ''
         157.230.112.219 server1
         45.32.253.181 server2
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
     '';
   };
 

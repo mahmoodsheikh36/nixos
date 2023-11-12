@@ -137,7 +137,7 @@
     feh # i use it to set wallpaper
     my_sxiv
     zathura
-    #discord
+    discord
 
     # media manipulation tools
     imagemagick
@@ -204,5 +204,7 @@
     rustc meson ninja
   ];
 
-  system.stateVersion = "22.05";
+  # system.stateVersion = "22.11";
+
+  system.stateVersion = "23.05";
 }
