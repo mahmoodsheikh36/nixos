@@ -1,20 +1,16 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running `nixos-help`).
-
 { config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ # include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
+  # use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Enable sound and bluetooth
+  # enable sound and bluetooth
   sound.enable = true;
   services.blueman.enable = true;
   hardware.bluetooth.enable = true;
@@ -33,7 +29,7 @@
   };
   nixpkgs.config.pulseaudio = true;
 
-  # x11
+  # x11 and awesomewm
   services.xserver = {
     enable = true;
     libinput = {
@@ -41,7 +37,7 @@
       touchpad = {
         disableWhileTyping = true;
         tappingDragLock = false;
-	accelSpeed = "2.0";
+	      accelSpeed = "2.0";
       };
     };
     layout = "us";
@@ -67,6 +63,7 @@
   security.sudo.configFile = ''
     mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
   '';
+  
   # general system config
   time.timeZone = "Asia/Jerusalem";
   networking = {
@@ -89,37 +86,26 @@
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
 
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
+  # enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   # users
   users.users.mahmooz = {
     isNormalUser = true;
-    extraGroups = [ "audio" ];
+    extraGroups = [ "audio" "wheel" ];
     shell = pkgs.zsh;
     password = "mahmooz";
   };
 
-  # List packages installed in system profile. To search, run:
+  # list packages installed in system profile. To search, run:
   # $ nix search wget
-nixpkgs.config.allowUnfree = true;
- environment.systemPackages = with pkgs; [
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    # text editors
     emacs29
     vscode
-neovim
-vim
+    neovim
+    vim
 
     # media tools
     mpv
@@ -188,7 +174,7 @@ vim
     flutter dart #android-studio
     texlive.combined.scheme-full
     rustc meson ninja
-git
+    git
 
     neovim
     curl wget nmap # networking tools
@@ -216,29 +202,17 @@ git
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
+  # open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # Copy the NixOS configuration file and link it from the resulting system
+  # copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
   # system.copySystemConfiguration = true;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
-
+  system.stateVersion = "23.05"; # dont change
 }
 
