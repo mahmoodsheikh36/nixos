@@ -5,6 +5,8 @@
     [ # include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+    
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -37,12 +39,21 @@
       touchpad = {
         disableWhileTyping = true;
         tappingDragLock = false;
-	      accelSpeed = "2.0";
+	      accelSpeed = "0.7";
       };
     };
     layout = "us";
     xkbOptions = "caps:swapescape";
-    displayManager.startx.enable = true;
+    displayManager = {
+      # sddm = {
+      #   enable = true;
+      # };
+      autoLogin.enable = true;
+      autoLogin.user = "mahmooz";
+      #startx.enable = true;
+      sx.enable = true;
+      defaultSession = "none+awesome";
+    };
     windowManager.awesome = {
       #package = with pkgs; awesomewm_git;
       enable = true;
@@ -57,15 +68,19 @@
   console = {
     #earlySetup = true;
     font = "ter-i14b";
-    packages = with pkgs; [ terminus_font fira-code ];
+    packages = with pkgs; [ terminus_font ];
     useXkbConfig = true; # remap caps to escape
   };
   security.sudo.configFile = ''
     mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
   '';
   
-  # general system config
   time.timeZone = "Asia/Jerusalem";
+  
+  # ask for password in terminal instead of x11-ash-askpass
+  programs.ssh.askPassword = "";
+  
+  # networking
   networking = {
     hostName = "mahmooz";
     enableIPv6 = false;
@@ -85,9 +100,52 @@
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
+  services.syncthing = {
+    enable = false;
+    user = "mahmooz";
+  };
+  services.touchegg.enable = true;
 
-  # enable CUPS to print documents.
-  # services.printing.enable = true;
+  # my overlays
+  nixpkgs.overlays = [
+    (self: super:
+    {
+      my_sxiv = super.sxiv.overrideAttrs (oldAttrs: rec {
+        src = super.fetchFromGitHub {
+          owner = "mahmoodsheikh36";
+          repo = "sxiv";
+          rev = "e10d3683bf9b26f514763408c86004a6593a2b66";
+          sha256 = "161l59balzh3q8vlya1rs8g97s5s8mwc5lfspxcb2sv83d35410a";
+        };
+      });
+    })
+    #(self: super:
+    #{
+      #awesomewm_git = super.awesome.overrideAttrs (oldAttrs: rec {
+        #src = super.fetchFromGitHub {
+          #owner = "awesomeWM";
+          #repo = "awesome";
+          #rev = "1932bd017f1fd433a74f621d9fe836e355ec054a";
+          #sha256 = "07w4h7lzkq9drckn511qybskcx8cr9hmjmnxzdrxvyyda5lkcfmk";
+        #};
+      #});
+    #})
+  ];
+  
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      fantasque-sans-mono
+      google-fonts
+      cascadia-code
+      inconsolata-nerdfont
+      iosevka
+      fira-code
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+    ];
+  };
 
   # users
   users.users.mahmooz = {
@@ -95,6 +153,8 @@
     extraGroups = [ "audio" "wheel" ];
     shell = pkgs.zsh;
     password = "mahmooz";
+    packages = with pkgs; [
+    ];
   };
 
   # list packages installed in system profile. To search, run:
@@ -113,6 +173,7 @@
     feh # i use it to set wallpaper
     zathura
     discord
+    my_sxiv
 
     # media manipulation tools
     imagemagick
@@ -137,10 +198,11 @@
     libtool # to compile vterm
     xdotool
     docker
+    jq
 
     # x11 tools
-    xorg.xinit
-    sxhkd
+    #xorg.xinit
+    # sxhkd
     rofi
     libnotify
     xclip
@@ -175,9 +237,11 @@
     texlive.combined.scheme-full
     rustc meson ninja
     git
+    python3
+    julia
 
     neovim
-    curl wget nmap # networking tools
+    curl wget nmap socat # networking tools
 
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
