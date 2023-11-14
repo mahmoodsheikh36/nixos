@@ -31,6 +31,32 @@
   };
   nixpkgs.config.pulseaudio = true;
 
+  # my overlays
+  nixpkgs.overlays = [
+    (self: super:
+    {
+      my_sxiv = super.sxiv.overrideAttrs (oldAttrs: rec {
+        src = super.fetchFromGitHub {
+          owner = "mahmoodsheikh36";
+          repo = "sxiv";
+          rev = "e10d3683bf9b26f514763408c86004a6593a2b66";
+          sha256 = "161l59balzh3q8vlya1rs8g97s5s8mwc5lfspxcb2sv83d35410a";
+        };
+      });
+    })
+#    (self: super:
+#    {
+#      awesomewm_git = super.awesome.overrideAttrs (oldAttrs: rec {
+#        src = super.fetchFromGitHub {
+#          owner = "awesomeWM";
+#          repo = "awesome";
+#          rev = "7ed4dd620bc73ba87a1f88e6f126aed348f94458";
+#          sha256 = "0qz21z3idimw1hlmr23ffl0iwr7128wywjcygss6phyhq5zn5bx3";
+#        };
+#      });
+#    })
+  ];
+
   # x11 and awesomewm
   services.xserver = {
     enable = true;
@@ -50,12 +76,12 @@
       # };
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
-      #startx.enable = true;
+      startx.enable = true;
       sx.enable = true;
       defaultSession = "none+awesome";
     };
     windowManager.awesome = {
-      #package = with pkgs; awesomewm_git;
+      package = with pkgs; awesome;
       enable = true;
       luaModules = with pkgs.luaPackages; [
         luarocks
@@ -71,7 +97,7 @@
     packages = with pkgs; [ terminus_font ];
     useXkbConfig = true; # remap caps to escape
   };
-  security.sudo.configFile = ''
+  security.sudo.extraConfig = ''
     mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
   '';
   
@@ -105,32 +131,6 @@
     user = "mahmooz";
   };
   services.touchegg.enable = true;
-
-  # my overlays
-  nixpkgs.overlays = [
-    (self: super:
-    {
-      my_sxiv = super.sxiv.overrideAttrs (oldAttrs: rec {
-        src = super.fetchFromGitHub {
-          owner = "mahmoodsheikh36";
-          repo = "sxiv";
-          rev = "e10d3683bf9b26f514763408c86004a6593a2b66";
-          sha256 = "161l59balzh3q8vlya1rs8g97s5s8mwc5lfspxcb2sv83d35410a";
-        };
-      });
-    })
-    #(self: super:
-    #{
-      #awesomewm_git = super.awesome.overrideAttrs (oldAttrs: rec {
-        #src = super.fetchFromGitHub {
-          #owner = "awesomeWM";
-          #repo = "awesome";
-          #rev = "1932bd017f1fd433a74f621d9fe836e355ec054a";
-          #sha256 = "07w4h7lzkq9drckn511qybskcx8cr9hmjmnxzdrxvyyda5lkcfmk";
-        #};
-      #});
-    #})
-  ];
   
   fonts = {
     enableDefaultPackages = true;
@@ -141,10 +141,18 @@
       inconsolata-nerdfont
       iosevka
       fira-code
+      ubuntu_font_family
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
+      # Persian Font
+      vazir-fonts
+      font-awesome_5
+      # pkgs.corefonts # MS fonts?
     ];
+    # not sure if i need those
+    fontDir.enable = true;
+    enableGhostscriptFonts = true;
   };
 
   # users
@@ -174,6 +182,8 @@
     zathura
     discord
     my_sxiv
+    telegram-desktop
+    zoom-us
 
     # media manipulation tools
     imagemagick
