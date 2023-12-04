@@ -44,17 +44,23 @@
         };
       });
     })
-#    (self: super:
-#    {
-#      awesomewm_git = super.awesome.overrideAttrs (oldAttrs: rec {
-#        src = super.fetchFromGitHub {
-#          owner = "awesomeWM";
-#          repo = "awesome";
-#          rev = "7ed4dd620bc73ba87a1f88e6f126aed348f94458";
-#          sha256 = "0qz21z3idimw1hlmr23ffl0iwr7128wywjcygss6phyhq5zn5bx3";
-#        };
-#      });
-#    })
+    (self: super:
+    {
+      my_awesome = super.awesome.overrideAttrs (oldAttrs: rec {
+      postPatch = ''
+        patchShebangs tests/examples/_postprocess.lua
+      '';
+      patches = [];
+      src = super.fetchFromGitHub {
+          owner = "awesomeWM";
+          repo = "awesome";
+          rev = "7ed4dd620bc73ba87a1f88e6f126aed348f94458";
+          sha256 = "0qz21z3idimw1hlmr23ffl0iwr7128wywjcygss6phyhq5zn5bx3";
+        };
+      });
+    })
+    
+
   ];
 
   # x11 and awesomewm
@@ -81,7 +87,7 @@
       defaultSession = "none+awesome";
     };
     windowManager.awesome = {
-      package = with pkgs; awesome;
+      package = with pkgs; my_awesome;
       enable = true;
       luaModules = with pkgs.luaPackages; [
         luarocks
@@ -89,6 +95,13 @@
       ];
     };
   };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+  };
+
 
   # tty configs
   console = {
@@ -117,6 +130,10 @@
         45.32.253.181 server2
         127.0.0.1 youtube.com
         127.0.0.1 www.youtube.com
+        127.0.0.1 reddit.com
+        127.0.0.1 www.reddit.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
     '';
   };
 
@@ -127,7 +144,7 @@
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
   services.syncthing = {
-    enable = false;
+    enable = true;
     user = "mahmooz";
   };
   services.touchegg.enable = true;
@@ -141,18 +158,33 @@
       inconsolata-nerdfont
       iosevka
       fira-code
+      nerdfonts
       ubuntu_font_family
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
       # Persian Font
       vazir-fonts
-      font-awesome_5
-      # pkgs.corefonts # MS fonts?
+      font-awesome
+      iosevka
+      # corefonts # MS fonts?
     ];
-    # not sure if i need those
+    # not sure if i need these 2
     fontDir.enable = true;
     enableGhostscriptFonts = true;
+    fontconfig = {
+      enable = true;
+      antialias = true;
+      cache32Bit = true;
+      # defaultFonts = {
+      #   emoji = ["Noto Color Emoji"];
+      #   monospace = [ "Noto Mono" ];
+      #   sansSerif = [ "Noto Sans" ];
+      #   serif = [ "Noto Serif" ];
+      hinting.autohint = true;
+      hinting.enable = true;
+      # hinting.style = "slight";
+    };
   };
 
   # users
@@ -165,8 +197,11 @@
     ];
   };
 
-  # list packages installed in system profile. To search, run:
-  # $ nix search wget
+  # dictionaries
+  services.dictd.enable = true;
+  services.dictd.DBs = with pkgs.dictdDBs; [ wiktionary wordnet ];
+
+  # packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # text editors
@@ -180,10 +215,15 @@
     spotify
     feh # i use it to set wallpaper
     zathura
-    discord
+    # discord
     my_sxiv
     telegram-desktop
     zoom-us
+    youtube-music
+    okular
+    xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
+    ocrmypdf
+    pandoc
 
     # media manipulation tools
     imagemagick
@@ -191,7 +231,7 @@
     gimp inkscape
 
     # general tools
-    google-chrome qutebrowser firefox tor-browser-bundle-bin
+    google-chrome qutebrowser tor-browser-bundle-bin
     scrcpy
     pavucontrol
     libreoffice
@@ -209,6 +249,8 @@
     xdotool
     docker
     jq
+    ripgrep
+    pdftk pdfgrep
 
     # x11 tools
     #xorg.xinit
@@ -219,6 +261,8 @@
     scrot
     picom
     parcellite
+    hsetroot
+    unclutter
 
     # other
     redis
@@ -243,19 +287,22 @@
     # some programming languages/environments
     lua
     openjdk8
-    flutter dart #android-studio
+    # flutter dart #android-studio
     texlive.combined.scheme-full
     rustc meson ninja
     git
     python3
     julia
+    jupyter python311Packages.jupyter python311Packages.jupyter-core
+    typescript
 
     neovim
-    curl wget nmap socat # networking tools
+    curl wget nmap socat arp-scan traceroute # networking tools
 
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
     transmission gcc clang youtube-dl yt-dlp fzf acpi gnupg tree-sitter clang-tools
+    cryptsetup
 
     # some build systems
     cmake gnumake
@@ -268,25 +315,5 @@
     nix-prefetch-git
  ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
-
   system.stateVersion = "23.05"; # dont change
 }
-
