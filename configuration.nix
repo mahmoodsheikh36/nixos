@@ -5,7 +5,7 @@
     [ # include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-    
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # use the systemd-boot EFI boot loader.
@@ -29,7 +29,7 @@
       load-module module-switch-on-connect
     ";
   };
-  nixpkgs.config.pulseaudio = true;
+  #nixpkgs.config.pulseaudio = true;
 
   # my overlays
   nixpkgs.overlays = [
@@ -59,8 +59,6 @@
         };
       });
     })
-    
-
   ];
 
   # x11 and awesomewm
@@ -95,12 +93,12 @@
       ];
     };
   };
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    config.common.default = "*";
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  #   config.common.default = "*";
+  # };
 
 
   # tty configs
@@ -113,12 +111,12 @@
   security.sudo.extraConfig = ''
     mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
   '';
-  
+
   time.timeZone = "Asia/Jerusalem";
-  
+
   # ask for password in terminal instead of x11-ash-askpass
   programs.ssh.askPassword = "";
-  
+
   # networking
   networking = {
     hostName = "mahmooz";
@@ -126,20 +124,21 @@
     resolvconf.dnsExtensionMechanism = false;
     networkmanager.enable = true;
     extraHosts = ''
-        157.230.112.219 server1
-        45.32.253.181 server2
+        192.168.1.150 server
         127.0.0.1 youtube.com
         127.0.0.1 www.youtube.com
         127.0.0.1 reddit.com
         127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
+        127.0.0.1 instagram.com
+        127.0.0.1 www.instagram.com
     '';
   };
 
   # enable some programs/services
   programs.zsh.enable = true;
-  programs.adb.enable = true;
+  # programs.adb.enable = true;
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
@@ -148,7 +147,7 @@
     user = "mahmooz";
   };
   services.touchegg.enable = true;
-  
+
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -212,7 +211,6 @@
 
     # media tools
     mpv
-    spotify
     feh # i use it to set wallpaper
     zathura
     # discord
@@ -224,17 +222,19 @@
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     ocrmypdf
     pandoc
+    popcorntime
 
     # media manipulation tools
-    imagemagick
+    imagemagick ghostscript # ghostscript is needed for some imagemagick commands
     ffmpeg
     gimp inkscape
 
     # general tools
-    google-chrome qutebrowser tor-browser-bundle-bin
+    google-chrome qutebrowser tor-browser-bundle-bin firefox
     scrcpy
     pavucontrol
     libreoffice
+    syncthing
 
     # commandline tools
     kitty # terminal emulator
@@ -244,17 +244,16 @@
     sqlite
     gptfdisk parted
     silver-searcher # the silver searcher i use it for emacs
-    # ghostscript # i use this to view pdfs in emacs
     libtool # to compile vterm
     xdotool
     docker
     jq
     ripgrep
     pdftk pdfgrep
+    spotdl
+    parallel
 
     # x11 tools
-    #xorg.xinit
-    # sxhkd
     rofi
     libnotify
     xclip
@@ -266,23 +265,22 @@
 
     # other
     redis
-    bluetooth_battery # command to get battery percentage of current headset
-    #zoom-us
+    zoom-us
     hugo
-    syncthing
     adb-sync
     woeusb-ng
     ntfs3g
     gnupg1orig
     pigz pinentry
     SDL2
+    sass
 
     # virtualization tools
     qemu virt-manager
 
     # science
     gnuplot
-    sage sagetex
+    # sageWithDoc sagetex
 
     # some programming languages/environments
     lua
@@ -291,17 +289,20 @@
     texlive.combined.scheme-full
     rustc meson ninja
     git
-    python3
-    julia
-    jupyter python311Packages.jupyter python311Packages.jupyter-core
+    jupyter
     typescript
+    (python310.withPackages(ps: with ps; [
+      matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas
+    ]))
+    # julia-bin
+    (julia.withPackages(["Plots" "Graphs" "CSV" ])) # "MLJ" "Flux" "DataFrames"]))
 
-    neovim
     curl wget nmap socat arp-scan traceroute # networking tools
+
 
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
-    transmission gcc clang youtube-dl yt-dlp fzf acpi gnupg tree-sitter clang-tools
+    transmission gcc clang yt-dlp acpi gnupg tree-sitter clang-tools
     cryptsetup
 
     # some build systems
@@ -314,6 +315,8 @@
     nixos-generators
     nix-prefetch-git
  ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "23.05"; # dont change
 }

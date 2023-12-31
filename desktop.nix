@@ -193,8 +193,9 @@
     gnuplot
     sage sagetex
     (python38.withPackages(ps: with ps; [
-      sage
-    ]))
+      numpy requests beautifulsoup4 flask mysql-connector
+      pip redis
+      ]))
 
     # some programming languages/environments
     lua

@@ -91,7 +91,7 @@
     cmake gnumake
 
     # python
-    (python38.withPackages(ps: with ps; [
+    (python.withPackages(ps: with ps; [
       numpy requests beautifulsoup4 flask mysql-connector
       pip redis
     ]))
