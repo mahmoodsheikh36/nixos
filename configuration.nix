@@ -59,7 +59,28 @@
         };
       });
     })
+    (import (builtins.fetchTarball { # emacs master
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+    (self: super:
+    {
+      my_emacs = super.emacs-git.overrideAttrs (oldAttrs: rec {
+        # src = super.fetchFromGitHub {
+        #   owner = "emacs-mirror";
+        #   repo = "emacs";
+        #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
+        #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
+        # };
+        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets --with-imagemagick
+        # imagemagick = pkgs.imagemagick;
+      });
+    })
   ];
+
+  services.emacs = {
+    enable = true;
+    package = pkgs.my_emacs; # pkgs.emacsGit;
+  };
 
   # x11 and awesomewm
   services.xserver = {
@@ -127,10 +148,10 @@
         192.168.1.150 server
         127.0.0.1 youtube.com
         127.0.0.1 www.youtube.com
-        127.0.0.1 reddit.com
-        127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 reddit.com
+        # 127.0.0.1 www.reddit.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -204,7 +225,7 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # text editors
-    emacs29
+    # emacs29
     vscode
     neovim
     vim
