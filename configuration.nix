@@ -72,7 +72,8 @@
         #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
         # };
         configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets --with-imagemagick
-        # imagemagick = pkgs.imagemagick;
+        imagemagick = pkgs.imagemagickBig;
+        withImageMagick = true;
       });
     })
   ];
@@ -90,7 +91,7 @@
       touchpad = {
         disableWhileTyping = true;
         tappingDragLock = false;
-	      accelSpeed = "0.7";
+        accelSpeed = "0.7";
       };
     };
     layout = "us";
@@ -306,7 +307,7 @@
     # some programming languages/environments
     lua
     openjdk8
-    # flutter dart #android-studio
+    flutter dart android-studio
     texlive.combined.scheme-full
     rustc meson ninja
     git
@@ -315,11 +316,19 @@
     (python310.withPackages(ps: with ps; [
       matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas
     ]))
-    # julia-bin
-    (julia.withPackages(["Plots" "Graphs" "CSV" ])) # "MLJ" "Flux" "DataFrames"]))
+    (julia.withPackages([
+      "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak"
+      "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
+      "Gen" "Zygote" "UnicodePlots" "Symbolics"
+      # "StaticArrays" "Optimization" "GalacticOptim" "BrainFlow" "DataStructures" "Images" "Genie" "Dagger" "RecipesBase"
+      # "ForwardDiff" "Javis" "Weave"
+      "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL"
+      "Luxor" "ReinforcementLearningBase" "SymbolicUtils"
+      "Latexify" "Distributions" "StatsPlots"
+      # "Transformers" "WaterLily" "Knet" "CUDA" # "Interact"
+    ])) # "MLJ" "DataFrames" "Flux" # "ModelingToolkit"
 
     curl wget nmap socat arp-scan traceroute # networking tools
-
 
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
