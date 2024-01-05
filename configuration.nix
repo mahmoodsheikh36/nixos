@@ -4,6 +4,7 @@
   imports =
     [ # include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./home.nix
     ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -71,7 +72,8 @@
         #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
         #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
         # };
-        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets --with-imagemagick
+        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets "--with-imagemagick"
+        patches = [];
         imagemagick = pkgs.imagemagickBig;
         withImageMagick = true;
       });
@@ -95,16 +97,23 @@
       };
     };
     layout = "us";
-    xkbOptions = "caps:swapescape";
+    xkbOptions = "caps:swapescape,ctrl:ralt_rctrl";
     displayManager = {
-      # sddm = {
-      #   enable = true;
-      # };
+      sddm = {
+        enable = true;
+        wayland.enable = false;
+      };
+      setupCommands = ''
+        sxhkd &
+      '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
       startx.enable = true;
       sx.enable = true;
       defaultSession = "none+awesome";
+      # defaultSession = "xfce+awesome";
+      # defaultSession = "xfce";
+      # defaultSession = "gnome";
     };
     windowManager.awesome = {
       package = with pkgs; my_awesome;
@@ -114,14 +123,27 @@
         luadbi-mysql
       ];
     };
+    # desktopManager.gnome.enable = true;
+    desktopManager = {
+      xfce = {
+        enable = true;
+        noDesktop = false;
+        enableXfwm = true;
+      };
+    };
   };
-  # xdg.portal = {
-  #   enable = true;
-  #   wlr.enable = true;
-  #   extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-  #   config.common.default = "*";
-  # };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+  };
 
+  # gnome configs
+  services.gnome.tracker.enable = false;
+  services.gnome.tracker-miners.enable = false;
+  # a workaround for auto login issue
+  # systemd.services."mahmooz@tty1".enable = false;
 
   # tty configs
   console = {
@@ -133,6 +155,7 @@
   security.sudo.extraConfig = ''
     mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
   '';
+  security.polkit.enable = true;
 
   time.timeZone = "Asia/Jerusalem";
 
@@ -161,6 +184,8 @@
   # enable some programs/services
   programs.zsh.enable = true;
   # programs.adb.enable = true;
+  services.printing.enable = true; # CUPS
+  services.flatpak.enable = true;
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
@@ -169,6 +194,24 @@
     user = "mahmooz";
   };
   services.touchegg.enable = true;
+  programs.traceroute.enable = true;
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-media-tags-plugin
+      thunar-volman
+    ];
+  };
+  programs.firefox.enable = true;
+
+  # gpg
+  services.pcscd.enable = true;
+  programs.gnupg.agent = {
+     enable = true;
+     pinentryFlavor = "curses";
+     enableSSHSupport = true;
+  };
 
   fonts = {
     enableDefaultPackages = true;
@@ -221,6 +264,7 @@
   # dictionaries
   services.dictd.enable = true;
   services.dictd.DBs = with pkgs.dictdDBs; [ wiktionary wordnet ];
+  environment.wordlist.enable = true;
 
   # packages
   nixpkgs.config.allowUnfree = true;
@@ -252,7 +296,7 @@
     gimp inkscape
 
     # general tools
-    google-chrome qutebrowser tor-browser-bundle-bin firefox
+    google-chrome qutebrowser tor-browser-bundle-bin
     scrcpy
     pavucontrol
     libreoffice
@@ -284,6 +328,7 @@
     parcellite
     hsetroot
     unclutter
+    xorg.xev
 
     # other
     redis
@@ -306,7 +351,7 @@
 
     # some programming languages/environments
     lua
-    openjdk8
+    openjdk
     flutter dart android-studio
     texlive.combined.scheme-full
     rustc meson ninja
@@ -317,18 +362,19 @@
       matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas
     ]))
     (julia.withPackages([
-      "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak"
+      "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
-      "Gen" "Zygote" "UnicodePlots" "Symbolics"
-      # "StaticArrays" "Optimization" "GalacticOptim" "BrainFlow" "DataStructures" "Images" "Genie" "Dagger" "RecipesBase"
+      "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
+      "Luxor" "ReinforcementLearningBase" "SymbolicUtils" "Images"
+      "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "Symbolics"
+    ]))
+# "Flux" # "ModelingToolkit"
+      # "Transformers" "WaterLily" "Knet" "CUDA" "Interact"
+      # "StaticArrays" "Optimization" "GalacticOptim" "BrainFlow" "DataStructures" "Genie" "Dagger" "RecipesBase"
       # "ForwardDiff" "Javis" "Weave"
-      "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL"
-      "Luxor" "ReinforcementLearningBase" "SymbolicUtils"
-      "Latexify" "Distributions" "StatsPlots"
-      # "Transformers" "WaterLily" "Knet" "CUDA" # "Interact"
-    ])) # "MLJ" "DataFrames" "Flux" # "ModelingToolkit"
 
-    curl wget nmap socat arp-scan traceroute # networking tools
+    # networking tools
+    curl wget nmap socat arp-scan traceroute wireshark tcpdump
 
     # some helpful programs / other
     git tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
@@ -344,6 +390,9 @@
     # nix specific tools
     nixos-generators
     nix-prefetch-git
+
+    # dictionary
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
