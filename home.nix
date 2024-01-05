@@ -14,30 +14,54 @@ in
   home-manager = {
     users = let
       user_config = {
-        /* The home.stateVersion option does not have a default and must be set */
+        /* the home.stateVersion option does not have a default and must be set */
         home.stateVersion = "23.05";
+        programs.home-manager.enable = true;
         # home.packages = [ sxhkd ];
         services.sxhkd.enable = true;
         services.sxhkd.package = my_sxhkd;
         services.sxhkd.extraConfig = builtins.readFile(builtins.fetchurl {
           url = "https://raw.githubusercontent.com/mahmoodsheikh36/dotfiles/master/.config/sxhkd/sxhkdrc";
         });
-        services.syncthing.enable = true;
+        # services.syncthing.enable = true;
         xfconf.enable = true;
-        xfconf.settings."xfce4-keyboard-shortcuts" = {
-          "&lt;Super&gt;space" = "rofi -show drun";
-          "<Super>space" = "rofi -show drun";
-          "<Super>Tab" = "cycle_windows_key";
-          "/xfwm4/custom/<Super>Tab" = "cycle_windows_key";
-          "/xfwm4/custom/<Super>KP_1" = "workspace_1_key";
-          "/xfwm4/custom/<Super>KP_2" = "workspace_2_key";
-          "/xfwm4/custom/<Super>KP_3" = "workspace_3_key";
-          "/xfwm4/custom/<Super>KP_4" = "workspace_4_key";
+        xfconf.settings = {
+          xfce4-desktop = {
+            "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =
+              "${pkgs.nixos-artwork.wallpapers.stripes-logo.gnomeFilePath}";
+          };
+          xfce4-keyboard-shortcuts = {
+            "xfwm4/custom/<Super>1" = "workspace_1_key";
+            "xfwm4/custom/<Super>2" = "workspace_2_key";
+            "xfwm4/custom/<Super>3" = "workspace_3_key";
+            "xfwm4/custom/<Super>4" = "workspace_4_key";
+            "xfwm4/custom/<Super>Tab" = "cycle_windows_key";
+          };
+        };
+        services.fusuma = {
+          enable = true;
+          extraPackages = with pkgs; [ xdotool ];
+          settings = {
+            threshold = { swipe = 0.1; };
+            interval = { swipe = 0.7; };
+            swipe = {
+              "3" = {
+                left = {
+                  # GNOME: Switch to left workspace
+                  command = "xdotool key ctrl+alt+Left";
+                };
+                right = {
+                  # GNOME: Switch to right workspace
+                  command = "xdotool key ctrl+alt+Right";
+                };
+              };
+            };
+          };
         };
       };
     in {
       mahmooz = user_config;
-      root = user_config;
+      # root = user_config;
     };
   };
 }

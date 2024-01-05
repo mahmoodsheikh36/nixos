@@ -105,14 +105,15 @@
       };
       setupCommands = ''
         sxhkd &
+        feh --bg-fill ~/.cache/wallpaper
       '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
       startx.enable = true;
       sx.enable = true;
-      defaultSession = "none+awesome";
+      # defaultSession = "none+awesome";
       # defaultSession = "xfce+awesome";
-      # defaultSession = "xfce";
+      defaultSession = "xfce";
       # defaultSession = "gnome";
     };
     windowManager.awesome = {
@@ -189,10 +190,10 @@
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
-  services.syncthing = {
-    enable = true;
-    user = "mahmooz";
-  };
+  #services.syncthing = {
+  #  enable = true;
+  #  user = "mahmooz";
+  #};
   services.touchegg.enable = true;
   programs.traceroute.enable = true;
   programs.thunar = {
@@ -204,6 +205,7 @@
     ];
   };
   programs.firefox.enable = true;
+  programs.xfconf.enable = true;
 
   # gpg
   services.pcscd.enable = true;
@@ -289,6 +291,7 @@
     ocrmypdf
     pandoc
     popcorntime
+    lollypop
 
     # media manipulation tools
     imagemagick ghostscript # ghostscript is needed for some imagemagick commands
