@@ -30,7 +30,10 @@
       load-module module-switch-on-connect
     ";
   };
-  #nixpkgs.config.pulseaudio = true;
+  hardware.opentabletdriver.enable = true;
+  hardware.opentabletdriver.daemon.enable = true;
+  services.iptsd.enable = true;
+  services.iptsd.config.Touch.DisableOnStylus = true;
 
   # my overlays
   nixpkgs.overlays = [
@@ -94,6 +97,7 @@
         disableWhileTyping = true;
         tappingDragLock = false;
         accelSpeed = "0.7";
+        naturalScrolling = false;
       };
     };
     layout = "us";
@@ -358,7 +362,6 @@
     flutter dart android-studio
     texlive.combined.scheme-full
     rustc meson ninja
-    git
     jupyter
     typescript
     (python310.withPackages(ps: with ps; [

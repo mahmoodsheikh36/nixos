@@ -25,6 +25,11 @@ in
         });
         # services.syncthing.enable = true;
         xfconf.enable = true;
+        programs.git = {
+          enable = true;
+          userName = "mahmoodsheikh36";
+          userEmail = "mahmod.m2015@gmail.com";
+        };
         xfconf.settings = {
           xfce4-desktop = {
             "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =
@@ -36,28 +41,32 @@ in
             "xfwm4/custom/<Super>3" = "workspace_3_key";
             "xfwm4/custom/<Super>4" = "workspace_4_key";
             "xfwm4/custom/<Super>Tab" = "cycle_windows_key";
+            "xfwm4/custom/<Super><Shift>1" = "move_window_workspace_1_key";
+            "xfwm4/custom/<Super><Shift>2" = "move_window_workspace_2_key";
+            "xfwm4/custom/<Super><Shift>3" = "move_window_workspace_3_key";
+            "xfwm4/custom/<Super><Shift>4" = "move_window_workspace_4_key";
           };
         };
-        services.fusuma = {
-          enable = true;
-          extraPackages = with pkgs; [ xdotool ];
-          settings = {
-            threshold = { swipe = 0.1; };
-            interval = { swipe = 0.7; };
-            swipe = {
-              "3" = {
-                left = {
-                  # GNOME: Switch to left workspace
-                  command = "xdotool key ctrl+alt+Left";
-                };
-                right = {
-                  # GNOME: Switch to right workspace
-                  command = "xdotool key ctrl+alt+Right";
-                };
-              };
-            };
-          };
-        };
+        # services.fusuma = {
+        #   enable = true;
+        #   extraPackages = with pkgs; [ xdotool ];
+        #   settings = {
+        #     threshold = { swipe = 0.1; };
+        #     interval = { swipe = 0.7; };
+        #     # swipe = {
+        #     #   "3" = {
+        #     #     left = {
+        #     #       # GNOME: Switch to left workspace
+        #     #       command = "xdotool key ctrl+alt+Left";
+        #     #     };
+        #     #     right = {
+        #     #       # GNOME: Switch to right workspace
+        #     #       command = "xdotool key ctrl+alt+Right";
+        #     #     };
+        #     #   };
+        #     # };
+        #   };
+        # };
       };
     in {
       mahmooz = user_config;
