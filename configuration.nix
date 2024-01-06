@@ -2,9 +2,9 @@
 
 {
   imports =
-    [ # include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./home.nix
+    [
+      ./hardware-configuration.nix # hardware scan results
+      ./home.nix # home-manager etc
     ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -179,8 +179,8 @@
         127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -194,10 +194,6 @@
   services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
-  #services.syncthing = {
-  #  enable = true;
-  #  user = "mahmooz";
-  #};
   services.touchegg.enable = true;
   programs.traceroute.enable = true;
   programs.thunar = {
@@ -296,6 +292,7 @@
     pandoc
     popcorntime
     lollypop
+    clementine
 
     # media manipulation tools
     imagemagickBig ghostscript # ghostscript is needed for some imagemagick commands
@@ -365,7 +362,7 @@
     jupyter
     typescript
     (python310.withPackages(ps: with ps; [
-      matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas
+      matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy
     ]))
     (julia.withPackages([
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
@@ -373,11 +370,12 @@
       "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
       "Luxor" "ReinforcementLearningBase" "SymbolicUtils" "Images" "Flux"
       "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "Symbolics"
+      "DataStructures" "ForwardDiff" "StaticArrays" "RecipesBase" "Optimization"
+      # "Transformers" "ModelingToolkit" "WaterLily" "Knet" "CUDA" "Javis" "Weave" "GalacticOptim" "BrainFlow" "Genie" "Dagger" "Interact"
     ]))
-      # "Transformers" "WaterLily" "Knet" "CUDA" "Interact" # "ModelingToolkit"
-      # "StaticArrays" "Optimization" "GalacticOptim" "BrainFlow" "DataStructures" "Genie" "Dagger" "RecipesBase"
-      # "ForwardDiff" "Javis" "Weave"
-    sbcl racket
+    sbcl
+    racket
+    gcc clang gdb clang-tools
 
     zeal devdocs-desktop
 
@@ -385,9 +383,10 @@
     curl wget nmap socat arp-scan traceroute wireshark tcpdump
 
     # some helpful programs / other
-    git tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
-    transmission gcc clang yt-dlp acpi gnupg tree-sitter clang-tools
+    gitFull tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
+    transmission yt-dlp acpi gnupg tree-sitter
     cryptsetup
+    onboard # onscreen keyboard
 
     # some build systems
     cmake gnumake
