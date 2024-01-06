@@ -23,13 +23,13 @@ in
         services.sxhkd.extraConfig = builtins.readFile(builtins.fetchurl {
           url = "https://raw.githubusercontent.com/mahmoodsheikh36/dotfiles/master/.config/sxhkd/sxhkdrc";
         });
-        # services.syncthing.enable = true;
-        xfconf.enable = true;
+        services.syncthing.enable = true;
         programs.git = {
           enable = true;
           userName = "mahmoodsheikh36";
           userEmail = "mahmod.m2015@gmail.com";
         };
+        xfconf.enable = true;
         xfconf.settings = {
           xfce4-desktop = {
             "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =

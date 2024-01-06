@@ -115,9 +115,9 @@
       autoLogin.user = "mahmooz";
       startx.enable = true;
       sx.enable = true;
-      # defaultSession = "none+awesome";
+      defaultSession = "none+awesome";
       # defaultSession = "xfce+awesome";
-      defaultSession = "xfce";
+      # defaultSession = "xfce";
       # defaultSession = "gnome";
     };
     windowManager.awesome = {
@@ -188,7 +188,7 @@
 
   # enable some programs/services
   programs.zsh.enable = true;
-  # programs.adb.enable = true;
+  programs.adb.enable = true;
   services.printing.enable = true; # CUPS
   services.flatpak.enable = true;
   services.mysql.enable = true;
@@ -298,7 +298,7 @@
     lollypop
 
     # media manipulation tools
-    imagemagick ghostscript # ghostscript is needed for some imagemagick commands
+    imagemagickBig ghostscript # ghostscript is needed for some imagemagick commands
     ffmpeg
     gimp inkscape
 
@@ -371,13 +371,15 @@
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
       "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
-      "Luxor" "ReinforcementLearningBase" "SymbolicUtils" "Images"
+      "Luxor" "ReinforcementLearningBase" "SymbolicUtils" "Images" "Flux"
       "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "Symbolics"
     ]))
-# "Flux" # "ModelingToolkit"
-      # "Transformers" "WaterLily" "Knet" "CUDA" "Interact"
+      # "Transformers" "WaterLily" "Knet" "CUDA" "Interact" # "ModelingToolkit"
       # "StaticArrays" "Optimization" "GalacticOptim" "BrainFlow" "DataStructures" "Genie" "Dagger" "RecipesBase"
       # "ForwardDiff" "Javis" "Weave"
+    sbcl racket
+
+    zeal devdocs-desktop
 
     # networking tools
     curl wget nmap socat arp-scan traceroute wireshark tcpdump
