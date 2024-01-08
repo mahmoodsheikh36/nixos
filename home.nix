@@ -23,6 +23,9 @@ in
         services.sxhkd.extraConfig = builtins.readFile(builtins.fetchurl {
           url = "https://raw.githubusercontent.com/mahmoodsheikh36/dotfiles/master/.config/sxhkd/sxhkdrc";
         });
+        programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
+          url = "https://raw.githubusercontent.com/mahmoodsheikh36/dotfiles/master/.zshrc";
+        });
         services.syncthing.enable = true;
         programs.git = {
           enable = true;
@@ -31,10 +34,10 @@ in
         };
         xfconf.enable = true;
         xfconf.settings = {
-          xfce4-desktop = {
-            "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =
-              "${pkgs.nixos-artwork.wallpapers.stripes-logo.gnomeFilePath}";
-          };
+          # xfce4-desktop = {
+          #   "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =
+          #     "${pkgs.nixos-artwork.wallpapers.stripes-logo.gnomeFilePath}";
+          # };
           xfce4-keyboard-shortcuts = {
             "xfwm4/custom/<Super>1" = "workspace_1_key";
             "xfwm4/custom/<Super>2" = "workspace_2_key";
@@ -47,6 +50,20 @@ in
             "xfwm4/custom/<Super><Shift>4" = "move_window_workspace_4_key";
           };
         };
+        home.activation = {
+          # always clone dotfiles repository if it doesn't exist
+          cloneDotfiles =
+            config.home-manager.users.mahmooz.lib.dag.entryAfter
+            [ "writeBoundary" ] ''
+              if [ ! -d "$HOME/work/dotfiles" ]; then
+                  mkdir -p "$HOME/work/" || true
+                  ${pkgs.git}/bin/git clone "https://github.com/mahmoodsheikh36/dotfiles" "$HOME/work/"
+              fi
+            '';
+        };
+        # set a variable for dotfiles repo, not necessary but convenient
+        home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
+
         # services.fusuma = {
         #   enable = true;
         #   extraPackages = with pkgs; [ xdotool ];
