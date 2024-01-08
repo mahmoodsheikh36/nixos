@@ -173,14 +173,15 @@
     enableIPv6 = false;
     resolvconf.dnsExtensionMechanism = false;
     networkmanager.enable = true;
+    # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -362,7 +363,9 @@
     jupyter
     typescript
     (python310.withPackages(ps: with ps; [
-      matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy
+      matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
+      scikit-learn torchvision opencv scrapy beautifulsoup4 seaborn pillow dash mysql-connector
+      rich pyspark networkx
     ]))
     (julia.withPackages([
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
@@ -387,6 +390,8 @@
     transmission yt-dlp acpi gnupg tree-sitter
     cryptsetup
     onboard # onscreen keyboard
+    spark
+    openssl
 
     # some build systems
     cmake gnumake
@@ -400,7 +405,27 @@
 
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
- ];
+  ];
+
+  # monitoring services
+  services.grafana = {
+    enable = true;
+    settings.server.http_port = 2342;
+    settings.server.domain =  "grafana.pele";
+    settings.server.addr = "127.0.0.1";
+  };
+  # nginx reverse proxy
+  services.nginx.virtualHosts.${config.services.grafana.domain} = {
+    locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
+        proxyWebsockets = true;
+    };
+  };
+  services.prometheus = {
+    enable = true;
+    port = 9001;
+  };
+  services.monit.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
