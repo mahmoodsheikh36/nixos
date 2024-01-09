@@ -109,7 +109,8 @@
       };
       setupCommands = ''
         sxhkd &
-        feh --bg-fill ~/.cache/wallpaper
+        # feh --bg-fill ~/.cache/wallpaper
+        hsetroot -solid '#222222'
       '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
@@ -176,8 +177,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         # 127.0.0.1 discord.com
@@ -207,6 +208,22 @@
   };
   programs.firefox.enable = true;
   programs.xfconf.enable = true;
+  services.postgresql = {
+    enable = true;
+    enableTCPIP = true;
+    authentication = pkgs.lib.mkOverride 10 ''
+      # Generated file; do not edit!
+      # TYPE  DATABASE        USER            ADDRESS                 METHOD
+      local   all             all                                     trust
+      host    all             all             127.0.0.1/32            trust
+      host    all             all             ::1/128                 trust
+      '';
+    # ensureDatabases = [ "mydatabase" ];
+    # port = 5432;
+    # initialScript = pkgs.writeText "backend-initScript" ''
+    #   CREATE ROLE mahmooz WITH LOGIN PASSWORD 'mahmooz' CREATEDB;
+    # '';
+  };
 
   # gpg
   services.pcscd.enable = true;
@@ -346,6 +363,7 @@
     pigz pinentry
     SDL2
     sass
+    simplescreenrecorder
 
     # virtualization tools
     qemu virt-manager
@@ -415,9 +433,9 @@
     settings.server.addr = "127.0.0.1";
   };
   # nginx reverse proxy
-  services.nginx.virtualHosts.${config.services.grafana.domain} = {
+  services.nginx.virtualHosts.${config.services.grafana.settings.server.domain} = {
     locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
+        proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
         proxyWebsockets = true;
     };
   };
@@ -425,7 +443,7 @@
     enable = true;
     port = 9001;
   };
-  services.monit.enable = true;
+  # services.monit.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
