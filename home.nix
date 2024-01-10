@@ -73,6 +73,11 @@ in
         # set a variable for dotfiles repo, not necessary but convenient
         home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
 
+        # temporarily, sourcehut is offline
+        manual.html.enable = false;
+        manual.manpages.enable = false;
+        manual.json.enable = false;
+
         # services.fusuma = {
         #   enable = true;
         #   extraPackages = with pkgs; [ xdotool ];
