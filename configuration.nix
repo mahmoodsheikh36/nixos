@@ -35,6 +35,9 @@
   services.iptsd.enable = true;
   services.iptsd.config.Touch.DisableOnStylus = true;
 
+  # temporarily, sourcehut is offline
+  manual.{html,manpages,json}.enable = false;
+
   # my overlays
   nixpkgs.overlays = [
     (self: super:
@@ -110,7 +113,7 @@
       setupCommands = ''
         sxhkd &
         # feh --bg-fill ~/.cache/wallpaper
-        hsetroot -solid '#222222'
+        ${pkgs.hsetroot}/bin/hsetroot -solid '#222222'
       '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
@@ -158,9 +161,14 @@
     packages = with pkgs; [ terminus_font ];
     useXkbConfig = true; # remap caps to escape
   };
-  security.sudo.extraConfig = ''
-    mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
-  '';
+  # security.sudo.extraConfig = ''
+  #   mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
+  # '';
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+    execWheelOnly = true;
+  };
   security.polkit.enable = true;
 
   time.timeZone = "Asia/Jerusalem";
@@ -224,6 +232,27 @@
     #   CREATE ROLE mahmooz WITH LOGIN PASSWORD 'mahmooz' CREATEDB;
     # '';
   };
+  programs.direnv.enable = true;
+  programs.git = {
+    enable = true;
+    package = pkgs.gitFull;
+  };
+  programs.htop.enable = true;
+  programs.java.enable = true;
+  programs.neovim.enable = true;
+  programs.nix-ld.enable = true;
+  programs.nm-applet.enable = true;
+  programs.sniffnet.enable = true;
+  programs.virt-manager.enable = true;
+  programs.wireshark.enable = true;
+  qt.enable = true;
+
+  programs.nix-index = { # helps finding the package that contains a specific file
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+  programs.command-not-found.enable = false; # needed for nix-index
 
   # gpg
   services.pcscd.enable = true;
@@ -292,7 +321,6 @@
     # text editors
     # emacs29
     vscode
-    neovim
     vim
 
     # media tools
@@ -328,7 +356,6 @@
     kitty # terminal emulator
     pulsemixer # tui for pulseaudio control
     playerctl # media control
-    nix-index # helps finding the package that contains a specific file
     sqlite
     gptfdisk parted
     silver-searcher # the silver searcher i use it for emacs
@@ -389,10 +416,10 @@
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
       "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
-      "Luxor" "ReinforcementLearningBase" "SymbolicUtils" "Images" "Flux"
-      "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "Symbolics"
-      "DataStructures" "ForwardDiff" "StaticArrays" "RecipesBase" "Optimization"
-      # "Transformers" "ModelingToolkit" "WaterLily" "Knet" "CUDA" "Javis" "Weave" "GalacticOptim" "BrainFlow" "Genie" "Dagger" "Interact"
+      "Luxor" "ReinforcementLearningBase" "Images" "Flux" "DataStructures" "RecipesBase"
+      "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots"
+      # "Optimization" "ForwardDiff"
+      # "Transformers" "ModelingToolkit" "WaterLily" "Knet" "CUDA" "Javis" "Weave" "GalacticOptim" "BrainFlow" "Genie" "Dagger" "Interact" "StaticArrays" "Symbolics" "SymbolicUtils"
     ]))
     sbcl
     racket
@@ -401,10 +428,10 @@
     zeal devdocs-desktop
 
     # networking tools
-    curl wget nmap socat arp-scan traceroute wireshark tcpdump
+    curl wget nmap socat arp-scan tcpdump
 
     # some helpful programs / other
-    gitFull tmux file vifm zip unzip fzf htop p7zip unrar-wrapper
+    tmux file vifm zip unzip fzf p7zip unrar-wrapper
     transmission yt-dlp acpi gnupg tree-sitter
     cryptsetup
     onboard # onscreen keyboard

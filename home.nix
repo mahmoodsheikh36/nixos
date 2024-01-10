@@ -58,6 +58,15 @@ in
               if [ ! -d "$HOME/work/dotfiles" ]; then
                   mkdir -p "$HOME/work/" || true
                   ${pkgs.git}/bin/git clone "https://github.com/mahmoodsheikh36/dotfiles" "$HOME/work/"
+                  ${pkgs.zsh}/bin/zsh "$HOME/work/dotfiles/restore.sh"
+              fi
+              if [ ! -d "$HOME/.config/awesome" ]; then
+                  mkdir -p "$HOME/.config/" || true
+                  ${pkgs.git}/bin/git clone "https://github.com/mahmoodsheikh36/awesome" "$HOME/.config/"
+              fi
+              if [ ! -d "$HOME/work/scripts" ]; then
+                  mkdir -p "$HOME/work/" || true
+                  ${pkgs.git}/bin/git clone "https://github.com/mahmoodsheikh36/scripts" "$HOME/work/"
               fi
             '';
         };
