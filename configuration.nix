@@ -36,7 +36,9 @@
   services.iptsd.config.Touch.DisableOnStylus = true;
 
   # temporarily, sourcehut is offline
-  manual.{html,manpages,json}.enable = false;
+  manual.html.enable = false;
+  manual.manpages.enable = false;
+  manual.json.enable = false;
 
   # my overlays
   nixpkgs.overlays = [
