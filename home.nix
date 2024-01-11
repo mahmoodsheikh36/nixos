@@ -50,30 +50,30 @@ in
             "xfwm4/custom/<Super><Shift>4" = "move_window_workspace_4_key";
           };
         };
-        home.activation = {
-          # always clone dotfiles repository if it doesn't exist
-          cloneDotfiles =
-            config.home-manager.users.mahmooz.lib.dag.entryAfter
-            [ "installPackages" ] ''
-              if [ ! -d "/home/mahmooz/work/dotfiles" ]; then
-                  mkdir -p "/home/mahmooz/work/" || true
-                  $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/dotfiles" "/home/mahmooz/work/dotfiles"
-                  $DRY_RUN_CMD "${pkgs.zsh}/bin/zsh" "/home/mahmooz/work/dotfiles/restore.sh"
-              fi
-              if [ ! -d "/home/mahmooz/.config/awesome" ]; then
-                  mkdir -p "/home/mahmooz/.config/" || true
-                  $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/awesome" "/home/mahmooz/.config/awesome"
-              fi
-              if [ ! -d "/home/mahmooz/work/scripts" ]; then
-                  mkdir -p "/home/mahmooz/work/" || true
-                  $DRY_RUN_CMD $"{pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/scripts" "/home/mahmooz/work/scripts"
-              fi
-              if [ ! -d "/home/mahmooz/.config/dotfiles" ]; then
-                  mkdir -p "/home/mahmooz/.config/" || true
-                  $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/dotfiles" "/home/mahmooz/.config/dotfiles"
-              fi
-            '';
-        };
+        # home.activation = {
+        #   # always clone dotfiles repository if it doesn't exist
+        #   cloneDotfiles =
+        #     config.home-manager.users.mahmooz.lib.dag.entryAfter
+        #     [ "installPackages" ] ''
+        #       if [ ! -d "/home/mahmooz/work/dotfiles" ]; then
+        #           mkdir -p "/home/mahmooz/work/" || true
+        #           $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/dotfiles" "/home/mahmooz/work/dotfiles"
+        #           $DRY_RUN_CMD "${pkgs.zsh}/bin/zsh" "/home/mahmooz/work/dotfiles/restore.sh"
+        #       fi
+        #       if [ ! -d "/home/mahmooz/.config/awesome" ]; then
+        #           mkdir -p "/home/mahmooz/.config/" || true
+        #           $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/awesome" "/home/mahmooz/.config/awesome"
+        #       fi
+        #       if [ ! -d "/home/mahmooz/work/scripts" ]; then
+        #           mkdir -p "/home/mahmooz/work/" || true
+        #           $DRY_RUN_CMD $"{pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/scripts" "/home/mahmooz/work/scripts"
+        #       fi
+        #       if [ ! -d "/home/mahmooz/.config/dotfiles" ]; then
+        #           mkdir -p "/home/mahmooz/.config/" || true
+        #           $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/dotfiles" "/home/mahmooz/.config/dotfiles"
+        #       fi
+        #     '';
+        # };
         # set a variable for dotfiles repo, not necessary but convenient
         home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
 
