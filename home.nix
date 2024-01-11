@@ -51,10 +51,11 @@ in
           };
         };
         # always clone dotfiles repository if it doesn't exist
-        home.activation.dotfiles_setup = config.home-manager.users.mahmooz.lib.dag.entryAfter [ "installPackages" ] ''
-          source "${config.system.build.setEnvironment}"
-          $DRY_RUN_CMD curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | sh
-        '';
+        # been told this isnt the way, wellp
+        # home.activation.dotfiles_setup = config.home-manager.users.mahmooz.lib.dag.entryAfter [ "installPackages" ] ''
+        #   source "${config.system.build.setEnvironment}"
+        #   $DRY_RUN_CMD ${pkgs.curl}/bin/curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | ${pkgs.zsh}/bin/zsh
+        # '';
         # set a variable for dotfiles repo, not necessary but convenient
         home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
 
@@ -62,6 +63,21 @@ in
         manual.html.enable = false;
         manual.manpages.enable = false;
         manual.json.enable = false;
+
+        home.file = {
+          # "git/config".source = ./dotfiles/git/config;
+          ".config/backup/dotfiles" = {
+            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/dotfiles";
+            onChange = "${pkgs.writeShellScript "dotfiles-change" ''
+            ''}";
+          };
+          ".config/backup/scripts" = {
+            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/scripts";
+          };
+          ".config/backup/nixos" = {
+            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/nixos";
+          };
+        };
 
         # services.fusuma = {
         #   enable = true;
