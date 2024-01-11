@@ -471,11 +471,11 @@
   };
   # services.monit.enable = true;
 
-  system.activationScripts.myscript.text = ''
-    source "${config.system.build.setEnvironment}"
-    su mahmooz
-    $DRY_RUN_CMD curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | sh
-  '';
+  # system.activationScripts.myscript.text = ''
+  #   source "${config.system.build.setEnvironment}"
+  #   su mahmooz
+  #   $DRY_RUN_CMD curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | sh
+  # '';
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
