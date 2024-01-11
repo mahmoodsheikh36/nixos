@@ -50,17 +50,13 @@ in
             "xfwm4/custom/<Super><Shift>4" = "move_window_workspace_4_key";
           };
         };
-        home.activation = {
-          # always clone dotfiles repository if it doesn't exist
-          cloneDotfiles =
-            config.home-manager.users.mahmooz.lib.dag.entryAfter
-            [ "installPackages" ] ''
-              source "${config.system.build.setEnvironment}"
-              su mahmooz
-              $DRY_RUN_CMD curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | sh
-            '';
-        };
-        set a variable for dotfiles repo, not necessary but convenient
+        # always clone dotfiles repository if it doesn't exist
+        home.activation.dotfiles_setup = config.home-manager.users.mahmooz.lib.dag.entryAfter [ "installPackages" ] ''
+          source "${config.system.build.setEnvironment}"
+          su mahmooz
+          $DRY_RUN_CMD curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | sh
+        '';
+        # set a variable for dotfiles repo, not necessary but convenient
         home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
 
         # temporarily, sourcehut is offline
