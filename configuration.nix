@@ -472,24 +472,9 @@
   # services.monit.enable = true;
 
   system.activationScripts.myscript.text = ''
-    if [ ! -d "/home/mahmooz/work/dotfiles" ]; then
-        su mahmooz
-        mkdir -p "/home/mahmooz/work/" || true
-        $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/dotfiles" "/home/mahmooz/work/dotfiles"
-        $DRY_RUN_CMD "${pkgs.zsh}/bin/zsh" "/home/mahmooz/work/dotfiles/restore.sh"
-    fi
-    if [ ! -d "/home/mahmooz/.config/awesome" ]; then
-        mkdir -p "/home/mahmooz/.config/" || true
-        $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/awesome" "/home/mahmooz/.config/awesome"
-    fi
-    if [ ! -d "/home/mahmooz/work/scripts" ]; then
-        mkdir -p "/home/mahmooz/work/" || true
-        $DRY_RUN_CMD $"{pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/scripts" "/home/mahmooz/work/scripts"
-    fi
-    if [ ! -d "/home/mahmooz/.config/dotfiles" ]; then
-        mkdir -p "/home/mahmooz/.config/" || true
-        $DRY_RUN_CMD "${pkgs.git}/bin/git" clone "https://github.com/mahmoodsheikh36/dotfiles" "/home/mahmooz/.config/dotfiles"
-    fi
+    source "${config.system.build.setEnvironment}"
+    su mahmooz
+    $DRY_RUN_CMD curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | sh
   '';
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
