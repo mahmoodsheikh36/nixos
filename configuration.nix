@@ -30,6 +30,7 @@
       load-module module-switch-on-connect
     ";
   };
+
   hardware.opentabletdriver.enable = true;
   hardware.opentabletdriver.daemon.enable = true;
   services.iptsd.enable = true;
@@ -83,10 +84,10 @@
     })
   ];
 
-  services.emacs = {
-    enable = true;
-    package = pkgs.my_emacs; # pkgs.emacsGit;
-  };
+  #services.emacs = {
+    ## enable = true;
+    #package = pkgs.my_emacs; # pkgs.emacsGit;
+  #};
 
   # x11 and awesomewm
   services.xserver = {
@@ -317,6 +318,7 @@
   environment.systemPackages = with pkgs; [
     # text editors
     # emacs29
+    my_emacs
     vscode
     vim
 
@@ -339,7 +341,7 @@
 
     # media manipulation tools
     imagemagickBig ghostscript # ghostscript is needed for some imagemagick commands
-    ffmpeg
+    ffmpeg-full.bin
     gimp inkscape
 
     # general tools
