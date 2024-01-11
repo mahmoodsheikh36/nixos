@@ -224,11 +224,16 @@
       host    all             all             127.0.0.1/32            trust
       host    all             all             ::1/128                 trust
       '';
+    package = pkgs.postgresql_16;
     # ensureDatabases = [ "mydatabase" ];
     # port = 5432;
-    # initialScript = pkgs.writeText "backend-initScript" ''
-    #   CREATE ROLE mahmooz WITH LOGIN PASSWORD 'mahmooz' CREATEDB;
-    # '';
+    initialScript = pkgs.writeText "backend-initScript" ''
+      CREATE ROLE mahmooz WITH LOGIN PASSWORD 'mahmooz' CREATEDB;
+    '';
+    # ensureUsers = [{
+    #   name = "mahmooz";
+    #   # ensureDBOwnership = true;
+    # }];
   };
   programs.direnv.enable = true;
   programs.git = {
@@ -471,18 +476,12 @@
   };
   # services.monit.enable = true;
 
-  # system.activationScripts.myscript.text = ''
-  #   source "${config.system.build.setEnvironment}"
-  #   su mahmooz
-  #   $DRY_RUN_CMD curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | sh
-  # '';
-
   environment.sessionVariables = rec {
     XDG_CACHE_HOME  = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME   = "$HOME/.local/share";
     XDG_STATE_HOME  = "$HOME/.local/state";
-    # Not officially in the specification
+    # not officially in the specification
     XDG_BIN_HOME    = "$HOME/.local/bin";
     PATH = [ 
       "${XDG_BIN_HOME}"
