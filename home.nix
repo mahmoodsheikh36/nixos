@@ -20,12 +20,12 @@ in
         # home.packages = [ sxhkd ];
         services.sxhkd.enable = true;
         services.sxhkd.package = my_sxhkd;
-        services.sxhkd.extraConfig = builtins.readFile(builtins.fetchurl {
-          url = "https://raw.githubusercontent.com/mahmoodsheikh36/dotfiles/master/.config/sxhkd/sxhkdrc";
-        });
-        programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
-          url = "https://raw.githubusercontent.com/mahmoodsheikh36/dotfiles/master/.zshrc";
-        });
+        # services.sxhkd.extraConfig = builtins.readFile(builtins.fetchurl {
+        #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.config/sxhkd/sxhkdrc";
+        # });
+        # programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
+        #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.zshrc";
+        # });
         services.syncthing.enable = true;
         programs.git = {
           enable = true;

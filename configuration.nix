@@ -97,7 +97,7 @@
       touchpad = {
         disableWhileTyping = true;
         tappingDragLock = false;
-        accelSpeed = "0.7";
+        accelSpeed = "0.9";
         naturalScrolling = false;
       };
     };
@@ -187,8 +187,8 @@
         127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -218,22 +218,24 @@
     enable = true;
     enableTCPIP = true;
     authentication = pkgs.lib.mkOverride 10 ''
-      # Generated file; do not edit!
+      # generated file; do not edit!
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
       local   all             all                                     trust
       host    all             all             127.0.0.1/32            trust
       host    all             all             ::1/128                 trust
       '';
     package = pkgs.postgresql_16;
-    # ensureDatabases = [ "mydatabase" ];
+    ensureDatabases = [ "mahmooz" ];
     # port = 5432;
     initialScript = pkgs.writeText "backend-initScript" ''
       CREATE ROLE mahmooz WITH LOGIN PASSWORD 'mahmooz' CREATEDB;
+      CREATE DATABASE test;
+      GRANT ALL PRIVILEGES ON DATABASE test TO mahmooz;
     '';
-    # ensureUsers = [{
-    #   name = "mahmooz";
-    #   # ensureDBOwnership = true;
-    # }];
+    ensureUsers = [{
+      name = "mahmooz";
+      ensureDBOwnership = true;
+    }];
   };
   programs.direnv.enable = true;
   programs.git = {
@@ -282,8 +284,11 @@
       # Persian Font
       vazir-fonts
       font-awesome
-      iosevka
       # corefonts # MS fonts?
+      mplus-outline-fonts.githubRelease
+      dina-font
+      proggyfonts
+      dejavu_fonts
     ];
     # not sure if i need these 2
     fontDir.enable = true;
@@ -331,7 +336,7 @@
     mpv
     feh # i use it to set wallpaper
     zathura
-    # discord
+    discord
     my_sxiv
     telegram-desktop
     zoom-us
@@ -421,9 +426,10 @@
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
       "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
       "Luxor" "ReinforcementLearningBase" "Images" "Flux" "DataStructures" "RecipesBase"
-      "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots"
-      # "Optimization" "ForwardDiff"
-      # "Transformers" "ModelingToolkit" "WaterLily" "Knet" "CUDA" "Javis" "Weave" "GalacticOptim" "BrainFlow" "Genie" "Dagger" "Interact" "StaticArrays" "Symbolics" "SymbolicUtils"
+      "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "StaticArrays"
+      "Weave" "BrainFlow" "Genie" "WaterLily"
+      # "ForwardDiff" "Optimization" "Knet" "ModelingToolkit"
+      # "Transformers" "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact" "Symbolics" "SymbolicUtils"
     ]))
     sbcl
     racket
