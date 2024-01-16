@@ -69,7 +69,7 @@
     }))
     (self: super:
     {
-      my_emacs = super.emacs-git.overrideAttrs (oldAttrs: rec {
+      my_emacs_git = super.emacs-git.overrideAttrs (oldAttrs: rec {
         # src = super.fetchFromGitHub {
         #   owner = "emacs-mirror";
         #   repo = "emacs";
@@ -78,6 +78,12 @@
         # };
         configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets "--with-imagemagick"
         patches = [];
+        imagemagick = pkgs.imagemagickBig;
+        withImageMagick = true;
+      });
+      my_emacs = super.emacs.overrideAttrs (oldAttrs: rec {
+        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets "--with-imagemagick"
+        # patches = [];
         imagemagick = pkgs.imagemagickBig;
         withImageMagick = true;
       });
@@ -130,8 +136,9 @@
         luadbi-mysql
       ];
     };
-    # desktopManager.gnome.enable = true;
     desktopManager = {
+      gnome.enable = true;
+      plasma5.enable = true;
       xfce = {
         enable = true;
         noDesktop = false;
@@ -142,8 +149,8 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    config.common.default = "*";
+    # extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    # config.common.default = "*";
   };
 
   # gnome configs
@@ -250,7 +257,19 @@
   programs.sniffnet.enable = true;
   programs.virt-manager.enable = true;
   programs.wireshark.enable = true;
-  qt.enable = true;
+  programs.dconf.enable = true;
+
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
+
+  services.locate = {
+    enable = true;
+    # pkg = pkgs.mlocate;
+    interval = "hourly";
+  };
 
   programs.nix-index = { # helps finding the package that contains a specific file
     enable = true;
@@ -281,7 +300,7 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      # Persian Font
+      # persian font
       vazir-fonts
       font-awesome
       # corefonts # MS fonts?
@@ -328,7 +347,7 @@
   environment.systemPackages = with pkgs; [
     # text editors
     # emacs29
-    my_emacs
+    my_emacs_git
     vscode
     vim
 
@@ -400,6 +419,7 @@
     SDL2
     sass
     simplescreenrecorder
+    ncdu
 
     # virtualization tools
     qemu virt-manager
@@ -416,7 +436,7 @@
     rustc meson ninja
     jupyter
     typescript
-    (python310.withPackages(ps: with ps; [
+    (python3.withPackages(ps: with ps; [
       matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
       scikit-learn torchvision opencv scrapy beautifulsoup4 seaborn pillow dash mysql-connector
       rich pyspark networkx
@@ -428,8 +448,9 @@
       "Luxor" "ReinforcementLearningBase" "Images" "Flux" "DataStructures" "RecipesBase"
       "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "StaticArrays"
       "Weave" "BrainFlow" "Genie" "WaterLily"
-      # "ForwardDiff" "Optimization" "Knet" "ModelingToolkit"
-      # "Transformers" "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact" "Symbolics" "SymbolicUtils"
+      "Symbolics" "SymbolicUtils" "ForwardDiff"
+      # "Optimization" "Knet" "ModelingToolkit"
+      # "Transformers" "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
     ]))
     sbcl
     racket
@@ -442,7 +463,7 @@
 
     # some helpful programs / other
     tmux file vifm zip unzip fzf p7zip unrar-wrapper
-    transmission yt-dlp acpi gnupg tree-sitter
+    transmission yt-dlp acpi gnupg tree-sitter lm_sensors
     cryptsetup
     onboard # onscreen keyboard
     spark

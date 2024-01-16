@@ -17,12 +17,12 @@ in
         /* the home.stateVersion option does not have a default and must be set */
         home.stateVersion = "23.05";
         programs.home-manager.enable = true;
-        # home.packages = [ sxhkd ];
-        services.sxhkd.enable = true;
-        services.sxhkd.package = my_sxhkd;
-        # services.sxhkd.extraConfig = builtins.readFile(builtins.fetchurl {
-        #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.config/sxhkd/sxhkdrc";
-        # });
+        home.packages = [
+          home-manager
+          my_sxhkd
+        ];
+        # services.sxhkd.enable = true;
+        # services.sxhkd.package = my_sxhkd;
         # programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
         #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.zshrc";
         # });
@@ -60,9 +60,9 @@ in
         home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
 
         # temporarily, sourcehut is offline
-        manual.html.enable = false;
-        manual.manpages.enable = false;
-        manual.json.enable = false;
+        # manual.html.enable = false;
+        # manual.manpages.enable = false;
+        # manual.json.enable = false;
 
         home.file = {
           # "git/config".source = ./dotfiles/git/config;
@@ -76,6 +76,9 @@ in
           };
           ".config/backup/nixos" = {
             source = builtins.fetchGit "https://github.com/mahmoodsheikh36/nixos";
+          };
+          ".config/backup/otherdots" = {
+            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/otherdots";
           };
         };
 
