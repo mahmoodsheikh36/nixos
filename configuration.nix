@@ -49,6 +49,18 @@
         };
       });
     })
+    # the default sxhkd build crashes for me, hence the override, but this doesnt work too
+    #(self: super:
+    #{
+      #my_sxhkd = super.sxhkd.overrideAttrs (oldAttrs: rec {
+        #src = super.fetchFromGitHub {
+          #owner = "baskerville";
+          #repo = "sxhkd";
+          #rev = "7a2a87fdfdb6a396349cbe5f7f10129ebefd1d0e";
+          #sha256 = "1yx020g6m3sq240dvqlr7rm49lngvk7izdf1v29y5aiqwnymj8ki";
+        #};
+      #});
+    #})
     (self: super:
     {
       my_awesome = super.awesome.overrideAttrs (oldAttrs: rec {
@@ -115,8 +127,8 @@
         wayland.enable = false;
       };
       setupCommands = ''
-        sxhkd &
-        # feh --bg-fill ~/.cache/wallpaper
+        # ${pkgs.sxhkd}/bin/sxhkd
+        # ${pkgs.feh}/bin/feh --bg-fill ~/.cache/wallpaper
         ${pkgs.hsetroot}/bin/hsetroot -solid '#222222'
       '';
       autoLogin.enable = true;
@@ -190,8 +202,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -436,11 +448,11 @@
     rustc meson ninja
     jupyter
     typescript
-    (python3.withPackages(ps: with ps; [
-      matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
-      scikit-learn torchvision opencv scrapy beautifulsoup4 seaborn pillow dash mysql-connector
-      rich pyspark networkx
-    ]))
+    # (python3.withPackages(ps: with ps; [
+    #   matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
+    #   scikit-learn torchvision opencv scrapy beautifulsoup4 seaborn pillow dash mysql-connector
+    #   rich pyspark networkx
+    # ]))
     (julia.withPackages([
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"

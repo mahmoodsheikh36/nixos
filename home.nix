@@ -1,10 +1,10 @@
- { config, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-  sxhkd_pkgs = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
-  }) {};
-  my_sxhkd = sxhkd_pkgs.sxhkd;
+  # sxhkd_pkgs = import (builtins.fetchTarball {
+  #     url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
+  # }) {};
+  # my_sxhkd = sxhkd_pkgs.sxhkd;
 in
 {
   imports = [
@@ -19,10 +19,17 @@ in
         programs.home-manager.enable = true;
         home.packages = [
           home-manager
-          my_sxhkd
+          # my_sxhkd
+          (pkgs.python3.withPackages(ps: with ps; [
+            matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
+            scikit-learn torchvision scrapy beautifulsoup4 seaborn pillow dash mysql-connector
+            rich pyspark networkx #opencv
+          ]))
         ];
-        # services.sxhkd.enable = true;
-        # services.sxhkd.package = my_sxhkd;
+        # services.sxhkd = {
+        #   enable = true;
+        #   package = pkgs.my_sxhkd;
+        # };
         # programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
         #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.zshrc";
         # });
@@ -50,20 +57,9 @@ in
             "xfwm4/custom/<Super><Shift>4" = "move_window_workspace_4_key";
           };
         };
-        # always clone dotfiles repository if it doesn't exist
-        # been told this isnt the way, wellp
-        # home.activation.dotfiles_setup = config.home-manager.users.mahmooz.lib.dag.entryAfter [ "installPackages" ] ''
-        #   source "${config.system.build.setEnvironment}"
-        #   $DRY_RUN_CMD ${pkgs.curl}/bin/curl https://raw.githubusercontent.com/mahmoodsheikh36/scripts/main/setup_dotfiles.sh | ${pkgs.zsh}/bin/zsh
-        # '';
+
         # set a variable for dotfiles repo, not necessary but convenient
-        home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
-
-        # temporarily, sourcehut is offline
-        # manual.html.enable = false;
-        # manual.manpages.enable = false;
-        # manual.json.enable = false;
-
+        # home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
         home.file = {
           # "git/config".source = ./dotfiles/git/config;
           ".config/backup/dotfiles" = {
