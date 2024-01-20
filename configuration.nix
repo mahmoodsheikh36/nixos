@@ -204,8 +204,8 @@
         192.168.1.150 server
         # 127.0.0.1 youtube.com
         # 127.0.0.1 www.youtube.com
-        # 127.0.0.1 reddit.com
-        # 127.0.0.1 www.reddit.com
+        127.0.0.1 reddit.com
+        127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
         127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
@@ -265,7 +265,7 @@
   programs.java.enable = true;
   programs.neovim.enable = true;
   programs.nix-ld.enable = true;
-  programs.nm-applet.enable = true;
+  #programs.nm-applet.enable = true; # this thing is annoying lol
   programs.sniffnet.enable = true;
   programs.virt-manager.enable = true;
   programs.wireshark.enable = true;
