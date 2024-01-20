@@ -204,8 +204,8 @@
         192.168.1.150 server
         # 127.0.0.1 youtube.com
         # 127.0.0.1 www.youtube.com
-        127.0.0.1 reddit.com
-        127.0.0.1 www.reddit.com
+        # 127.0.0.1 reddit.com
+        # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
         127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
@@ -448,11 +448,6 @@
     rustc meson ninja
     jupyter
     typescript
-    # (python3.withPackages(ps: with ps; [
-    #   matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
-    #   scikit-learn torchvision opencv scrapy beautifulsoup4 seaborn pillow dash mysql-connector
-    #   rich pyspark networkx
-    # ]))
     (julia.withPackages([
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
