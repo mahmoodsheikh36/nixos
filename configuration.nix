@@ -16,19 +16,32 @@
   # enable sound and bluetooth
   sound.enable = true;
   services.blueman.enable = true;
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.settings = {
-    General = {
-      Enable = "Source,Sink,Media,Socket";
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+      };
+      Policy = {
+        AutoEnable = "true";
+      };
     };
+    powerOnBoot = true;
   };
   hardware.pulseaudio = {
     enable = true;
-    # extraModules = [ pkgs.pulseaudio-modules-bt ];
+    #extraModules = [ pkgs.pulseaudio-modules-bt ];
     package = pkgs.pulseaudioFull;
     extraConfig = "
       load-module module-switch-on-connect
     ";
+  };
+  systemd.user.services.mpris-proxy = {
+    description = "Mpris proxy";
+    after = [ "network.target" "sound.target" ];
+    wantedBy = [ "default.target" ];
+    serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 
   hardware.opentabletdriver.enable = true;
@@ -120,7 +133,7 @@
       };
     };
     layout = "us";
-    xkbOptions = "caps:swapescape,ctrl:ralt_rctrl";
+    xkbOptions = "caps:escape,ctrl:ralt_rctrl";
     displayManager = {
       sddm = {
         enable = true;
@@ -206,10 +219,10 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
-        127.0.0.1 instagram.com
-        127.0.0.1 www.instagram.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
+        # 127.0.0.1 instagram.com
+        # 127.0.0.1 www.instagram.com
     '';
   };
 
@@ -231,7 +244,6 @@
       thunar-volman
     ];
   };
-  programs.firefox.enable = true;
   programs.xfconf.enable = true;
   services.postgresql = {
     enable = true;
@@ -270,6 +282,7 @@
   programs.virt-manager.enable = true;
   programs.wireshark.enable = true;
   programs.dconf.enable = true;
+  programs.firefox.enable = true;
 
   qt = {
     enable = true;
@@ -359,7 +372,7 @@
   environment.systemPackages = with pkgs; [
     # text editors
     # emacs29
-    my_emacs_git
+    emacs-git
     vscode
     vim
 
@@ -412,7 +425,7 @@
     rofi
     libnotify
     xclip
-    scrot
+    scrot maim # maim is a better alternative to scrot
     picom
     parcellite
     hsetroot
@@ -432,6 +445,8 @@
     sass
     simplescreenrecorder
     ncdu
+    usbutils
+    pciutils
 
     # virtualization tools
     qemu virt-manager
@@ -462,6 +477,7 @@
     sbcl
     racket
     gcc clang gdb clang-tools
+    python311Packages.west
 
     zeal devdocs-desktop
 
@@ -520,6 +536,8 @@
     PATH = [ 
       "${XDG_BIN_HOME}"
     ];
+    # this one fixes some problems with python matplotlib and probably some other qt applications
+    QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins";
   };
 
   # packages cache

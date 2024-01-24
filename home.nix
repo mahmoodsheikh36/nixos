@@ -1,14 +1,15 @@
 { config, pkgs, ... }:
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-  # sxhkd_pkgs = import (builtins.fetchTarball {
-  #     url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
-  # }) {};
-  # my_sxhkd = sxhkd_pkgs.sxhkd;
+  sxhkd_pkgs = import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
+  }) {};
+  my_sxhkd = sxhkd_pkgs.sxhkd;
 in
 {
   imports = [
     (import "${home-manager}/nixos")
+    # ./firefox.nix
   ];
 
   home-manager = {
@@ -17,9 +18,10 @@ in
         /* the home.stateVersion option does not have a default and must be set */
         home.stateVersion = "23.05";
         programs.home-manager.enable = true;
+        services.blueman-applet.enable = true;
         home.packages = [
           home-manager
-          # my_sxhkd
+          my_sxhkd
           (pkgs.python3.withPackages(ps: with ps; [
             matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
             scikit-learn torchvision scrapy beautifulsoup4 seaborn pillow dash mysql-connector
