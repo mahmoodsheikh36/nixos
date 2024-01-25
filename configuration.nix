@@ -420,6 +420,7 @@
     pdftk pdfgrep
     spotdl
     parallel
+    pigz
 
     # x11 tools
     rofi
