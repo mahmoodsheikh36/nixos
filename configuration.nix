@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -62,18 +62,6 @@
         };
       });
     })
-    # the default sxhkd build crashes for me, hence the override, but this doesnt work too
-    #(self: super:
-    #{
-      #my_sxhkd = super.sxhkd.overrideAttrs (oldAttrs: rec {
-        #src = super.fetchFromGitHub {
-          #owner = "baskerville";
-          #repo = "sxhkd";
-          #rev = "7a2a87fdfdb6a396349cbe5f7f10129ebefd1d0e";
-          #sha256 = "1yx020g6m3sq240dvqlr7rm49lngvk7izdf1v29y5aiqwnymj8ki";
-        #};
-      #});
-    #})
     (self: super:
     {
       my_awesome = super.awesome.overrideAttrs (oldAttrs: rec {
@@ -140,9 +128,9 @@
         wayland.enable = false;
       };
       setupCommands = ''
-        # ${pkgs.sxhkd}/bin/sxhkd
         # ${pkgs.feh}/bin/feh --bg-fill ~/.cache/wallpaper
-        ${pkgs.hsetroot}/bin/hsetroot -solid '#222222'
+        ${lib.getExe pkgs.hsetroot} -solid '#222222'
+        # ${lib.getExe pkgs.sxhkd}
       '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
@@ -221,8 +209,8 @@
         # 127.0.0.1 www.reddit.com
         # 127.0.0.1 discord.com
         # 127.0.0.1 www.discord.com
-        # 127.0.0.1 instagram.com
-        # 127.0.0.1 www.instagram.com
+        127.0.0.1 instagram.com
+        127.0.0.1 www.instagram.com
     '';
   };
 
@@ -385,13 +373,12 @@
     telegram-desktop
     zoom-us
     youtube-music
-    okular
+    okular pandoc
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
-    ocrmypdf
-    pandoc
+    krita
+    ocrmypdf pdftk pdfgrep poppler_utils calibre
     popcorntime
-    lollypop
-    clementine
+    lollypop clementine
 
     # media manipulation tools
     imagemagickBig ghostscript # ghostscript is needed for some imagemagick commands
@@ -406,7 +393,7 @@
     syncthing
 
     # commandline tools
-    kitty # terminal emulator
+    kitty wezterm # terminal emulator
     pulsemixer # tui for pulseaudio control
     playerctl # media control
     sqlite
@@ -417,7 +404,6 @@
     docker
     jq
     ripgrep
-    pdftk pdfgrep
     spotdl
     parallel
     pigz
@@ -432,6 +418,7 @@
     hsetroot
     unclutter
     xorg.xev
+    sxhkd
 
     # other
     redis
@@ -526,6 +513,16 @@
     port = 9001;
   };
   # services.monit.enable = true;
+
+  systemd.user.services.my_sxhkd_service = {
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig = {
+      #Type = "dbus";
+      #BusName = "org.freedesktop.Notifications";
+      ExecStart = "${lib.getExe pkgs.sxhkd}";
+    };
+  };
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME  = "$HOME/.cache";

@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-  sxhkd_pkgs = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
-  }) {};
-  my_sxhkd = sxhkd_pkgs.sxhkd;
+  #sxhkd_pkgs = import (builtins.fetchTarball {
+  #    url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
+  #}) {};
+  #my_sxhkd = sxhkd_pkgs.sxhkd;
 in
 {
   imports = [
@@ -21,20 +21,17 @@ in
         services.blueman-applet.enable = true;
         home.packages = [
           home-manager
-          my_sxhkd
+          # my_sxhkd
           (pkgs.python3.withPackages(ps: with ps; [
             matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
             scikit-learn torchvision scrapy beautifulsoup4 seaborn pillow dash mysql-connector
-            rich pyspark networkx #opencv
+            rich pyspark networkx dpkt #opencv
           ]))
         ];
-        # services.sxhkd = {
-        #   enable = true;
-        #   package = pkgs.my_sxhkd;
-        # };
         # programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
         #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.zshrc";
         # });
+        # services.sxhkd.enable = true;
         services.syncthing.enable = true;
         programs.git = {
           enable = true;
