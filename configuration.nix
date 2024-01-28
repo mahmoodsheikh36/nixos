@@ -14,34 +14,53 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # enable sound and bluetooth
-  sound.enable = true;
-  services.blueman.enable = true;
-  hardware.bluetooth = {
-    enable = true;
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        Experimental = true;
-      };
-      Policy = {
-        AutoEnable = "true";
-      };
-    };
-    powerOnBoot = true;
-  };
-  hardware.pulseaudio = {
-    enable = true;
-    #extraModules = [ pkgs.pulseaudio-modules-bt ];
-    package = pkgs.pulseaudioFull;
-    extraConfig = "
-      load-module module-switch-on-connect
-    ";
-  };
+  # services.blueman.enable = true;
+  # hardware.bluetooth = {
+  #   enable = true;
+  #   settings = {
+  #     General = {
+  #       Enable = "Source,Sink,Media,Socket";
+  #       Experimental = true;
+  #     };
+  #     Policy = {
+  #       AutoEnable = "true";
+  #     };
+  #   };
+  #   powerOnBoot = true;
+  # };
+  # hardware.pulseaudio = {
+  #   enable = true;
+  #   #extraModules = [ pkgs.pulseaudio-modules-bt ];
+  #   package = pkgs.pulseaudioFull;
+  #   extraConfig = "
+  #     load-module module-switch-on-connect
+  #   ";
+  # };
+  hardware.pulseaudio.enable = false;
   systemd.user.services.mpris-proxy = {
     description = "Mpris proxy";
     after = [ "network.target" "sound.target" ];
     wantedBy = [ "default.target" ];
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+  environment.etc = {
+    "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+      bluez_monitor.properties = {
+        ["bluez5.enable-sbc-xq"] = true,
+        ["bluez5.enable-msbc"] = true,
+        ["bluez5.enable-hw-volume"] = true,
+        ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+      }
+    '';
   };
 
   hardware.opentabletdriver.enable = true;
@@ -492,6 +511,62 @@
 
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+    enchant.dev # for emacs jinx-mode
+
+    (emacsWithPackagesFromUsePackage {
+      # Your Emacs config file. Org mode babel files are also
+      # supported.
+      # NB: Config files cannot contain unicode characters, since
+      #     they're being parsed in nix, which lacks unicode
+      #     support.
+      # config = ./emacs.org;
+      config = "/dev/null";
+
+      # Whether to include your config as a default init file.
+      # If being bool, the value of config is used.
+      # Its value can also be a derivation like this if you want to do some
+      # substitution:
+      #   defaultInitFile = pkgs.substituteAll {
+      #     name = "default.el";
+      #     src = ./emacs.el;
+      #     inherit (config.xdg) configHome dataHome;
+      #   };
+      defaultInitFile = false;
+
+      # Package is optional, defaults to pkgs.emacs
+      package = emacs-git;
+
+      # By default emacsWithPackagesFromUsePackage will only pull in
+      # packages with `:ensure`, `:ensure t` or `:ensure <package name>`.
+      # Setting `alwaysEnsure` to `true` emulates `use-package-always-ensure`
+      # and pulls in all use-package references not explicitly disabled via
+      # `:ensure nil` or `:disabled`.
+      # Note that this is NOT recommended unless you've actually set
+      # `use-package-always-ensure` to `t` in your config.
+      alwaysEnsure = true;
+
+      # For Org mode babel files, by default only code blocks with
+      # `:tangle yes` are considered. Setting `alwaysTangle` to `true`
+      # will include all code blocks missing the `:tangle` argument,
+      # defaulting it to `yes`.
+      # Note that this is NOT recommended unless you have something like
+      # `#+PROPERTY: header-args:emacs-lisp :tangle yes` in your config,
+      # which defaults `:tangle` to `yes`.
+      # alwaysTangle = true;
+
+      # Optionally provide extra packages not in the configuration file.
+      extraEmacsPackages = epkgs: [
+        epkgs.cask
+        epkgs.jinx
+      ];
+
+      # Optionally override derivations.
+      # override = final: prev: {
+      #   weechat = prev.melpaPackages.weechat.overrideAttrs(old: {
+      #     patches = [ ./weechat-el.patch ];
+      #   });
+      # };
+    })
   ];
 
   # monitoring services
@@ -536,6 +611,13 @@
     ];
     # this one fixes some problems with python matplotlib and probably some other qt applications
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins";
+  };
+
+  environment.variables = {
+    # for the emacs jinx-mode package, needs to compile a .c file that includes enchant.h
+    CPLUS_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
+    C_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
+    LIBRARY_PATH = "${pkgs.enchant}/lib";
   };
 
   # packages cache
