@@ -379,7 +379,6 @@
   environment.systemPackages = with pkgs; [
     # text editors
     # emacs29
-    emacs-git
     vscode
     vim
 
@@ -512,6 +511,8 @@
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     enchant.dev # for emacs jinx-mode
+
+    pulseaudioFull
 
     (emacsWithPackagesFromUsePackage {
       # Your Emacs config file. Org mode babel files are also
