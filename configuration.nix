@@ -150,6 +150,7 @@
         # ${pkgs.feh}/bin/feh --bg-fill ~/.cache/wallpaper
         ${lib.getExe pkgs.hsetroot} -solid '#222222'
         # ${lib.getExe pkgs.sxhkd}
+        ${lib.getExe pkgs.xorg.xrdb} -load ~/.Xresources
       '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
@@ -453,6 +454,7 @@
     ncdu
     usbutils
     pciutils
+    subversion # git alternative
 
     # virtualization tools
     qemu virt-manager
@@ -497,6 +499,8 @@
     onboard # onscreen keyboard
     spark
     openssl
+    haskellPackages.kmonad xcape keyd # keyboard utilities
+    pulseaudioFull
 
     # some build systems
     cmake gnumake
@@ -511,8 +515,6 @@
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     enchant.dev # for emacs jinx-mode
-
-    pulseaudioFull
 
     (emacsWithPackagesFromUsePackage {
       # Your Emacs config file. Org mode babel files are also
@@ -612,14 +614,17 @@
     ];
     # this one fixes some problems with python matplotlib and probably some other qt applications
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins";
+    PYTHON_HISTORY_FILE = "$HOME/brain/python_history";
+    QT_SCALE_FACTOR = "2";
+    EDITOR = "nvim";
   };
 
-  environment.variables = {
-    # for the emacs jinx-mode package, needs to compile a .c file that includes enchant.h
-    CPLUS_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
-    C_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
-    LIBRARY_PATH = "${pkgs.enchant}/lib";
-  };
+  # environment.variables = {
+  #   # for the emacs jinx-mode package, needs to compile a .c file that includes enchant.h
+  #   CPLUS_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
+  #   C_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
+  #   LIBRARY_PATH = "${pkgs.enchant}/lib";
+  # };
 
   # packages cache
   nix = {
