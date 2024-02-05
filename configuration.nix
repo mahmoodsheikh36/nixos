@@ -139,8 +139,8 @@
         naturalScrolling = false;
       };
     };
-    layout = "us";
-    xkbOptions = "caps:escape,ctrl:ralt_rctrl";
+    xkb.layout = "us";
+    xkb.options = "caps:escape,ctrl:ralt_rctrl";
     displayManager = {
       sddm = {
         enable = true;
@@ -227,8 +227,8 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -379,9 +379,10 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # text editors
-    # emacs29
+    emacs29
     vscode
     vim
+    # emacs-git
 
     # media tools
     mpv
@@ -461,7 +462,7 @@
 
     # science
     gnuplot
-    # sageWithDoc sagetex
+    sageWithDoc sagetex
 
     # some programming languages/environments
     lua
@@ -560,7 +561,7 @@
       # Optionally provide extra packages not in the configuration file.
       extraEmacsPackages = epkgs: [
         epkgs.cask
-        epkgs.jinx
+        # epkgs.jinx
       ];
 
       # Optionally override derivations.
