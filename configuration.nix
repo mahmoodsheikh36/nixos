@@ -285,7 +285,7 @@
   programs.java.enable = true;
   programs.neovim.enable = true;
   programs.nix-ld.enable = true;
-  #programs.nm-applet.enable = true; # this thing is annoying lol
+  #programs.nm-applet.enable = true; # this thing is annoying lol (send notifications and stuff..)
   programs.sniffnet.enable = true;
   programs.virt-manager.enable = true;
   programs.wireshark.enable = true;
@@ -387,7 +387,7 @@
     # media tools
     mpv
     feh # i use it to set wallpaper
-    zathura
+    # zathura
     discord
     my_sxiv
     telegram-desktop
@@ -472,14 +472,15 @@
     rustc meson ninja
     jupyter
     typescript
-    (julia.withPackages([
+    (julia.withPackages.override({precompile = false;})([
+      "TruthTables" "LinearSolve"
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
       "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
       "Luxor" "ReinforcementLearningBase" "Images" "Flux" "DataStructures" "RecipesBase"
       "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "StaticArrays"
       "Weave" "BrainFlow" "Genie" "WaterLily"
-      "Symbolics" "SymbolicUtils" "ForwardDiff"
+      "Symbolics" "SymbolicUtils" "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
       # "Optimization" "Knet" "ModelingToolkit"
       # "Transformers" "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
     ]))
