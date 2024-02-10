@@ -520,7 +520,7 @@
     pulseaudioFull
 
     # some build systems
-    cmake gnumake
+    cmake gnumake autoconf
 
     # nodejs
     nodejs nodePackages.node2nix
