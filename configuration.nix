@@ -381,7 +381,6 @@
     # text editors
     emacs29
     vscode
-    vim
     # emacs-git
 
     # media tools
@@ -484,11 +483,27 @@
       # "Optimization" "Knet" "ModelingToolkit"
       # "Transformers" "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
     ]))
-    sbcl
     racket
     gcc clang gdb clang-tools
     python311Packages.west
 
+    # lisps
+    lispPackages.quicklisp
+    (sbcl.withPackages (ps: with ps; [
+      lem-opengl
+      serapeum
+      lparallel
+      cl-csv
+      hunchentoot
+      jsown
+    ]))
+    # usage example:
+    # $ sbcl
+    # * (load (sb-ext:posix-getenv "ASDF"))
+    # * (asdf:load-system 'alexandria)
+    babashka
+
+    # offline docs
     zeal devdocs-desktop
 
     # networking tools
@@ -516,7 +531,7 @@
 
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-    enchant.dev # for emacs jinx-mode
+    # enchant.dev # for emacs jinx-mode
 
     (emacsWithPackagesFromUsePackage {
       # Your Emacs config file. Org mode babel files are also
@@ -594,6 +609,7 @@
   };
   # services.monit.enable = true;
 
+  # run sxhkd when x11 starts
   systemd.user.services.my_sxhkd_service = {
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
