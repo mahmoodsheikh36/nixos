@@ -84,11 +84,11 @@
     (self: super:
     {
       my_awesome = super.awesome.overrideAttrs (oldAttrs: rec {
-      postPatch = ''
-        patchShebangs tests/examples/_postprocess.lua
-      '';
-      patches = [];
-      src = super.fetchFromGitHub {
+        postPatch = ''
+          patchShebangs tests/examples/_postprocess.lua
+        '';
+        patches = [];
+        src = super.fetchFromGitHub {
           owner = "awesomeWM";
           repo = "awesome";
           rev = "7ed4dd620bc73ba87a1f88e6f126aed348f94458";
@@ -108,16 +108,46 @@
         #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
         #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
         # };
-        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets "--with-imagemagick"
+        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules" "--with-widgets" "--with-imagemagick"];
         patches = [];
         imagemagick = pkgs.imagemagickBig;
-        withImageMagick = true;
       });
-      my_emacs = super.emacs.overrideAttrs (oldAttrs: rec {
-        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules"]; # --with-widgets "--with-imagemagick"
-        # patches = [];
+    })
+    (self: super: {
+      my_emacs = (super.emacs.override { withImageMagick = true; }).overrideAttrs (oldAttrs: rec {
+        # src = super.fetchFromGitHub {
+        #   owner = "emacs-mirror";
+        #   repo = "emacs";
+        #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
+        #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
+        # };
+        configureFlags = oldAttrs.configureFlags ++ [
+          "--with-tree-sitter"
+          "--with-gnutls"
+          "--with-xwidgets"
+          "--with-sqlite3=no"
+          "--with-native-compilation=no"
+          "--with-png"
+          "--with-gif"
+          "--with-jpeg"
+          "--with-sound"
+          "--with-libsystemd"
+          "--with-harfbuzz"
+          "--with-dbus"
+          "--with-sound"
+          "--with-file-notification=yes"
+          "--with-wide-int"
+          "--with-pdumper=yes"
+          "--with-small-ja-dic"
+          "--without-compress-install"
+
+          "--with-imagemagick"
+          "--with-modules"
+          "--with-json"
+          "--with-widgets"
+        ];
+        patches = [];
         imagemagick = pkgs.imagemagickBig;
-        withImageMagick = true;
       });
     })
   ];
@@ -227,8 +257,8 @@
         127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -382,6 +412,7 @@
     emacs29
     vscode
     # emacs-git
+    # my_emacs_git
 
     # media tools
     mpv
@@ -405,7 +436,7 @@
     gimp inkscape
 
     # general tools
-    google-chrome qutebrowser tor-browser-bundle-bin
+    google-chrome tor-browser-bundle-bin # qutebrowser
     scrcpy
     pavucontrol
     libreoffice
@@ -431,7 +462,7 @@
     rofi
     libnotify
     xclip
-    scrot maim # maim is a better alternative to scrot
+    maim # maim is a better alternative to scrot
     picom
     parcellite
     hsetroot
@@ -455,6 +486,7 @@
     usbutils
     pciutils
     subversion # git alternative
+    logseq
 
     # virtualization tools
     qemu virt-manager
@@ -542,7 +574,7 @@
       #     inherit (config.xdg) configHome dataHome;
       #   };
       defaultInitFile = false;
-      package = emacs-git;
+      package = my_emacs; # emacs-git;
       alwaysEnsure = true;
       extraEmacsPackages = epkgs: [
         epkgs.cask
