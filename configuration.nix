@@ -114,39 +114,39 @@
       });
     })
     (self: super: {
-      my_emacs = (super.emacs.override { withImageMagick = true; }).overrideAttrs (oldAttrs: rec {
+      my_emacs = (super.emacs.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
         # src = super.fetchFromGitHub {
         #   owner = "emacs-mirror";
         #   repo = "emacs";
         #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
         #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
         # };
-        configureFlags = oldAttrs.configureFlags ++ [
-          "--with-tree-sitter"
-          "--with-gnutls"
-          "--with-xwidgets"
-          "--with-sqlite3=no"
-          "--with-native-compilation=no"
-          "--with-png"
-          "--with-gif"
-          "--with-jpeg"
-          "--with-sound"
-          "--with-libsystemd"
-          "--with-harfbuzz"
-          "--with-dbus"
-          "--with-sound"
-          "--with-file-notification=yes"
-          "--with-wide-int"
-          "--with-pdumper=yes"
-          "--with-small-ja-dic"
-          "--without-compress-install"
+        #configureFlags = oldAttrs.configureFlags ++ [
+          #"--with-tree-sitter"
+          #"--with-gnutls"
+          #"--with-xwidgets"
+          #"--with-sqlite3=no"
+          #"--with-native-compilation=no"
+          #"--with-png"
+          #"--with-gif"
+          #"--with-jpeg"
+          #"--with-sound"
+          #"--with-libsystemd"
+          #"--with-harfbuzz"
+          #"--with-dbus"
+          #"--with-sound"
+          #"--with-file-notification=yes"
+          #"--with-wide-int"
+          #"--with-pdumper=yes"
+          #"--with-small-ja-dic"
+          #"--without-compress-install"
 
-          "--with-imagemagick"
-          "--with-modules"
-          "--with-json"
-          "--with-widgets"
-        ];
-        patches = [];
+          #"--with-imagemagick"
+          #"--with-modules"
+          #"--with-json"
+          #"--with-widgets"
+        #];
+        #patches = [];
         imagemagick = pkgs.imagemagickBig;
       });
     })
@@ -353,7 +353,7 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       fantasque-sans-mono
-      google-fonts
+      #google-fonts
       cascadia-code
       inconsolata-nerdfont
       iosevka
