@@ -257,8 +257,8 @@
         127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -634,7 +634,9 @@
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins";
     PYTHON_HISTORY_FILE = "$HOME/brain/python_history";
     BRAIN_DIR = "$HOME/brain";
+    MUSIC_DIR = "$HOME/music";
     SCRIPTS_DIR = "$HOME/work/scripts/";
+    DOTFILES_DIR = "$HOME/work/otherdots/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
   };
