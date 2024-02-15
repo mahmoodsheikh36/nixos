@@ -8,7 +8,7 @@
     ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
+  boot.tmp.cleanOnBoot = true;
   # use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -257,8 +257,8 @@
         127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -312,6 +312,7 @@
     package = pkgs.gitFull;
   };
   programs.htop.enable = true;
+  programs.iotop.enable = true;
   programs.java.enable = true;
   programs.neovim.enable = true;
   programs.nix-ld.enable = true;
@@ -417,13 +418,12 @@
     # media tools
     mpv
     feh # i use it to set wallpaper
-    # zathura
     discord
     my_sxiv
     telegram-desktop
     zoom-us
     youtube-music
-    okular pandoc
+    okular pandoc zathura
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
     ocrmypdf pdftk pdfgrep poppler_utils calibre
@@ -482,7 +482,7 @@
     SDL2
     sass
     simplescreenrecorder
-    ncdu
+    ncdu dua duf dust
     usbutils
     pciutils
     subversion # git alternative
@@ -639,6 +639,19 @@
     DOTFILES_DIR = "$HOME/work/otherdots/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
+    #FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [
+      #"/Library/Fonts"
+      #"/System/Library/Fonts"
+      #"/Users/USER/Library/Fonts"
+      #pkgs.lmodern
+    #]; };
+    #OSFONTDIR = pkgs.makeFontsConf { fontDirectories = [
+      #"/Library/Fonts"
+      #"/System/Library/Fonts"
+      #"/Users/USER/Library/Fonts"
+      #pkgs.lmodern
+    #]; };
+
   };
 
   # environment.variables = {
