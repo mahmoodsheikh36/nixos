@@ -412,8 +412,6 @@
     # text editors
     emacs29
     vscode
-    # emacs-git
-    # my_emacs_git
 
     # media tools
     mpv
@@ -504,7 +502,7 @@
     rustc meson ninja
     jupyter
     typescript
-    (julia.withPackages.override({precompile = false;})([
+    (julia.withPackages.override({ precompile = false; })([
       "TruthTables" "LinearSolve"
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
@@ -544,13 +542,14 @@
 
     # some helpful programs / other
     tmux file vifm zip unzip fzf p7zip unrar-wrapper
-    transmission yt-dlp acpi gnupg tree-sitter lm_sensors
+    transmission acpi gnupg tree-sitter lm_sensors
     cryptsetup
     onboard # onscreen keyboard
     spark
     openssl
     haskellPackages.kmonad xcape keyd # keyboard utilities
     pulseaudioFull
+    yt-dlp you-get
 
     # some build systems
     cmake gnumake autoconf
@@ -640,19 +639,6 @@
     DOTFILES_DIR = "$HOME/work/otherdots/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
-    #FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [
-      #"/Library/Fonts"
-      #"/System/Library/Fonts"
-      #"/Users/USER/Library/Fonts"
-      #pkgs.lmodern
-    #]; };
-    #OSFONTDIR = pkgs.makeFontsConf { fontDirectories = [
-      #"/Library/Fonts"
-      #"/System/Library/Fonts"
-      #"/Users/USER/Library/Fonts"
-      #pkgs.lmodern
-    #]; };
-
   };
 
   # environment.variables = {
