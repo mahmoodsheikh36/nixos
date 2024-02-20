@@ -178,9 +178,10 @@
       };
       setupCommands = ''
         # ${pkgs.feh}/bin/feh --bg-fill ~/.cache/wallpaper
-        ${lib.getExe pkgs.hsetroot} -solid '#222222'
+        # ${lib.getExe pkgs.hsetroot} -solid '#222222'
         # ${lib.getExe pkgs.sxhkd}
         ${lib.getExe pkgs.xorg.xrdb} -load ~/.Xresources
+        ${lib.getExe pkgs.feh} --bg-fill ~/.cache/wallpaper
       '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
@@ -190,6 +191,7 @@
       # defaultSession = "xfce+awesome";
       # defaultSession = "xfce";
       # defaultSession = "gnome";
+      # defaultSession = "plasma";
     };
     windowManager.awesome = {
       package = with pkgs; my_awesome;
@@ -215,6 +217,12 @@
     # extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     # config.common.default = "*";
   };
+  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+    # plasma-browser-integration
+    konsole
+    # oxygen
+  ];
+
 
   # gnome configs
   services.gnome.tracker.enable = false;
@@ -257,8 +265,8 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -354,7 +362,7 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       fantasque-sans-mono
-      #google-fonts
+      google-fonts
       cascadia-code
       inconsolata-nerdfont
       iosevka
