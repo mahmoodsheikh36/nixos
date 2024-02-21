@@ -644,6 +644,7 @@
     PYTHON_HISTORY_FILE = "$HOME/brain/python_history";
     BRAIN_DIR = "$HOME/brain";
     MUSIC_DIR = "$HOME/music";
+    WORK_DIR = "$HOME/work";
     SCRIPTS_DIR = "$HOME/work/scripts/";
     DOTFILES_DIR = "$HOME/work/otherdots/";
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
