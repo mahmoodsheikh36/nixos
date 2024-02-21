@@ -3,7 +3,7 @@
 {
   imports =
     [
-      ./hardware-configuration.nix # hardware scan results
+      /etc/nixos/hardware-configuration.nix # hardware scan results
       ./home.nix # home-manager etc
     ];
 
@@ -177,7 +177,7 @@
         wayland.enable = false;
       };
       setupCommands = ''
-        # ${pkgs.feh}/bin/feh --bg-fill ~/.cache/wallpaper
+        # these commands dont work because $HOME isnt /home/mahmooz..
         # ${lib.getExe pkgs.hsetroot} -solid '#222222'
         # ${lib.getExe pkgs.sxhkd}
         ${lib.getExe pkgs.xorg.xrdb} -load ~/.Xresources
@@ -265,8 +265,8 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -464,6 +464,7 @@
     spotdl
     parallel
     pigz
+    fd # alternative to find
 
     # x11 tools
     rofi
@@ -510,7 +511,7 @@
     rustc meson ninja
     jupyter
     typescript
-    (julia.withPackages.override({ precompile = false; })([
+    (julia.withPackages.override({ precompile = true; })([
       "TruthTables" "LinearSolve"
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
@@ -635,7 +636,7 @@
     XDG_STATE_HOME  = "$HOME/.local/state";
     # not officially in the specification
     XDG_BIN_HOME    = "$HOME/.local/bin";
-    PATH = [ 
+    PATH = [
       "${XDG_BIN_HOME}"
     ];
     # this one fixes some problems with python matplotlib and probably some other qt applications
@@ -645,6 +646,7 @@
     MUSIC_DIR = "$HOME/music";
     SCRIPTS_DIR = "$HOME/work/scripts/";
     DOTFILES_DIR = "$HOME/work/otherdots/";
+    NIX_CONFIG_DIR = "$HOME/work/nixos/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
   };
@@ -682,4 +684,5 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "23.05"; # dont change
+  system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
 }

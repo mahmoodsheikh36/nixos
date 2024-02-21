@@ -1,1 +1,1 @@
-sudo ln -sf ~/work/nixos/configuration.nix /etc/nixos
+sudo ln -sf "$PWD"/configuration.nix /etc/nixos
