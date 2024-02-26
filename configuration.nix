@@ -152,11 +152,6 @@
     })
   ];
 
-  #services.emacs = {
-    ## enable = true;
-    #package = pkgs.my_emacs; # pkgs.emacsGit;
-  #};
-
   # x11 and awesomewm
   services.xserver = {
     enable = true;
@@ -227,8 +222,6 @@
   # gnome configs
   services.gnome.tracker.enable = false;
   services.gnome.tracker-miners.enable = false;
-  # a workaround for auto login issue
-  # systemd.services."mahmooz@tty1".enable = false;
 
   # tty configs
   console = {
@@ -237,9 +230,6 @@
     packages = with pkgs; [ terminus_font ];
     useXkbConfig = true; # remap caps to escape
   };
-  # security.sudo.extraConfig = ''
-  #   mahmooz ALL=(ALL:ALL) NOPASSWD: ALL
-  # '';
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
@@ -395,14 +385,8 @@
       enable = true;
       antialias = true;
       cache32Bit = true;
-      # defaultFonts = {
-      #   emoji = ["Noto Color Emoji"];
-      #   monospace = [ "Noto Mono" ];
-      #   sansSerif = [ "Noto Sans" ];
-      #   serif = [ "Noto Serif" ];
       hinting.autohint = true;
       hinting.enable = true;
-      # hinting.style = "slight";
     };
   };
 
