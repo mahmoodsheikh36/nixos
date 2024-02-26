@@ -1,11 +1,6 @@
 { config, pkgs, ... }:
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-  #sxhkd_pkgs = import (builtins.fetchTarball {
-  #    url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
-  #}) {};
-  #my_sxhkd = sxhkd_pkgs.sxhkd;
-  # nix firefox addons only work with the firefox-esr package.
 in
 {
   imports = [
