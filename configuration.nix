@@ -265,8 +265,8 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -421,6 +421,8 @@
   services.dictd.DBs = with pkgs.dictdDBs; [ wiktionary wordnet ];
   environment.wordlist.enable = true;
 
+  documentation.dev.enable = true;
+
   # packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
@@ -511,7 +513,7 @@
     sageWithDoc sagetex
 
     # some programming languages/environments
-    lua
+    (lua.withPackages(ps: with ps; [ busted luafilesystem ]))
     openjdk
     flutter dart android-studio
     texlive.combined.scheme-full
@@ -533,6 +535,8 @@
     racket
     gcc clang gdb clang-tools
     python311Packages.west
+    typst
+    tailwindcss
 
     # lisps
     lispPackages.quicklisp
@@ -543,6 +547,7 @@
       cl-csv
       hunchentoot
       jsown
+      alexandria
     ]))
     # usage example:
     # $ sbcl
@@ -569,13 +574,30 @@
 
     # some build systems
     cmake gnumake autoconf
+    pkg-config
 
     # nodejs
-    nodejs nodePackages.node2nix
+    nodejs
 
     # nix specific tools
     nixos-generators
     nix-prefetch-git
+
+    man-pages man-pages-posix
+    ansible
+
+    # lsp
+    haskell-language-server emmet-language-server clojure-lsp llm-ls
+    nodePackages.node2nix yaml-language-server postgres-lsp ansible-language-server
+    asm-lsp typst-lsp htmx-lsp cmake-language-server lua-language-server java-language-server
+    tailwindcss-language-server
+    nodePackages.vim-language-server
+    nodePackages.bash-language-server
+    nixd nil
+    texlab
+    sqls
+
+    # (callPackage ./firefox.nix {})
 
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
@@ -655,6 +677,7 @@
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
+    BROWSER = "firefox";
   };
 
   # environment.variables = {

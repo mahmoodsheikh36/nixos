@@ -5,11 +5,11 @@ let
   #    url = "https://github.com/NixOS/nixpkgs/archive/b5e903cedb331f9ee268ceebffb58069f1dae9fb.tar.gz";
   #}) {};
   #my_sxhkd = sxhkd_pkgs.sxhkd;
+  # nix firefox addons only work with the firefox-esr package.
 in
 {
   imports = [
     (import "${home-manager}/nixos")
-    # ./firefox.nix
   ];
 
   home-manager = {
@@ -25,7 +25,7 @@ in
           (pkgs.python3.withPackages(ps: with ps; [
             matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
             scikit-learn torchvision scrapy beautifulsoup4 seaborn pillow dash mysql-connector
-            rich pyspark networkx dpkt #opencv
+            rich pyspark networkx dpkt python-lsp-server #opencv
           ]))
         ];
         # programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
