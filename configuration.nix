@@ -180,8 +180,8 @@
         # these commands dont work because $HOME isnt /home/mahmooz..
         # ${lib.getExe pkgs.hsetroot} -solid '#222222'
         # ${lib.getExe pkgs.sxhkd}
-        ${lib.getExe pkgs.xorg.xrdb} -load ~/.Xresources
-        ${lib.getExe pkgs.feh} --bg-fill ~/.cache/wallpaper
+        ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
+        ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
       '';
       autoLogin.enable = true;
       autoLogin.user = "mahmooz";
@@ -198,7 +198,7 @@
       enable = true;
       luaModules = with pkgs.luaPackages; [
         luarocks
-        luadbi-mysql
+        # luadbi-mysql
       ];
     };
     desktopManager = {
@@ -265,8 +265,8 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -326,7 +326,6 @@
   programs.nix-ld.enable = true;
   #programs.nm-applet.enable = true; # this thing is annoying lol (send notifications and stuff..)
   programs.sniffnet.enable = true;
-  programs.virt-manager.enable = true;
   programs.wireshark.enable = true;
   programs.dconf.enable = true;
   programs.firefox.enable = true;
@@ -358,6 +357,15 @@
      enableSSHSupport = true;
   };
 
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      runAsRoot = true;
+      ovmf.enable = true;
+    };
+  };
+  programs.virt-manager.enable = true;
+
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -381,7 +389,6 @@
       proggyfonts
       dejavu_fonts
     ];
-    # not sure if i need these 2
     fontDir.enable = true;
     enableGhostscriptFonts = true;
     fontconfig = {
@@ -497,7 +504,7 @@
     logseq
 
     # virtualization tools
-    qemu virt-manager
+    # qemu virt-manager
 
     # science
     gnuplot
@@ -520,8 +527,8 @@
       "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "StaticArrays"
       "Weave" "BrainFlow" "Genie" "WaterLily"
       "Symbolics" "SymbolicUtils" "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
-      # "Optimization" "Knet" "ModelingToolkit"
-      # "Transformers" "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
+      # "Transformers" "Optimization" "Knet" "ModelingToolkit"
+      # "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
     ]))
     racket
     gcc clang gdb clang-tools
@@ -623,8 +630,6 @@
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
     serviceConfig = {
-      #Type = "dbus";
-      #BusName = "org.freedesktop.Notifications";
       ExecStart = "${lib.getExe pkgs.sxhkd}";
     };
   };
