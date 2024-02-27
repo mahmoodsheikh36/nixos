@@ -10,10 +10,22 @@ in
   home-manager = {
     users = let
       user_config = {
+
         /* the home.stateVersion option does not have a default and must be set */
         home.stateVersion = "23.05";
+
         programs.home-manager.enable = true;
+
+        programs.neovim = {
+          enable = true;
+          vimAlias = true;
+          plugins = with pkgs.vimPlugins; [
+            nvim-treesitter.withAllGrammars
+          ];
+        };
+
         services.blueman-applet.enable = true;
+
         home.packages = [
           home-manager
           (pkgs.python3.withPackages(ps: with ps; [
@@ -22,16 +34,20 @@ in
             rich pyspark networkx dpkt python-lsp-server #opencv
           ]))
         ];
+
         # programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
         #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.zshrc";
         # });
         # services.sxhkd.enable = true;
+
         services.syncthing.enable = true;
+
         programs.git = {
           enable = true;
           userName = "mahmoodsheikh36";
           userEmail = "mahmod.m2015@gmail.com";
         };
+
         xfconf.enable = true;
         # xfconf.settings = {
         #   # xfce4-desktop = {

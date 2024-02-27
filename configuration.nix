@@ -255,10 +255,10 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
-        127.0.0.1 instagram.com
-        127.0.0.1 www.instagram.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
+        # 127.0.0.1 instagram.com
+        # 127.0.0.1 www.instagram.com
     '';
   };
 
@@ -312,7 +312,6 @@
   programs.htop.enable = true;
   programs.iotop.enable = true;
   programs.java.enable = true;
-  programs.neovim.enable = true;
   programs.nix-ld.enable = true;
   #programs.nm-applet.enable = true; # this thing is annoying lol (send notifications and stuff..)
   programs.sniffnet.enable = true;
@@ -556,6 +555,10 @@
     pulseaudioFull
     yt-dlp you-get
 
+    tree-sitter
+    ttags
+    diffsitter
+
     # some build systems
     cmake gnumake autoconf
     pkg-config
@@ -598,10 +601,11 @@
       defaultInitFile = false;
       package = my_emacs; # emacs-git;
       alwaysEnsure = true;
-      extraEmacsPackages = epkgs: [
-        epkgs.cask
+      extraEmacsPackages = (epkgs: with epkgs; [
+        cask
+        treesit-grammars.with-all-grammars
         # epkgs.jinx
-      ];
+      ]);
       # Optionally override derivations.
       # override = final: prev: {
       #   weechat = prev.melpaPackages.weechat.overrideAttrs(old: {
