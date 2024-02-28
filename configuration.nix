@@ -236,7 +236,21 @@
     wheelNeedsPassword = false;
     execWheelOnly = true;
   };
-  security.polkit.enable = true;
+
+  # allow the user run a program to poweroff the system.
+  security.polkit = {
+    enable = true;
+    extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if (action.id == "org.freedesktop.systemd1.manage-units" ||
+              action.id == "org.freedesktop.systemd1.manage-unit-files") {
+              if (action.lookup("unit") == "poweroff.target") {
+                  return polkit.Result.YES;
+              }
+          }
+      });
+    '';
+  };
 
   time.timeZone = "Asia/Jerusalem";
 
