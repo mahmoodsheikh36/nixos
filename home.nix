@@ -15,13 +15,31 @@ in
         home.stateVersion = "23.05";
 
         programs.home-manager.enable = true;
-
         programs.neovim = {
           enable = true;
-          vimAlias = true;
           plugins = with pkgs.vimPlugins; [
             nvim-treesitter.withAllGrammars
+            coc-nvim coc-css coc-explorer coc-git coc-go coc-html coc-json coc-prettier coc-pyright coc-rust-analyzer coc-tsserver coc-yaml
+            coc-clangd
+            coc-vimtex
+            neoformat
+            vim-commentary
+            vim-monokai
+            vimtex
+            vim-nix
+            vim-fugitive
           ];
+          viAlias = true;
+          vimAlias = true;
+          vimdiffAlias = true;
+          withNodeJs = true;
+          withPython3 = true;
+        };
+
+        home.pointerCursor = {
+          name = "Adwaita";
+          package = pkgs.gnome.adwaita-icon-theme;
+          size = 64;
         };
 
         services.blueman-applet.enable = true;

@@ -52,16 +52,16 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  environment.etc = {
-    "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
-      bluez_monitor.properties = {
-        ["bluez5.enable-sbc-xq"] = true,
-        ["bluez5.enable-msbc"] = true,
-        ["bluez5.enable-hw-volume"] = true,
-        ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-      }
-    '';
-  };
+  # environment.etc = {
+  #   "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+  #     bluez_monitor.properties = {
+  #       ["bluez5.enable-sbc-xq"] = true,
+  #       ["bluez5.enable-msbc"] = true,
+  #       ["bluez5.enable-hw-volume"] = true,
+  #       ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+  #     }
+  #   '';
+  # };
 
   hardware.opentabletdriver.enable = true;
   hardware.opentabletdriver.daemon.enable = true;
@@ -171,11 +171,12 @@
         enable = true;
         wayland.enable = false;
       };
-      setupCommands = ''
+      # setupCommands
+      sessionCommands = ''
         # these commands dont work because $HOME isnt /home/mahmooz..
         # ${lib.getExe pkgs.hsetroot} -solid '#222222'
         # ${lib.getExe pkgs.sxhkd}
-        ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
+        # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
         ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
       '';
       autoLogin.enable = true;
@@ -251,14 +252,14 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
-        # 127.0.0.1 instagram.com
-        # 127.0.0.1 www.instagram.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
+        127.0.0.1 instagram.com
+        127.0.0.1 www.instagram.com
     '';
   };
 
@@ -496,7 +497,7 @@
     sageWithDoc sagetex
 
     # some programming languages/environments
-    (lua.withPackages(ps: with ps; [ busted luafilesystem ]))
+    (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
     openjdk
     flutter dart android-studio
     texlive.combined.scheme-full
@@ -558,6 +559,8 @@
     tree-sitter
     ttags
     diffsitter
+    # ruff # python code formatter
+    black
 
     # some build systems
     cmake gnumake autoconf
@@ -583,6 +586,7 @@
     nixd nil
     texlab
     sqls
+    ruff-lsp
 
     # (callPackage ./firefox.nix {})
 
