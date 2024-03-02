@@ -13,6 +13,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
   # enable sound and bluetooth
   # services.blueman.enable = true;
   # hardware.bluetooth = {
@@ -503,6 +509,7 @@
     subversion # git alternative
     logseq
     graphviz
+    lshw
 
     # virtualization tools
     # qemu virt-manager
