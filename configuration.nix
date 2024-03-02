@@ -510,6 +510,7 @@
     logseq
     graphviz
     lshw
+    btop
 
     # virtualization tools
     # qemu virt-manager
