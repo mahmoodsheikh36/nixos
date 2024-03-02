@@ -4,11 +4,17 @@
   hardware.nvidia = {
     modesetting.enable = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
     prime = {
       # make sure to use the correct bus id values for your system!
-      intelBusId = "PCI:00:02:0";
-      nvidiaBusId = "PCI:01:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      sync.enable = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
   };
+  boot.kernelParams = [ "module_blacklist=i915" ];
 }
