@@ -431,13 +431,11 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # text editors
-    emacs29
     vscode
 
     # media tools
     mpv
     feh # i use it to set wallpaper
-    discord
     my_sxiv
     telegram-desktop
     zoom-us
@@ -468,7 +466,7 @@
     playerctl # media control
     sqlite
     gptfdisk parted
-    silver-searcher # the silver searcher i use it for emacs
+    silver-searcher
     libtool # to compile vterm
     xdotool
     docker
@@ -643,19 +641,19 @@
   ];
 
   # monitoring services
-  services.grafana = {
-    enable = true;
-    settings.server.http_port = 2342;
-    settings.server.domain =  "grafana.pele";
-    settings.server.addr = "127.0.0.1";
-  };
-  # nginx reverse proxy
-  services.nginx.virtualHosts.${config.services.grafana.settings.server.domain} = {
-    locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
-        proxyWebsockets = true;
-    };
-  };
+  # services.grafana = {
+  #   enable = true;
+  #   settings.server.http_port = 2342;
+  #   settings.server.domain =  "grafana.pele";
+  #   settings.server.addr = "127.0.0.1";
+  # };
+  # # nginx reverse proxy
+  # services.nginx.virtualHosts.${config.services.grafana.settings.server.domain} = {
+  #   locations."/" = {
+  #       proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
+  #       proxyWebsockets = true;
+  #   };
+  # };
   services.prometheus = {
     enable = true;
     port = 9001;
