@@ -509,6 +509,8 @@
     graphviz
     lshw
     btop
+    firebase-tools
+    graphqlmap
 
     # virtualization tools
     # qemu virt-manager
@@ -537,7 +539,6 @@
       # "Transformers" "Optimization" "Knet" "ModelingToolkit"
       # "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
     ]))
-    racket
     gcc clang gdb clang-tools
     python311Packages.west
     typst
@@ -553,15 +554,21 @@
       hunchentoot
       jsown
       alexandria
+      # swank
+      # slynk
+      # nyxt
     ]))
     # usage example:
     # $ sbcl
     # * (load (sb-ext:posix-getenv "ASDF"))
     # * (asdf:load-system 'alexandria)
     babashka
+    chicken
+    guile
+    racket
 
     # offline docs
-    zeal devdocs-desktop
+    # zeal devdocs-desktop
 
     # networking tools
     curl wget nmap socat arp-scan tcpdump
