@@ -583,6 +583,7 @@
     haskellPackages.kmonad xcape keyd # keyboard utilities
     pulseaudioFull
     yt-dlp you-get
+    libgen-cli
 
     tree-sitter
     ttags
@@ -692,6 +693,7 @@
     BRAIN_DIR = "$HOME/brain";
     MUSIC_DIR = "$HOME/music";
     WORK_DIR = "$HOME/work";
+    NOTES_DIR = "$HOME/brain/notes/";
     SCRIPTS_DIR = "$HOME/work/scripts/";
     DOTFILES_DIR = "$HOME/work/otherdots/";
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
