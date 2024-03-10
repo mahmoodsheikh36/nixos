@@ -272,8 +272,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -438,14 +438,14 @@
     feh # i use it to set wallpaper
     my_sxiv
     telegram-desktop
-    zoom-us
     youtube-music
-    okular pandoc zathura
+    okular zathura
+    pandoc
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
-    ocrmypdf pdftk pdfgrep poppler_utils calibre
     popcorntime
     lollypop clementine
+    ocrmypdf pdftk pdfgrep poppler_utils calibre djvu2pdf
     djvulibre
 
     # media manipulation tools
@@ -612,7 +612,7 @@
     tailwindcss-language-server
     nodePackages.vim-language-server
     nodePackages.bash-language-server
-    nixd nil
+    nil # nixd
     texlab
     sqls
     ruff-lsp
