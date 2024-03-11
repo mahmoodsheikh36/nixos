@@ -36,13 +36,12 @@
   # };
   # hardware.pulseaudio = {
   #   enable = true;
-  #   #extraModules = [ pkgs.pulseaudio-modules-bt ];
+  #   # extraModules = [ pkgs.pulseaudio-modules-bt ];
   #   package = pkgs.pulseaudioFull;
   #   extraConfig = "
   #     load-module module-switch-on-connect
   #   ";
   # };
-  hardware.pulseaudio.enable = false;
   systemd.user.services.mpris-proxy = {
     description = "Mpris proxy";
     after = [ "network.target" "sound.target" ];
@@ -51,23 +50,24 @@
   };
 
   security.rtkit.enable = true;
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    wireplumber.configPackages = [
+      (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+        bluez_monitor.properties = {
+          ["bluez5.enable-sbc-xq"] = true,
+          ["bluez5.enable-msbc"] = true,
+          ["bluez5.enable-hw-volume"] = true,
+          ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+        }
+      '')
+    ];
   };
-  # environment.etc = {
-  #   "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
-  #     bluez_monitor.properties = {
-  #       ["bluez5.enable-sbc-xq"] = true,
-  #       ["bluez5.enable-msbc"] = true,
-  #       ["bluez5.enable-hw-volume"] = true,
-  #       ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-  #     }
-  #   '';
-  # };
 
   hardware.opentabletdriver.enable = true;
   hardware.opentabletdriver.daemon.enable = true;
@@ -491,7 +491,7 @@
 
     # other
     redis
-    zoom-us
+    # zoom-us, do i realy want this running natively?
     hugo
     adb-sync
     woeusb-ng
