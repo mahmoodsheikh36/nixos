@@ -51,7 +51,7 @@
 
   security.rtkit.enable = true;
   hardware.pulseaudio.enable = false;
-  services.pipewire = {
+ services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
@@ -68,6 +68,8 @@
       '')
     ];
   };
+
+  # services.logind.lidSwitch = "ignore";
 
   hardware.opentabletdriver.enable = true;
   hardware.opentabletdriver.daemon.enable = true;
@@ -120,13 +122,13 @@
       });
     })
     (self: super: {
-      my_emacs = (super.emacs.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
-        # src = super.fetchFromGitHub {
-        #   owner = "emacs-mirror";
-        #   repo = "emacs";
-        #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
-        #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
-        # };
+      my_emacs = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
+        src = super.fetchFromGitHub {
+          owner = "emacs-mirror";
+          repo = "emacs";
+          rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
+          sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
+        };
         #configureFlags = oldAttrs.configureFlags ++ [
           #"--with-tree-sitter"
           #"--with-gnutls"
@@ -272,8 +274,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -454,7 +456,7 @@
     gimp inkscape
 
     # general tools
-    google-chrome tor-browser-bundle-bin # qutebrowser
+    google-chrome nyxt tor-browser-bundle-bin # qutebrowser
     scrcpy
     pavucontrol
     libreoffice
@@ -625,12 +627,6 @@
 
     (emacsWithPackagesFromUsePackage {
       config = "/dev/null";
-      # substitution:
-      #   defaultInitFile = pkgs.substituteAll {
-      #     name = "default.el";
-      #     src = ./emacs.el;
-      #     inherit (config.xdg) configHome dataHome;
-      #   };
       defaultInitFile = false;
       package = my_emacs; # emacs-git;
       alwaysEnsure = true;
@@ -639,12 +635,6 @@
         treesit-grammars.with-all-grammars
         # epkgs.jinx
       ]);
-      # Optionally override derivations.
-      # override = final: prev: {
-      #   weechat = prev.melpaPackages.weechat.overrideAttrs(old: {
-      #     patches = [ ./weechat-el.patch ];
-      #   });
-      # };
     })
   ];
 
