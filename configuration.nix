@@ -364,9 +364,10 @@
   # gpg
   services.pcscd.enable = true;
   programs.gnupg.agent = {
-     enable = true;
-     pinentryFlavor = "curses";
-     enableSSHSupport = true;
+    enable = true;
+    # pinentryFlavor = "curses";
+    pinentryPackage = lib.mkForce pkgs.pinentry;
+    enableSSHSupport = true;
   };
 
   virtualisation.libvirtd = {
@@ -441,7 +442,7 @@
     my_sxiv
     telegram-desktop
     youtube-music
-    okular zathura
+    okular zathura foliate mupdf
     pandoc
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
