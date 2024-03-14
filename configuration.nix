@@ -195,7 +195,7 @@
       # defaultSession = "xfce+awesome";
       # defaultSession = "xfce";
       # defaultSession = "gnome";
-      # defaultSession = "plasma";
+      # defaultSession = "plasmax11";
     };
     windowManager.awesome = {
       package = with pkgs; my_awesome;
@@ -207,7 +207,7 @@
     };
     desktopManager = {
       gnome.enable = true;
-      plasma5.enable = true;
+      plasma6.enable = true;
       xfce = {
         enable = true;
         noDesktop = false;
@@ -221,8 +221,8 @@
     # extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     # config.common.default = "*";
   };
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-    # plasma-browser-integration
+  environment.plasma6.excludePackages = with pkgs.libsForQt5; [
+    plasma-browser-integration
     konsole
     # oxygen
   ];
@@ -244,6 +244,8 @@
     wheelNeedsPassword = false;
     execWheelOnly = true;
   };
+  security.audit.enable = true;
+  security.auditd.enable = true;
 
   # allow the user run a program to poweroff the system.
   security.polkit = {
@@ -448,7 +450,7 @@
     krita
     popcorntime
     lollypop clementine
-    ocrmypdf pdftk pdfgrep poppler_utils calibre djvu2pdf
+    ocrmypdf pdftk pdfgrep poppler_utils calibre djvu2pdf fntsample
     djvulibre
 
     # media manipulation tools
@@ -483,7 +485,7 @@
     # x11 tools
     rofi
     libnotify
-    xclip
+    xclip xsel
     maim # maim is a better alternative to scrot
     picom
     parcellite
@@ -514,6 +516,7 @@
     btop
     firebase-tools
     graphqlmap
+    lsof
 
     # virtualization tools
     # qemu virt-manager
