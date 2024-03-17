@@ -123,12 +123,13 @@
     })
     (self: super: {
       my_emacs = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
-        src = super.fetchFromGitHub {
-          owner = "emacs-mirror";
-          repo = "emacs";
-          rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
-          sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
-        };
+        # i thought this would help avoid recompilation but it doesnt
+        # src = super.fetchFromGitHub {
+        #   owner = "emacs-mirror";
+        #   repo = "emacs";
+        #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
+        #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
+        # };
         #configureFlags = oldAttrs.configureFlags ++ [
           #"--with-tree-sitter"
           #"--with-gnutls"
@@ -281,8 +282,8 @@
         127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -522,6 +523,7 @@
     # science
     gnuplot
     sageWithDoc sagetex
+    lean
 
     # some programming languages/environments
     (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
@@ -584,7 +586,7 @@
     onboard # onscreen keyboard
     spark
     openssl
-    haskellPackages.kmonad xcape keyd # keyboard utilities
+    xcape keyd # haskellPackages.kmonad  # keyboard utilities
     pulseaudioFull
     yt-dlp you-get
     libgen-cli

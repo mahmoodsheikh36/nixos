@@ -50,7 +50,7 @@ in
             matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
             scikit-learn torchvision scrapy beautifulsoup4 seaborn pillow dash mysql-connector
             rich pyspark networkx dpkt python-lsp-server #opencv
-            graphviz flask-sqlalchemy flask-cors ariadne graphene
+            graphviz flask-sqlalchemy flask-cors ariadne graphene nltk
           ]))
         ];
 
@@ -66,6 +66,16 @@ in
           userName = "mahmoodsheikh36";
           userEmail = "mahmod.m2015@gmail.com";
         };
+
+        xdg.desktopEntries.mympv = {
+          name = "mympv";
+          genericName = "mympv";
+          exec = "mympv.sh %U";
+          terminal = false;
+          categories = [];
+          # mimeType = [ "video/mp4" ];
+        };
+
 
         xfconf.enable = true;
         # xfconf.settings = {
@@ -105,27 +115,6 @@ in
             source = builtins.fetchGit "https://github.com/mahmoodsheikh36/otherdots";
           };
         };
-
-        # services.fusuma = {
-        #   enable = true;
-        #   extraPackages = with pkgs; [ xdotool ];
-        #   settings = {
-        #     threshold = { swipe = 0.1; };
-        #     interval = { swipe = 0.7; };
-        #     # swipe = {
-        #     #   "3" = {
-        #     #     left = {
-        #     #       # GNOME: Switch to left workspace
-        #     #       command = "xdotool key ctrl+alt+Left";
-        #     #     };
-        #     #     right = {
-        #     #       # GNOME: Switch to right workspace
-        #     #       command = "xdotool key ctrl+alt+Right";
-        #     #     };
-        #     #   };
-        #     # };
-        #   };
-        # };
       };
     in {
       mahmooz = user_config;
