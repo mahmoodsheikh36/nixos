@@ -207,13 +207,15 @@
     };
     desktopManager = {
       gnome.enable = true;
-      plasma6.enable = true;
       xfce = {
         enable = true;
         noDesktop = false;
         enableXfwm = true;
       };
     };
+  };
+  services.desktopManager = {
+    plasma6.enable = true;
   };
   xdg.portal = {
     enable = true;
@@ -226,7 +228,6 @@
     konsole
     # oxygen
   ];
-
 
   # gnome configs
   services.gnome.tracker.enable = false;
@@ -276,8 +277,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -518,9 +519,6 @@
     graphqlmap
     lsof
 
-    # virtualization tools
-    # qemu virt-manager
-
     # science
     gnuplot
     sageWithDoc sagetex
@@ -562,7 +560,7 @@
       alexandria
       # swank
       # slynk
-      # nyxt
+      nyxt
     ]))
     # usage example:
     # $ sbcl
