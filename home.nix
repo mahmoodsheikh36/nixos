@@ -43,6 +43,7 @@ in
         };
 
         services.blueman-applet.enable = true;
+        services.playerctld.enable = true;
 
         home.packages = [
           home-manager

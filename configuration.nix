@@ -278,12 +278,12 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -489,7 +489,6 @@
     libnotify
     xclip xsel
     maim # maim is a better alternative to scrot
-    picom
     parcellite
     hsetroot
     unclutter
@@ -603,6 +602,7 @@
 
     # nodejs
     nodejs
+    yarn
 
     # nix specific tools
     nixos-generators
@@ -670,6 +670,11 @@
       ExecStart = "${lib.getExe pkgs.sxhkd}";
     };
   };
+
+  services.picom.enable = true;
+  systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
+    ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
+  '';
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME  = "$HOME/.cache";
