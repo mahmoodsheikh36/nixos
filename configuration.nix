@@ -183,7 +183,7 @@
       # setupCommands
       sessionCommands = ''
         # these commands dont work because $HOME isnt /home/mahmooz..
-        # ${lib.getExe pkgs.hsetroot} -solid '#222222'
+        ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
         # ${lib.getExe pkgs.sxhkd}
         # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
         ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
