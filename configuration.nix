@@ -290,6 +290,7 @@
   };
 
   # enable some programs/services
+  programs.mosh.enable = true;
   programs.zsh.enable = true;
   programs.adb.enable = true;
   services.printing.enable = true; # CUPS
@@ -608,6 +609,7 @@
     # nix specific tools
     nixos-generators
     nix-prefetch-git
+    deploy-rs
 
     man-pages man-pages-posix
     ansible
