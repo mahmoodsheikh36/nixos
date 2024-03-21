@@ -215,9 +215,9 @@
       };
     };
   };
-  services.desktopManager = {
-    plasma6.enable = true;
-  };
+  # services.desktopManager = {
+  #   plasma6.enable = true;
+  # };
   xdg.portal = {
     enable = true;
     wlr.enable = true;
