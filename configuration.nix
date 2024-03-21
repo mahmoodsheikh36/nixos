@@ -483,6 +483,7 @@
     parallel
     pigz
     fd # alternative to find
+    btrfs-progs
 
     # x11 tools
     rofi
