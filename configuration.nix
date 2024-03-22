@@ -523,7 +523,7 @@
 
     # science
     gnuplot
-    sageWithDoc sagetex
+    # sageWithDoc sagetex
     lean
 
     # some programming languages/environments
