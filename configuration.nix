@@ -278,8 +278,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -462,7 +462,7 @@
     gimp inkscape
 
     # general tools
-    google-chrome nyxt tor-browser-bundle-bin # qutebrowser
+    google-chrome brave nyxt tor-browser-bundle-bin # qutebrowser
     scrcpy
     pavucontrol
     libreoffice
