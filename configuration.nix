@@ -500,7 +500,7 @@
     # other
     redis
     # zoom-us, do i realy want this running natively?
-    hugo
+    # hugo
     adb-sync
     woeusb-ng
     ntfs3g
