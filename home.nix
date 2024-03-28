@@ -71,7 +71,7 @@ in
         xdg.desktopEntries.mympv = {
           name = "mympv";
           genericName = "mympv";
-          exec = "mympv.sh %U";
+          exec = "mympv.sh %F";
           terminal = false;
           categories = [];
           # mimeType = [ "video/mp4" ];

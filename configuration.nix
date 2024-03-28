@@ -51,7 +51,7 @@
 
   security.rtkit.enable = true;
   hardware.pulseaudio.enable = false;
- services.pipewire = {
+  services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
@@ -521,6 +521,8 @@
     firebase-tools
     graphqlmap
     lsof
+    isync
+    notmuch
 
     # science
     gnuplot
