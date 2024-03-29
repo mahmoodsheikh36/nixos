@@ -278,8 +278,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -554,6 +554,8 @@
     python311Packages.west
     typst
     tailwindcss
+
+    python311Packages.huggingface-hub
 
     # lisps
     lispPackages.quicklisp
