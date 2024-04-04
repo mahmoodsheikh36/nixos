@@ -13,11 +13,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  hardware.sensor.iio.enable = true;
+
+  # hardware.opengl = {
+  #   enable = true;
+  #   driSupport = true;
+  #   driSupport32Bit = true;
+  # };
 
   # enable sound and bluetooth
   # services.blueman.enable = true;
@@ -110,52 +112,14 @@
     (self: super:
     {
       my_emacs_git = super.emacs-git.overrideAttrs (oldAttrs: rec {
-        # src = super.fetchFromGitHub {
-        #   owner = "emacs-mirror";
-        #   repo = "emacs";
-        #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
-        #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
-        # };
         configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules" "--with-widgets" "--with-imagemagick"];
         patches = [];
         imagemagick = pkgs.imagemagickBig;
       });
     })
     (self: super: {
-      my_emacs = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
-        # i thought this would help avoid recompilation but it doesnt
-        # src = super.fetchFromGitHub {
-        #   owner = "emacs-mirror";
-        #   repo = "emacs";
-        #   rev = "4939f4139391c13c34387ac0c05a5c7db39bf9d5";
-        #   sha256 = "0k34blhvpc58s0ahgdc6lhv02fia6yf2x5agmk96xn6m67mkcmbc";
-        # };
-        #configureFlags = oldAttrs.configureFlags ++ [
-          #"--with-tree-sitter"
-          #"--with-gnutls"
-          #"--with-xwidgets"
-          #"--with-sqlite3=no"
-          #"--with-native-compilation=no"
-          #"--with-png"
-          #"--with-gif"
-          #"--with-jpeg"
-          #"--with-sound"
-          #"--with-libsystemd"
-          #"--with-harfbuzz"
-          #"--with-dbus"
-          #"--with-sound"
-          #"--with-file-notification=yes"
-          #"--with-wide-int"
-          #"--with-pdumper=yes"
-          #"--with-small-ja-dic"
-          #"--without-compress-install"
-
-          #"--with-imagemagick"
-          #"--with-modules"
-          #"--with-json"
-          #"--with-widgets"
-        #];
-        #patches = [];
+      # my_emacs = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
+      my_emacs = (super.emacs.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
         imagemagick = pkgs.imagemagickBig;
       });
     })
@@ -164,6 +128,7 @@
   # x11 and awesomewm
   services.xserver = {
     enable = true;
+    # wacom.enable = true;
     libinput = {
       enable = true;
       touchpad = {
@@ -179,10 +144,11 @@
       sddm = {
         enable = true;
         wayland.enable = false;
+        enableHidpi = true;
       };
       # setupCommands
       sessionCommands = ''
-        # these commands dont work because $HOME isnt /home/mahmooz..
+        # some of these commands dont work because $HOME isnt /home/mahmooz..
         ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
         # ${lib.getExe pkgs.sxhkd}
         # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
@@ -196,7 +162,7 @@
       # defaultSession = "xfce+awesome";
       # defaultSession = "xfce";
       # defaultSession = "gnome";
-      # defaultSession = "plasmax11";
+      # defaultSession = "plasma";
     };
     windowManager.awesome = {
       package = with pkgs; my_awesome;
@@ -208,6 +174,9 @@
     };
     desktopManager = {
       gnome.enable = true;
+      lxqt.enable = true;
+      enlightenment.enable = true;
+      # plasma5.enable = true;
       xfce = {
         enable = true;
         noDesktop = false;
@@ -218,17 +187,30 @@
   # services.desktopManager = {
   #   plasma6.enable = true;
   # };
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    # extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    # config.common.default = "*";
+# disable balooctl which uses up all resources..
+  environment = {
+    etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
+      "Basic Settings" = {
+        "Indexing-Enabled" = false;
+      };
+    };
   };
-  environment.plasma6.excludePackages = with pkgs.libsForQt5; [
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   # lxqt.enable = true;
+  #   # xdgOpenUsePortal = true;
+  #   # config.common.default = "*";
+  # };
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
     plasma-browser-integration
     konsole
-    # oxygen
+    oxygen
   ];
+  # security.pam.services.kwallet = {
+  #   name = "kwallet";
+  #   enableKwallet = false;
+  # };
 
   # gnome configs
   services.gnome.tracker.enable = false;
@@ -278,12 +260,12 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -356,7 +338,6 @@
 
   services.locate = {
     enable = true;
-    # pkg = pkgs.mlocate;
     interval = "hourly";
   };
 
@@ -371,7 +352,6 @@
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    # pinentryFlavor = "curses";
     pinentryPackage = lib.mkForce pkgs.pinentry;
     enableSSHSupport = true;
   };
@@ -487,6 +467,7 @@
     pigz
     fd # alternative to find
     btrfs-progs
+    dash
 
     # x11 tools
     rofi
@@ -498,6 +479,7 @@
     unclutter
     xorg.xev
     sxhkd
+    xorg.xwininfo
 
     # other
     redis
@@ -680,10 +662,10 @@
     };
   };
 
-  services.picom.enable = true;
-  systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
-    ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
-  '';
+  # services.picom.enable = true;
+  # systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
+  #   ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
+  # '';
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME  = "$HOME/.cache";

@@ -79,23 +79,23 @@ in
 
 
         xfconf.enable = true;
-        # xfconf.settings = {
-        #   # xfce4-desktop = {
-        #   #   "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =
-        #   #     "${pkgs.nixos-artwork.wallpapers.stripes-logo.gnomeFilePath}";
-        #   # };
-        #   xfce4-keyboard-shortcuts = {
-        #     "xfwm4/custom/<Super>1" = "workspace_1_key";
-        #     "xfwm4/custom/<Super>2" = "workspace_2_key";
-        #     "xfwm4/custom/<Super>3" = "workspace_3_key";
-        #     "xfwm4/custom/<Super>4" = "workspace_4_key";
-        #     "xfwm4/custom/<Super>Tab" = "cycle_windows_key";
-        #     "xfwm4/custom/<Super><Shift>1" = "move_window_workspace_1_key";
-        #     "xfwm4/custom/<Super><Shift>2" = "move_window_workspace_2_key";
-        #     "xfwm4/custom/<Super><Shift>3" = "move_window_workspace_3_key";
-        #     "xfwm4/custom/<Super><Shift>4" = "move_window_workspace_4_key";
-        #   };
-        # };
+        xfconf.settings = {
+          # xfce4-desktop = {
+          #   "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =
+          #     "${pkgs.nixos-artwork.wallpapers.stripes-logo.gnomeFilePath}";
+          # };
+          xfce4-keyboard-shortcuts = {
+            "xfwm4/custom/<Super>1" = "workspace_1_key";
+            "xfwm4/custom/<Super>2" = "workspace_2_key";
+            "xfwm4/custom/<Super>3" = "workspace_3_key";
+            "xfwm4/custom/<Super>4" = "workspace_4_key";
+            "xfwm4/custom/<Super>Tab" = "cycle_windows_key";
+            "xfwm4/custom/<Super><Shift>1" = "move_window_workspace_1_key";
+            "xfwm4/custom/<Super><Shift>2" = "move_window_workspace_2_key";
+            "xfwm4/custom/<Super><Shift>3" = "move_window_workspace_3_key";
+            "xfwm4/custom/<Super><Shift>4" = "move_window_workspace_4_key";
+          };
+        };
 
         # set a variable for dotfiles repo, not necessary but convenient
         # home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
