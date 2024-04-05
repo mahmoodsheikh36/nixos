@@ -579,6 +579,7 @@
     pulseaudioFull
     yt-dlp you-get
     libgen-cli
+    aria # aria2c downloader
 
     tree-sitter
     ttags
