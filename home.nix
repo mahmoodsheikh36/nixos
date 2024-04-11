@@ -44,6 +44,7 @@ in
 
         services.blueman-applet.enable = true;
         services.playerctld.enable = true;
+        services.parcellite.enable = true;
 
         home.packages = [
           home-manager

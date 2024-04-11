@@ -187,7 +187,7 @@
   # services.desktopManager = {
   #   plasma6.enable = true;
   # };
-# disable balooctl which uses up all resources..
+  # disable balooctl which uses up all resources..
   environment = {
     etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
       "Basic Settings" = {
@@ -207,10 +207,10 @@
     konsole
     oxygen
   ];
-  # security.pam.services.kwallet = {
-  #   name = "kwallet";
-  #   enableKwallet = false;
-  # };
+  security.pam.services.kwallet = {
+    name = "kwallet";
+    enableKwallet = false;
+  };
 
   # gnome configs
   services.gnome.tracker.enable = false;
@@ -260,8 +260,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         # 127.0.0.1 discord.com
@@ -425,7 +425,7 @@
     # media tools
     mpv
     feh # i use it to set wallpaper
-    my_sxiv
+    my_sxiv qimgv
     telegram-desktop
     youtube-music
     okular zathura foliate mupdf
@@ -474,7 +474,6 @@
     libnotify
     xclip xsel
     maim # maim is a better alternative to scrot
-    parcellite
     hsetroot
     unclutter
     xorg.xev
@@ -497,7 +496,7 @@
     usbutils
     pciutils
     subversion # git alternative
-    logseq
+    # logseq
     graphviz
     lshw
     btop
@@ -527,7 +526,7 @@
       "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
       "Luxor" "ReinforcementLearningBase" "Images" "Flux" "DataStructures" "RecipesBase"
       "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "StaticArrays"
-      "Weave" "BrainFlow" "Genie" "WaterLily"
+      "Weave" "BrainFlow" "Genie" "WaterLily" "LanguageServer"
       "Symbolics" "SymbolicUtils" "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
       # "Transformers" "Optimization" "Knet" "ModelingToolkit"
       # "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
