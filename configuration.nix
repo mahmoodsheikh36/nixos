@@ -158,9 +158,9 @@
       autoLogin.user = "mahmooz";
       startx.enable = true;
       sx.enable = true;
-      defaultSession = "none+awesome";
+      # defaultSession = "none+awesome";
       # defaultSession = "xfce+awesome";
-      # defaultSession = "xfce";
+      defaultSession = "xfce";
       # defaultSession = "gnome";
       # defaultSession = "plasma";
     };
@@ -264,8 +264,8 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -290,7 +290,7 @@
       thunar-volman
     ];
   };
-  programs.xfconf.enable = true;
+  # programs.xfconf.enable = true;
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
@@ -468,6 +468,7 @@
     fd # alternative to find
     btrfs-progs
     dash
+    sshfs
 
     # x11 tools
     rofi
@@ -519,7 +520,7 @@
     rustc meson ninja
     jupyter
     typescript
-    (julia.withPackages.override({ precompile = true; })([
+    (julia.withPackages.override({ precompile = false; })([
       "TruthTables" "LinearSolve"
       "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
       "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
