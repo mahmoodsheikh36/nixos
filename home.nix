@@ -61,7 +61,7 @@ in
         # });
         # services.sxhkd.enable = true;
 
-        services.syncthing.enable = true;
+        # services.syncthing.enable = true;
 
         programs.git = {
           enable = true;

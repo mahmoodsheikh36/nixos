@@ -15,35 +15,35 @@
 
   hardware.sensor.iio.enable = true;
 
-  # hardware.opengl = {
-  #   enable = true;
-  #   driSupport = true;
-  #   driSupport32Bit = true;
-  # };
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
 
   # enable sound and bluetooth
-  # services.blueman.enable = true;
-  # hardware.bluetooth = {
-  #   enable = true;
-  #   settings = {
-  #     General = {
-  #       Enable = "Source,Sink,Media,Socket";
-  #       Experimental = true;
-  #     };
-  #     Policy = {
-  #       AutoEnable = "true";
-  #     };
-  #   };
-  #   powerOnBoot = true;
-  # };
-  # hardware.pulseaudio = {
-  #   enable = true;
-  #   # extraModules = [ pkgs.pulseaudio-modules-bt ];
-  #   package = pkgs.pulseaudioFull;
-  #   extraConfig = "
-  #     load-module module-switch-on-connect
-  #   ";
-  # };
+  services.blueman.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+      };
+      Policy = {
+        AutoEnable = "true";
+      };
+    };
+    powerOnBoot = true;
+  };
+  hardware.pulseaudio = {
+    enable = true;
+    # extraModules = [ pkgs.pulseaudio-modules-bt ];
+    package = pkgs.pulseaudioFull;
+    extraConfig = "
+      load-module module-switch-on-connect
+    ";
+  };
   systemd.user.services.mpris-proxy = {
     description = "Mpris proxy";
     after = [ "network.target" "sound.target" ];
@@ -51,25 +51,26 @@
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 
-  security.rtkit.enable = true;
-  hardware.pulseaudio.enable = false;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    wireplumber.configPackages = [
-      (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-        bluez_monitor.properties = {
-          ["bluez5.enable-sbc-xq"] = true,
-          ["bluez5.enable-msbc"] = true,
-          ["bluez5.enable-hw-volume"] = true,
-          ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-        }
-      '')
-    ];
-  };
+  # security.rtkit.enable = true;
+  # hardware.pulseaudio.enable = false;
+  # services.pipewire = {
+  #   audio.enable = true;
+  #   enable = true;
+  #   alsa.enable = true;
+  #   alsa.support32Bit = true;
+  #   pulse.enable = true;
+  #   jack.enable = true;
+  #   wireplumber.configPackages = [
+  #     (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+  #       bluez_monitor.properties = {
+  #         ["bluez5.enable-sbc-xq"] = true,
+  #         ["bluez5.enable-msbc"] = true,
+  #         ["bluez5.enable-hw-volume"] = true,
+  #         ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+  #       }
+  #     '')
+  #   ];
+  # };
 
   # services.logind.lidSwitch = "ignore";
 
@@ -328,7 +329,7 @@
   programs.sniffnet.enable = true;
   programs.wireshark.enable = true;
   programs.dconf.enable = true;
-  programs.firefox.enable = true;
+  # programs.firefox.enable = true;
 
   qt = {
     enable = true;
@@ -363,7 +364,16 @@
       ovmf.enable = true;
     };
   };
+  virtualisation.waydroid.enable = true;
   programs.virt-manager.enable = true;
+
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableExtensionPack = true;
+  #   # enableKvm = true;
+  #   # addNetworkInterface = false;
+  #   # enableHardening = false;
+  # };
 
   fonts = {
     enableDefaultPackages = true;
@@ -515,7 +525,7 @@
     # some programming languages/environments
     (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
     openjdk
-    flutter dart android-studio
+    flutter dart android-studio android-tools genymotion
     texlive.combined.scheme-full
     rustc meson ninja
     jupyter
@@ -690,7 +700,7 @@
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
-    BROWSER = "firefox";
+    BROWSER = "brave";
   };
 
   # environment.variables = {
