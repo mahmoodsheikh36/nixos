@@ -130,6 +130,17 @@
   services.xserver = {
     enable = true;
     # wacom.enable = true;
+    displayManager = {
+      sessionCommands = ''
+        # some of these commands dont work because $HOME isnt /home/mahmooz..
+        ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
+        # ${lib.getExe pkgs.sxhkd}
+        # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
+        ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
+      '';
+      startx.enable = true;
+      sx.enable = true;
+    };
     libinput = {
       enable = true;
       touchpad = {
@@ -141,30 +152,6 @@
     };
     xkb.layout = "us";
     xkb.options = "caps:escape,ctrl:ralt_rctrl";
-    displayManager = {
-      sddm = {
-        enable = true;
-        wayland.enable = false;
-        enableHidpi = true;
-      };
-      # setupCommands
-      sessionCommands = ''
-        # some of these commands dont work because $HOME isnt /home/mahmooz..
-        ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
-        # ${lib.getExe pkgs.sxhkd}
-        # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
-        ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
-      '';
-      autoLogin.enable = true;
-      autoLogin.user = "mahmooz";
-      startx.enable = true;
-      sx.enable = true;
-      # defaultSession = "none+awesome";
-      # defaultSession = "xfce+awesome";
-      defaultSession = "xfce";
-      # defaultSession = "gnome";
-      # defaultSession = "plasma";
-    };
     windowManager.awesome = {
       package = with pkgs; my_awesome;
       enable = true;
@@ -184,6 +171,20 @@
         enableXfwm = true;
       };
     };
+  };
+  services.displayManager = {
+    sddm = {
+      enable = true;
+      wayland.enable = false;
+      enableHidpi = true;
+    };
+    autoLogin.enable = true;
+    autoLogin.user = "mahmooz";
+    # defaultSession = "none+awesome";
+    # defaultSession = "xfce+awesome";
+    defaultSession = "xfce";
+    # defaultSession = "gnome";
+    # defaultSession = "plasma";
   };
   # services.desktopManager = {
   #   plasma6.enable = true;
@@ -265,8 +266,8 @@
         # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
+        # 127.0.0.1 discord.com
+        # 127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -444,7 +445,7 @@
     krita
     popcorntime
     lollypop clementine
-    ocrmypdf pdftk pdfgrep poppler_utils calibre djvu2pdf fntsample
+    ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample # calibre
     djvulibre
 
     # media manipulation tools
