@@ -445,7 +445,7 @@
     krita
     popcorntime
     lollypop clementine
-    ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample # calibre
+    ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample calibre
     djvulibre
 
     # media manipulation tools
@@ -594,6 +594,9 @@
     yt-dlp you-get
     libgen-cli
     aria # aria2c downloader
+    prettierd # for emacs apheleia
+    pls # alternative to ls
+    nodePackages.prettier # for emacs apheleia
 
     tree-sitter
     ttags
