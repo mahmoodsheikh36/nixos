@@ -385,7 +385,7 @@
       inconsolata-nerdfont
       iosevka
       fira-code
-      nerdfonts
+      # nerdfonts
       ubuntu_font_family
       noto-fonts
       noto-fonts-cjk
@@ -547,11 +547,10 @@
       # "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
     ]))
     gcc clang gdb clang-tools
-    python311Packages.west
+    python3Packages.west
     typst
     tailwindcss
-
-    python311Packages.huggingface-hub
+    # python313
 
     # lisps
     lispPackages.quicklisp
@@ -597,6 +596,9 @@
     prettierd # for emacs apheleia
     pls # alternative to ls
     nodePackages.prettier # for emacs apheleia
+    python3Packages.huggingface-hub # huggingface commandline
+    man-pages man-pages-posix
+    ansible
 
     tree-sitter
     ttags
@@ -616,9 +618,6 @@
     nixos-generators
     nix-prefetch-git
     deploy-rs
-
-    man-pages man-pages-posix
-    ansible
 
     # lsp
     haskell-language-server emmet-language-server clojure-lsp llm-ls
@@ -697,7 +696,7 @@
     ];
     # this one fixes some problems with python matplotlib and probably some other qt applications
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins";
-    PYTHON_HISTORY_FILE = "$HOME/brain/python_history";
+    PYTHON_HISTORY = "$HOME/brain/python_history";
     BRAIN_DIR = "$HOME/brain";
     MUSIC_DIR = "$HOME/music";
     WORK_DIR = "$HOME/work";
