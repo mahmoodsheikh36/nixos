@@ -331,7 +331,7 @@
   programs.wireshark.enable = true;
   programs.dconf.enable = true;
   # programs.firefox.enable = true;
-  services.tumbler.enable = false;
+  services.tumbler.enable = lib.mkForce false;
 
   services.mysql = {
     enable = true;
