@@ -280,7 +280,6 @@
   programs.adb.enable = true;
   services.printing.enable = true; # CUPS
   services.flatpak.enable = true;
-  services.mysql.enable = true;
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
   services.touchegg.enable = true;
@@ -332,6 +331,11 @@
   programs.wireshark.enable = true;
   programs.dconf.enable = true;
   # programs.firefox.enable = true;
+
+  services.mysql = {
+    enable = true;
+    settings.mysqld.bind-address = "0.0.0.0";
+  };
 
   qt = {
     enable = true;
