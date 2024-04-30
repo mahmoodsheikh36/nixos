@@ -152,9 +152,9 @@
       ];
     };
     desktopManager = {
-      gnome.enable = true;
-      lxqt.enable = true;
-      enlightenment.enable = true;
+      # gnome.enable = true;
+      # lxqt.enable = true;
+      # enlightenment.enable = true;
       # plasma5.enable = true;
       xfce = {
         enable = true;
