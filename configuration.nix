@@ -141,15 +141,6 @@
       startx.enable = true;
       sx.enable = true;
     };
-    libinput = {
-      enable = true;
-      touchpad = {
-        disableWhileTyping = true;
-        tappingDragLock = false;
-        accelSpeed = "0.9";
-        naturalScrolling = false;
-      };
-    };
     xkb.layout = "us";
     xkb.options = "caps:escape,ctrl:ralt_rctrl";
     windowManager.awesome = {
@@ -169,6 +160,7 @@
         enable = true;
         noDesktop = false;
         enableXfwm = true;
+        enableScreensaver = false;
       };
     };
   };
@@ -195,6 +187,15 @@
       "Basic Settings" = {
         "Indexing-Enabled" = false;
       };
+    };
+  };
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      disableWhileTyping = true;
+      tappingDragLock = false;
+      accelSpeed = "0.9";
+      naturalScrolling = false;
     };
   };
   # xdg.portal = {
@@ -630,6 +631,7 @@
     texlab
     sqls
     ruff-lsp
+    python3Packages.python-lsp-server
 
     # (callPackage ./firefox.nix {})
 
