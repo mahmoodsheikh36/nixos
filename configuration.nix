@@ -485,6 +485,7 @@
     btrfs-progs
     dash
     sshfs
+    sshpass
 
     # x11 tools
     rofi
