@@ -279,7 +279,7 @@
   programs.zsh.enable = true;
   programs.adb.enable = true;
   services.printing.enable = true; # CUPS
-  services.flatpak.enable = true;
+  # services.flatpak.enable = true;
   services.mysql.package = pkgs.mariadb;
   services.openssh.enable = true;
   services.touchegg.enable = true;
