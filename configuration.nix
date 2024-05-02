@@ -167,17 +167,17 @@
       wayland.enable = false;
       enableHidpi = true;
     };
-    # autoLogin.enable = true;
-    # autoLogin.user = "mahmooz";
+    autoLogin.enable = true;
+    autoLogin.user = "mahmooz";
     defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
     # defaultSession = "xfce";
     # defaultSession = "gnome";
     # defaultSession = "plasma";
   };
-  services.desktopManager = {
-    plasma6.enable = true;
-  };
+  # services.desktopManager = {
+  #   plasma6.enable = true;
+  # };
   # disable balooctl which uses up all resources..
   environment = {
     etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
