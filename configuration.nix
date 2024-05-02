@@ -72,8 +72,6 @@
   #   ];
   # };
 
-  # services.logind.lidSwitch = "ignore";
-
   hardware.opentabletdriver.enable = true;
   hardware.opentabletdriver.daemon.enable = true;
   services.iptsd.enable = true;
@@ -155,7 +153,6 @@
       # gnome.enable = true;
       # lxqt.enable = true;
       # enlightenment.enable = true;
-      # plasma5.enable = true;
       xfce = {
         enable = true;
         noDesktop = false;
@@ -170,17 +167,17 @@
       wayland.enable = false;
       enableHidpi = true;
     };
-    autoLogin.enable = true;
-    autoLogin.user = "mahmooz";
-    # defaultSession = "none+awesome";
+    # autoLogin.enable = true;
+    # autoLogin.user = "mahmooz";
+    defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
-    defaultSession = "xfce";
+    # defaultSession = "xfce";
     # defaultSession = "gnome";
     # defaultSession = "plasma";
   };
-  # services.desktopManager = {
-  #   plasma6.enable = true;
-  # };
+  services.desktopManager = {
+    plasma6.enable = true;
+  };
   # disable balooctl which uses up all resources..
   environment = {
     etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
@@ -337,6 +334,15 @@
     enable = true;
     settings.mysqld.bind-address = "0.0.0.0";
   };
+
+  # hybrid sleep when press power button
+  services.logind.extraConfig = ''
+    HandlePowerKey=suspend
+    IdleAction=suspend
+    IdleActionSec=1m
+  '';
+  # dont hibernate when lid is closed
+  # services.logind.lidSwitch = "ignore";
 
   qt = {
     enable = true;
@@ -688,9 +694,9 @@
   };
 
   # services.picom.enable = true;
-  # systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
-  #   ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
-  # '';
+  systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
+    ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
+  '';
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME  = "$HOME/.cache";
