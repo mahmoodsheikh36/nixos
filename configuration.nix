@@ -504,6 +504,7 @@
     xorg.xev
     sxhkd
     xorg.xwininfo
+    xorg.xauth
 
     # other
     redis
