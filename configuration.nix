@@ -153,20 +153,20 @@
       # gnome.enable = true;
       # lxqt.enable = true;
       # enlightenment.enable = true;
-      xfce = {
-        enable = true;
-        noDesktop = false;
-        enableXfwm = true;
-        enableScreensaver = false;
-      };
+      # xfce = {
+      #   enable = true;
+      #   noDesktop = false;
+      #   enableXfwm = true;
+      #   enableScreensaver = false;
+      # };
     };
   };
   services.displayManager = {
-    sddm = {
-      enable = true;
-      wayland.enable = false;
-      enableHidpi = true;
-    };
+    # sddm = {
+    #   enable = true;
+    #   wayland.enable = false;
+    #   enableHidpi = true;
+    # };
     autoLogin.enable = true;
     autoLogin.user = "mahmooz";
     defaultSession = "none+awesome";
@@ -179,13 +179,13 @@
   #   plasma6.enable = true;
   # };
   # disable balooctl which uses up all resources..
-  environment = {
-    etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
-      "Basic Settings" = {
-        "Indexing-Enabled" = false;
-      };
-    };
-  };
+  # environment = {
+  #   etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
+  #     "Basic Settings" = {
+  #       "Indexing-Enabled" = false;
+  #     };
+  #   };
+  # };
   services.libinput = {
     enable = true;
     touchpad = {
@@ -202,19 +202,19 @@
   #   # xdgOpenUsePortal = true;
   #   # config.common.default = "*";
   # };
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    plasma-browser-integration
-    konsole
-    oxygen
-  ];
-  security.pam.services.kwallet = {
-    name = "kwallet";
-    enableKwallet = false;
-  };
+  # environment.plasma6.excludePackages = with pkgs.kdePackages; [
+  #   plasma-browser-integration
+  #   konsole
+  #   oxygen
+  # ];
+  # security.pam.services.kwallet = {
+  #   name = "kwallet";
+  #   enableKwallet = false;
+  # };
 
   # gnome configs
-  services.gnome.tracker.enable = false;
-  services.gnome.tracker-miners.enable = false;
+  # services.gnome.tracker.enable = false;
+  # services.gnome.tracker-miners.enable = false;
 
   # tty configs
   console = {
