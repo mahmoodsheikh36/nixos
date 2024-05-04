@@ -377,7 +377,7 @@
       ovmf.enable = true;
     };
   };
-  virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.enable = true;
   programs.virt-manager.enable = true;
 
   # virtualisation.virtualbox.host = {
@@ -613,6 +613,7 @@
     python3Packages.huggingface-hub # huggingface commandline
     man-pages man-pages-posix
     ansible
+    bc # for arithmetic in shell
 
     tree-sitter
     ttags
