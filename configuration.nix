@@ -162,11 +162,11 @@
     };
   };
   services.displayManager = {
-    # sddm = {
-    #   enable = true;
-    #   wayland.enable = false;
-    #   enableHidpi = true;
-    # };
+    sddm = {
+      enable = true;
+      wayland.enable = false;
+      enableHidpi = true;
+    };
     autoLogin.enable = true;
     autoLogin.user = "mahmooz";
     defaultSession = "none+awesome";
@@ -195,13 +195,13 @@
       naturalScrolling = false;
     };
   };
-  # xdg.portal = {
-  #   enable = true;
-  #   wlr.enable = true;
-  #   # lxqt.enable = true;
-  #   # xdgOpenUsePortal = true;
-  #   # config.common.default = "*";
-  # };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    # lxqt.enable = true;
+    # xdgOpenUsePortal = true;
+    # config.common.default = "*";
+  };
   # environment.plasma6.excludePackages = with pkgs.kdePackages; [
   #   plasma-browser-integration
   #   konsole
