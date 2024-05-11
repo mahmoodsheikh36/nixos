@@ -77,6 +77,14 @@ in
           categories = [];
           # mimeType = [ "video/mp4" ];
         };
+        xdg.desktopEntries.add_magnet = {
+          name = "add_magnet";
+          genericName = "add_magnet";
+          exec = "add_magnet.sh %F";
+          terminal = false;
+          categories = [];
+          mimeType = [ "x-scheme-handler/magnet" ];
+        };
 
 
         xfconf.enable = true;

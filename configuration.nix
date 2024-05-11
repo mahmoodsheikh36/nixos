@@ -455,7 +455,6 @@
     pandoc
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
-    popcorntime
     lollypop clementine
     ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample calibre
     djvulibre
@@ -567,7 +566,7 @@
     # python313
 
     # lisps
-    lispPackages.quicklisp
+    # lispPackages.quicklisp
     (sbcl.withPackages (ps: with ps; [
       lem-opengl
       serapeum
@@ -720,6 +719,7 @@
     SCRIPTS_DIR = "$HOME/work/scripts/";
     DOTFILES_DIR = "$HOME/work/otherdots/";
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
+    BLOG_DIR = "$HOME/work/blog3/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
     BROWSER = "brave";
