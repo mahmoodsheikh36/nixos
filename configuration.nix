@@ -719,7 +719,7 @@
     SCRIPTS_DIR = "$HOME/work/scripts/";
     DOTFILES_DIR = "$HOME/work/otherdots/";
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
-    BLOG_DIR = "$HOME/work/blog3/";
+    BLOG_DIR = "$HOME/work/blog/";
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
     BROWSER = "brave";
