@@ -53,6 +53,7 @@ in
             scikit-learn torchvision beautifulsoup4 seaborn pillow dash mysql-connector
             rich pyspark networkx dpkt python-lsp-server #opencv
             graphviz flask-sqlalchemy flask-cors ariadne graphene nltk
+            transformers diffusers spacy
           ]))
         ];
 
