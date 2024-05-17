@@ -260,14 +260,14 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
         127.0.0.1 www.discord.com
-        127.0.0.1 instagram.com
-        127.0.0.1 www.instagram.com
+        # 127.0.0.1 instagram.com
+        # 127.0.0.1 www.instagram.com
     '';
   };
 
@@ -397,11 +397,17 @@
       inconsolata-nerdfont
       iosevka
       fira-code
-      # nerdfonts
+      nerdfonts
       ubuntu_font_family
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
+      dejavu_fonts
+      cm_unicode
+      unicode-emoji
+      unicode-character-database
+      unifont
+      symbola
       # persian font
       vazir-fonts
       font-awesome
@@ -421,6 +427,9 @@
       hinting.enable = true;
     };
   };
+
+  # https://tom.dimiduk.net/posts/2016-06-29-nixos-latex.html
+  # environment.systemPackages = with pkgs; [ (texlive.combine { inherit (texlive) scheme-basic symbol xkeyval collection-fontsrecommended collection-fontsextra newtx fontaxes subfigure todonotes xcolor cm-super; })
 
   # users
   users.users.mahmooz = {
@@ -533,6 +542,11 @@
     nuclear
     python312Packages.google
     exiftool
+    popcorntime
+
+    # for listening to radio music?
+    strawberry
+    shortwave
 
     # science
     gnuplot
