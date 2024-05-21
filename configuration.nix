@@ -51,27 +51,6 @@
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 
-  # security.rtkit.enable = true;
-  # hardware.pulseaudio.enable = false;
-  # services.pipewire = {
-  #   audio.enable = true;
-  #   enable = true;
-  #   alsa.enable = true;
-  #   alsa.support32Bit = true;
-  #   pulse.enable = true;
-  #   jack.enable = true;
-  #   wireplumber.configPackages = [
-  #     (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-  #       bluez_monitor.properties = {
-  #         ["bluez5.enable-sbc-xq"] = true,
-  #         ["bluez5.enable-msbc"] = true,
-  #         ["bluez5.enable-hw-volume"] = true,
-  #         ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-  #       }
-  #     '')
-  #   ];
-  # };
-
   hardware.opentabletdriver.enable = true;
   hardware.opentabletdriver.daemon.enable = true;
   services.iptsd.enable = true;
@@ -149,17 +128,6 @@
         # luadbi-mysql
       ];
     };
-    desktopManager = {
-      # gnome.enable = true;
-      # lxqt.enable = true;
-      # enlightenment.enable = true;
-      # xfce = {
-      #   enable = true;
-      #   noDesktop = false;
-      #   enableXfwm = true;
-      #   enableScreensaver = false;
-      # };
-    };
   };
   services.displayManager = {
     sddm = {
@@ -175,17 +143,6 @@
     # defaultSession = "gnome";
     # defaultSession = "plasma";
   };
-  # services.desktopManager = {
-  #   plasma6.enable = true;
-  # };
-  # disable balooctl which uses up all resources..
-  # environment = {
-  #   etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
-  #     "Basic Settings" = {
-  #       "Indexing-Enabled" = false;
-  #     };
-  #   };
-  # };
   services.libinput = {
     enable = true;
     touchpad = {
@@ -202,19 +159,6 @@
     # xdgOpenUsePortal = true;
     # config.common.default = "*";
   };
-  # environment.plasma6.excludePackages = with pkgs.kdePackages; [
-  #   plasma-browser-integration
-  #   konsole
-  #   oxygen
-  # ];
-  # security.pam.services.kwallet = {
-  #   name = "kwallet";
-  #   enableKwallet = false;
-  # };
-
-  # gnome configs
-  # services.gnome.tracker.enable = false;
-  # services.gnome.tracker-miners.enable = false;
 
   # tty configs
   console = {
@@ -260,14 +204,14 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
         127.0.0.1 www.discord.com
-        # 127.0.0.1 instagram.com
-        # 127.0.0.1 www.instagram.com
+        127.0.0.1 instagram.com
+        127.0.0.1 www.instagram.com
     '';
   };
 
@@ -380,14 +324,6 @@
   # virtualisation.waydroid.enable = true;
   programs.virt-manager.enable = true;
 
-  # virtualisation.virtualbox.host = {
-  #   enable = true;
-  #   enableExtensionPack = true;
-  #   # enableKvm = true;
-  #   # addNetworkInterface = false;
-  #   # enableHardening = false;
-  # };
-
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -397,7 +333,7 @@
       inconsolata-nerdfont
       iosevka
       fira-code
-      nerdfonts
+      # nerdfonts
       ubuntu_font_family
       noto-fonts
       noto-fonts-cjk
@@ -415,7 +351,6 @@
       mplus-outline-fonts.githubRelease
       dina-font
       proggyfonts
-      dejavu_fonts
     ];
     fontDir.enable = true;
     enableGhostscriptFonts = true;
@@ -427,9 +362,6 @@
       hinting.enable = true;
     };
   };
-
-  # https://tom.dimiduk.net/posts/2016-06-29-nixos-latex.html
-  # environment.systemPackages = with pkgs; [ (texlive.combine { inherit (texlive) scheme-basic symbol xkeyval collection-fontsrecommended collection-fontsextra newtx fontaxes subfigure todonotes xcolor cm-super; })
 
   # users
   users.users.mahmooz = {
@@ -679,20 +611,6 @@
     })
   ];
 
-  # monitoring services
-  # services.grafana = {
-  #   enable = true;
-  #   settings.server.http_port = 2342;
-  #   settings.server.domain =  "grafana.pele";
-  #   settings.server.addr = "127.0.0.1";
-  # };
-  # # nginx reverse proxy
-  # services.nginx.virtualHosts.${config.services.grafana.settings.server.domain} = {
-  #   locations."/" = {
-  #       proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
-  #       proxyWebsockets = true;
-  #   };
-  # };
   services.prometheus = {
     enable = true;
     port = 9001;
@@ -738,13 +656,6 @@
     EDITOR = "nvim";
     BROWSER = "brave";
   };
-
-  # environment.variables = {
-  #   # for the emacs jinx-mode package, needs to compile a .c file that includes enchant.h
-  #   CPLUS_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
-  #   C_INCLUDE_PATH = "${pkgs.enchant.dev}/include";
-  #   LIBRARY_PATH = "${pkgs.enchant}/lib";
-  # };
 
   # packages cache
   nix = {

@@ -57,13 +57,6 @@ in
           ]))
         ];
 
-        # programs.zsh.initExtra = builtins.readFile(builtins.fetchurl {
-        #   url = "https://raw.githubusercontent.com/mahmoodsheikh36/otherdots/master/.zshrc";
-        # });
-        # services.sxhkd.enable = true;
-
-        # services.syncthing.enable = true;
-
         programs.git = {
           enable = true;
           userName = "mahmoodsheikh36";
@@ -81,31 +74,11 @@ in
         xdg.desktopEntries.add_magnet = {
           name = "add_magnet";
           genericName = "add_magnet";
-          exec = "add_magnet.sh %F";
+          exec = "add_magnet.sh \"%F\"";
           terminal = false;
           categories = [];
           mimeType = [ "x-scheme-handler/magnet" ];
         };
-
-
-        xfconf.enable = true;
-        # xfconf.settings = {
-        #   # xfce4-desktop = {
-        #   #   "backdrop/screen0/monitorLVDS-1/workspace0/last-image" =
-        #   #     "${pkgs.nixos-artwork.wallpapers.stripes-logo.gnomeFilePath}";
-        #   # };
-        #   xfce4-keyboard-shortcuts = {
-        #     "xfwm4/custom/<Super>1" = "workspace_1_key";
-        #     "xfwm4/custom/<Super>2" = "workspace_2_key";
-        #     "xfwm4/custom/<Super>3" = "workspace_3_key";
-        #     "xfwm4/custom/<Super>4" = "workspace_4_key";
-        #     "xfwm4/custom/<Super>Tab" = "cycle_windows_key";
-        #     "xfwm4/custom/<Super><Shift>!" = "move_window_workspace_1_key";
-        #     "xfwm4/custom/<Super><Shift>@" = "move_window_workspace_2_key";
-        #     "xfwm4/custom/<Super><Shift>#" = "move_window_workspace_3_key";
-        #     "xfwm4/custom/<Super><Shift>$" = "move_window_workspace_4_key";
-        #   };
-        # };
 
         # set a variable for dotfiles repo, not necessary but convenient
         # home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
