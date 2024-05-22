@@ -3,8 +3,8 @@
 {
   imports =
     [
-      /etc/nixos/hardware-configuration.nix # hardware scan results
-      ./home.nix # home-manager etc
+      ./hardware-configuration.nix # hardware scan results
+      # ./home.nix # home-manager etc
     ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -86,6 +86,7 @@
     })
     (import (builtins.fetchTarball { # emacs master
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      sha256 = "1h8glxvkqvjvp1d3gi49q7swj5xi6456vw5xj5h9mrbfzgqn7ihg"; # to avoid an error
     }))
     (self: super:
     {
@@ -204,8 +205,8 @@
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
         192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com

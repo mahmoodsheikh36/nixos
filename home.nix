@@ -1,12 +1,6 @@
 { config, pkgs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
-{
-  imports = [
-    (import "${home-manager}/nixos")
-  ];
 
+{
   home-manager = {
     users = let
       user_config = {
@@ -47,7 +41,7 @@ in
         services.parcellite.enable = true;
 
         home.packages = [
-          home-manager
+          # home-manager
           (pkgs.python3.withPackages (ps: with ps; [
             matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
             scikit-learn torchvision beautifulsoup4 seaborn pillow dash mysql-connector
@@ -82,23 +76,23 @@ in
 
         # set a variable for dotfiles repo, not necessary but convenient
         # home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
-        home.file = {
-          # "git/config".source = ./dotfiles/git/config;
-          ".config/backup/dotfiles" = {
-            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/dotfiles";
-            onChange = "${pkgs.writeShellScript "dotfiles-change" ''
-            ''}";
-          };
-          ".config/backup/scripts" = {
-            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/scripts";
-          };
-          ".config/backup/nixos" = {
-            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/nixos";
-          };
-          ".config/backup/otherdots" = {
-            source = builtins.fetchGit "https://github.com/mahmoodsheikh36/otherdots";
-          };
-        };
+        # home.file = {
+        #   # "git/config".source = ./dotfiles/git/config;
+        #   ".config/backup/dotfiles" = {
+        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/dotfiles";
+        #     onChange = "${pkgs.writeShellScript "dotfiles-change" ''
+        #     ''}";
+        #   };
+        #   ".config/backup/scripts" = {
+        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/scripts";
+        #   };
+        #   ".config/backup/nixos" = {
+        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/nixos";
+        #   };
+        #   ".config/backup/otherdots" = {
+        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/otherdots";
+        #   };
+        # };
       };
     in {
       mahmooz = user_config;
