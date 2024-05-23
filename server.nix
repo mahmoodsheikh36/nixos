@@ -46,7 +46,6 @@ in
   # networking
   networking = {
     hostName = "mahmooz";
-    enableIPv6 = false;
     # resolvconf.dnsExtensionMechanism = false;
     networkmanager.enable = true;
     # block some hosts by redirecting to the loopback interface
@@ -166,6 +165,7 @@ in
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
     BROWSER = "brave";
+    LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";
   };
 
   environment.systemPackages = server_vars.server_packages;
