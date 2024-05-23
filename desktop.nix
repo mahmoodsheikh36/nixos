@@ -1,17 +1,15 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, options, ... }:
 
+let
+  server_vars = (import ./server_vars.nix { pkgs = pkgs; });
+  desktop_vars = (import ./desktop_vars.nix { pkgs = pkgs; });
+in
 {
   imports =
     [
-      ./hardware-configuration.nix # hardware scan results
+      ./server.nix
       # ./home.nix # home-manager etc
     ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.tmp.cleanOnBoot = true;
-  # use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.sensor.iio.enable = true;
 
@@ -84,25 +82,7 @@
         };
       });
     })
-    (import (builtins.fetchTarball { # emacs master
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-      sha256 = "1h8glxvkqvjvp1d3gi49q7swj5xi6456vw5xj5h9mrbfzgqn7ihg"; # to avoid an error
-    }))
-    (self: super:
-    {
-      my_emacs_git = super.emacs-git.overrideAttrs (oldAttrs: rec {
-        configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules" "--with-widgets" "--with-imagemagick"];
-        patches = [];
-        imagemagick = pkgs.imagemagickBig;
-      });
-    })
-    (self: super: {
-      # my_emacs = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
-      my_emacs = (super.emacs.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
-        imagemagick = pkgs.imagemagickBig;
-      });
-    })
-  ];
+  ] ++ server_vars.server_overlays;
 
   # x11 and awesomewm
   services.xserver = {
@@ -191,41 +171,13 @@
     '';
   };
 
-  time.timeZone = "Asia/Jerusalem";
-
   # ask for password in terminal instead of x11-ash-askpass
   programs.ssh.askPassword = "";
 
-  # networking
-  networking = {
-    hostName = "mahmooz";
-    enableIPv6 = false;
-    resolvconf.dnsExtensionMechanism = false;
-    networkmanager.enable = true;
-    # block some hosts by redirecting to the loopback interface
-    extraHosts = ''
-        192.168.1.150 server
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
-        # 127.0.0.1 reddit.com
-        # 127.0.0.1 www.reddit.com
-        127.0.0.1 discord.com
-        127.0.0.1 www.discord.com
-        127.0.0.1 instagram.com
-        127.0.0.1 www.instagram.com
-    '';
-  };
-
   # enable some programs/services
-  programs.mosh.enable = true;
-  programs.zsh.enable = true;
-  programs.adb.enable = true;
   services.printing.enable = true; # CUPS
   # services.flatpak.enable = true;
-  services.mysql.package = pkgs.mariadb;
-  services.openssh.enable = true;
   services.touchegg.enable = true;
-  programs.traceroute.enable = true;
   programs.thunar = {
     enable = true;
     plugins = with pkgs.xfce; [
@@ -235,50 +187,10 @@
     ];
   };
   # programs.xfconf.enable = true;
-  services.postgresql = {
-    enable = true;
-    enableTCPIP = true;
-    authentication = pkgs.lib.mkOverride 10 ''
-      # generated file; do not edit!
-      # TYPE  DATABASE        USER            ADDRESS                 METHOD
-      local   all             all                                     trust
-      host    all             all             127.0.0.1/32            trust
-      host    all             all             ::1/128                 trust
-      '';
-    package = pkgs.postgresql_16;
-    ensureDatabases = [ "mahmooz" ];
-    # port = 5432;
-    initialScript = pkgs.writeText "backend-initScript" ''
-      CREATE ROLE mahmooz WITH LOGIN PASSWORD 'mahmooz' CREATEDB;
-      CREATE DATABASE test;
-      GRANT ALL PRIVILEGES ON DATABASE test TO mahmooz;
-    '';
-    ensureUsers = [{
-      name = "mahmooz";
-      ensureDBOwnership = true;
-    }];
-  };
-  programs.direnv.enable = true;
-  programs.git = {
-    enable = true;
-    package = pkgs.gitFull;
-    lfs.enable = true;
-  };
-  programs.htop.enable = true;
-  programs.iotop.enable = true;
-  programs.java.enable = true;
-  programs.nix-ld.enable = true;
-  #programs.nm-applet.enable = true; # this thing is annoying lol (send notifications and stuff..)
-  programs.sniffnet.enable = true;
-  programs.wireshark.enable = true;
-  programs.dconf.enable = true;
+  # programs.nm-applet.enable = true; # this thing is annoying lol (send notifications and stuff..)
   # programs.firefox.enable = true;
+  programs.dconf.enable = true;
   services.tumbler.enable = lib.mkForce false;
-
-  services.mysql = {
-    enable = true;
-    settings.mysqld.bind-address = "0.0.0.0";
-  };
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
@@ -293,26 +205,6 @@
     enable = true;
     platformTheme = "gnome";
     style = "adwaita-dark";
-  };
-
-  services.locate = {
-    enable = true;
-    interval = "hourly";
-  };
-
-  programs.nix-index = { # helps finding the package that contains a specific file
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-  };
-  programs.command-not-found.enable = false; # needed for nix-index
-
-  # gpg
-  services.pcscd.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryPackage = lib.mkForce pkgs.pinentry;
-    enableSSHSupport = true;
   };
 
   virtualisation.libvirtd = {
@@ -364,16 +256,6 @@
     };
   };
 
-  # users
-  users.users.mahmooz = {
-    isNormalUser = true;
-    extraGroups = [ "audio" "wheel" ];
-    shell = pkgs.zsh;
-    password = "mahmooz";
-    packages = with pkgs; [
-    ];
-  };
-
   # dictionaries
   services.dictd.enable = true;
   services.dictd.DBs = with pkgs.dictdDBs; [ wiktionary wordnet ];
@@ -382,7 +264,6 @@
   documentation.dev.enable = true;
 
   # packages
-  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # text editors
     vscode
@@ -394,7 +275,6 @@
     telegram-desktop
     youtube-music
     okular zathura foliate mupdf
-    pandoc
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
     lollypop clementine
@@ -402,8 +282,6 @@
     djvulibre
 
     # media manipulation tools
-    imagemagickBig ghostscript # ghostscript is needed for some imagemagick commands
-    ffmpeg-full.bin
     gimp inkscape
 
     # general tools
@@ -418,21 +296,10 @@
     kitty wezterm # terminal emulator
     pulsemixer # tui for pulseaudio control
     playerctl # media control
-    sqlite
     gptfdisk parted
-    silver-searcher
     libtool # to compile vterm
     xdotool
-    docker
-    jq
-    ripgrep
-    spotdl
-    parallel
-    pigz
-    fd # alternative to find
     btrfs-progs
-    dash
-    sshfs
     sshpass
 
     # x11 tools
@@ -448,33 +315,26 @@
     xorg.xauth
 
     # other
-    redis
     # zoom-us, do i realy want this running natively?
     hugo
     adb-sync
     woeusb-ng
     ntfs3g
     gnupg1orig
-    pigz pinentry
     SDL2
     sass
     simplescreenrecorder
-    ncdu dua duf dust
     usbutils
     pciutils
     subversion # git alternative
     # logseq
     graphviz
-    lshw
-    btop
     firebase-tools
     graphqlmap
-    lsof
     isync
     notmuch
     nuclear
     python312Packages.google
-    exiftool
     popcorntime
 
     # for listening to radio music?
@@ -483,30 +343,17 @@
 
     # science
     gnuplot
-    # sageWithDoc sagetex
     lean
+    # sageWithDoc sagetex
 
     # some programming languages/environments
     (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
-    openjdk
     flutter dart android-studio android-tools genymotion
     texlive.combined.scheme-full
     rustc meson ninja
     jupyter
     typescript
-    (julia.withPackages.override({ precompile = false; })([
-      "TruthTables" "LinearSolve"
-      "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
-      "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
-      "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
-      "Luxor" "ReinforcementLearningBase" "Images" "Flux" "DataStructures" "RecipesBase"
-      "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "StaticArrays"
-      "Weave" "BrainFlow" "Genie" "WaterLily" "LanguageServer"
-      "Symbolics" "SymbolicUtils" "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
-      # "Transformers" "Optimization" "Knet" "ModelingToolkit"
-      # "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
-    ]))
-    gcc clang gdb clang-tools
+    desktop_vars.desktop_julia
     python3Packages.west
     typst
     tailwindcss
@@ -538,42 +385,15 @@
     # offline docs
     # zeal devdocs-desktop
 
-    # networking tools
-    curl wget nmap socat arp-scan tcpdump
-
     # some helpful programs / other
-    tmux file vifm zip unzip fzf p7zip unrar-wrapper
-    transmission acpi gnupg tree-sitter lm_sensors
-    cryptsetup
     onboard # onscreen keyboard
-    spark
-    openssl
     xcape keyd # haskellPackages.kmonad  # keyboard utilities
     pulseaudioFull
-    yt-dlp you-get
-    libgen-cli
-    aria # aria2c downloader
     prettierd # for emacs apheleia
-    pls # alternative to ls
     nodePackages.prettier # for emacs apheleia
     python3Packages.huggingface-hub # huggingface commandline
-    man-pages man-pages-posix
-    ansible
-    bc # for arithmetic in shell
-
-    tree-sitter
-    ttags
-    diffsitter
     # ruff # python code formatter
     black
-
-    # some build systems
-    cmake gnumake autoconf
-    pkg-config
-
-    # nodejs
-    nodejs
-    yarn
 
     # nix specific tools
     nixos-generators
@@ -592,6 +412,8 @@
     sqls
     ruff-lsp
     python3Packages.python-lsp-server
+    nodePackages_latest.typescript-language-server
+    nodePackages_latest.eslint
 
     # (callPackage ./firefox.nix {})
 
@@ -599,18 +421,7 @@
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     # enchant.dev # for emacs jinx-mode
 
-    (emacsWithPackagesFromUsePackage {
-      config = "/dev/null";
-      defaultInitFile = false;
-      package = my_emacs; # emacs-git;
-      alwaysEnsure = true;
-      extraEmacsPackages = (epkgs: with epkgs; [
-        cask
-        treesit-grammars.with-all-grammars
-        # epkgs.jinx
-      ]);
-    })
-  ];
+  ] ++ server_vars.server_packages;
 
   services.prometheus = {
     enable = true;
@@ -632,57 +443,6 @@
     ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
   '';
 
-  environment.sessionVariables = rec {
-    XDG_CACHE_HOME  = "$HOME/.cache";
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_DATA_HOME   = "$HOME/.local/share";
-    XDG_STATE_HOME  = "$HOME/.local/state";
-    # not officially in the specification
-    XDG_BIN_HOME    = "$HOME/.local/bin";
-    PATH = [
-      "${XDG_BIN_HOME}"
-    ];
-    # this one fixes some problems with python matplotlib and probably some other qt applications
-    QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins";
-    PYTHON_HISTORY = "$HOME/brain/python_history";
-    BRAIN_DIR = "$HOME/brain";
-    MUSIC_DIR = "$HOME/music";
-    WORK_DIR = "$HOME/work";
-    NOTES_DIR = "$HOME/brain/notes/";
-    SCRIPTS_DIR = "$HOME/work/scripts/";
-    DOTFILES_DIR = "$HOME/work/otherdots/";
-    NIX_CONFIG_DIR = "$HOME/work/nixos/";
-    BLOG_DIR = "$HOME/work/blog/";
-    QT_SCALE_FACTOR = "2";
-    EDITOR = "nvim";
-    BROWSER = "brave";
-  };
-
-  # packages cache
-  nix = {
-    settings = {
-      substituters = [
-        "https://nix-community.cachix.org"
-        "https://nixpkgs-update.cachix.org"
-        "https://cache.nixos.org/"
-        "https://nix-gaming.cachix.org"
-        "https://chaotic-nyx.cachix.org"
-        "https://ezkea.cachix.org"
-      ];
-      trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "nixpkgs-update.cachix.org-1:6y6Z2JdoL3APdu6/+Iy8eZX2ajf09e4EE9SnxSML1W8="
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-        "nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-        "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
-      ];
-    };
-  };
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   system.stateVersion = "23.05"; # dont change
-  system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
+  # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
 }

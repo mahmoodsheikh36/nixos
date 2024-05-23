@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  desktop_vars = (import ./desktop_vars.nix { pkgs = pkgs; });
+in
 {
   home-manager = {
     users = let
@@ -41,14 +44,7 @@
         services.parcellite.enable = true;
 
         home.packages = [
-          # home-manager
-          (pkgs.python3.withPackages (ps: with ps; [
-            matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
-            scikit-learn torchvision beautifulsoup4 seaborn pillow dash mysql-connector
-            rich pyspark networkx dpkt python-lsp-server #opencv
-            graphviz flask-sqlalchemy flask-cors ariadne graphene nltk
-            transformers diffusers spacy
-          ]))
+          desktop_vars.desktop_python
         ];
 
         programs.git = {

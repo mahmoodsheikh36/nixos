@@ -14,16 +14,16 @@
         inherit inputs;
       };
       modules = [
-        ./configuration.nix
+        ./desktop.nix
       ];
     };
     homeConfigurations = {
       # FIXME replace with your username@hostname
       "mahmooz@mahmooz" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs;};
+        extraSpecialArgs = { inherit inputs; };
         # > Our main home-manager configuration file <
-        modules = [./home.nix];
+        modules = [ ./home.nix ];
       };
     };
   };
