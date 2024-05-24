@@ -67,7 +67,6 @@ in
   programs.zsh.enable = true;
   programs.adb.enable = true;
   services.mysql.package = pkgs.mariadb;
-  services.openssh.enable = true;
   programs.traceroute.enable = true;
   programs.direnv.enable = true;
   programs.git = {
@@ -90,6 +89,14 @@ in
   services.locate = {
     enable = true;
     interval = "hourly";
+  };
+
+  services.openssh = {
+    enable = true;
+    # require public key authentication for better security
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+    #settings.PermitRootLogin = "yes";
   };
 
   programs.nix-index = { # helps finding the package that contains a specific file
