@@ -14,7 +14,6 @@
         });
       })
     (self: super: {
-      # my_emacs = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
       my_emacs = (super.emacs.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
         imagemagick = pkgs.imagemagickBig;
       });
@@ -70,17 +69,6 @@
     nodejs
     yarn
 
-    # (emacsWithPackagesFromUsePackage {
-    #   config = "/dev/null";
-    #   defaultInitFile = false;
-    #   package = my_emacs; # emacs-git;
-    #   alwaysEnsure = true;
-    #   extraEmacsPackages = (epkgs: with epkgs; [
-    #     cask
-    #     treesit-grammars.with-all-grammars
-    #     # epkgs.jinx
-    #   ]);
-    # })
     emacs
   ];
 }

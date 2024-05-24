@@ -82,7 +82,7 @@ in
         };
       });
     })
-  ] ++ server_vars.server_overlays;
+  ]; # ++ server_vars.server_overlays;
 
   # x11 and awesomewm
   services.xserver = {
