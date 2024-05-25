@@ -180,10 +180,11 @@ in
     description = "ssh tunnel";
     after = [ "network.target" ];
     wantedBy = [ "default.target" ];
-    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 root@2a01:4f9:c012:ad1b::1 -NTg -o ServerAliveInterval=60 -o StrictHostKeyChecking=no";
+    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 root@2a01:4f9:c012:ad1b::1 -NTg -o ServerAliveInterval=60";
     serviceConfig = {
       user = "mahmooz";
       type = "simple";
+      restart = lib.mkForce "always";
     };
   };
 
