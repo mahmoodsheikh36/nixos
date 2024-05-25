@@ -181,7 +181,7 @@ in
     after = [ "network.target" ];
     wantedBy = [ "default.target" ];
     serviceConfig = {
-      ExecStart="${lib.getExe pkgs.openssh} -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 root@2a01:4f9:c012:ad1b::1 -NTg -o ServerAliveInterval=60";
+      ExecStart="${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 root@2a01:4f9:c012:ad1b::1 -NTg -o ServerAliveInterval=60";
     };
   };
 
