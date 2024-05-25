@@ -444,5 +444,5 @@ in
   '';
 
   system.stateVersion = "23.05"; # dont change
-  # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable";
+  # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable"; # is this needed when using flakes?
 }

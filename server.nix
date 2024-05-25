@@ -2,6 +2,7 @@
 
 let
   server_vars = (import ./server_vars.nix { pkgs = pkgs; });
+  per_machine_vars = (import ./per_machine_vars.nix {});
 in
 {
   imports =
@@ -173,6 +174,15 @@ in
     EDITOR = "nvim";
     BROWSER = "brave";
     LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";
+  };
+
+  systemd.user.services.my_ssh_tunnel_service = {
+    description = "ssh tunnel";
+    after = [ "network.target" ];
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      ExecStart="${lib.getExe pkgs.ssh} -i /home/mahmooz/brain/keys/hetzner1 -R '*:${per_machine_vars.remote_tunnel_port}:*:22' -6 root@2a01:4f9:c012:ad1b::1 -NTg -o ServerAliveInterval=60";
+    };
   };
 
   environment.systemPackages = server_vars.server_packages;
