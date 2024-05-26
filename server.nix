@@ -177,11 +177,13 @@ in
     MAIN_SERVER_ADDR = server_vars.main_server_addr;
   };
 
+  # note that you may have to ssh first manually for the main server to be inserted into known_hosts file so that this would work
   systemd.services.my_ssh_tunnel_service = {
     description = "ssh tunnel";
-    after = [ "network-online.target" ];
-    wants= [ "network-online.target" "systemd-networkd-wait-online.service" ];
+    after = [ "network.target" "network-online.target" ];
+    wants = [ "network-online.target" ];
     script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 ${server_vars.main_server_user}@${server_vars.main_server_addr} -NTg -o ServerAliveInterval=60";
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       User = "mahmooz";
       Type = "simple";
