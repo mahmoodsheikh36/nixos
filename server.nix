@@ -174,17 +174,19 @@ in
     EDITOR = "nvim";
     BROWSER = "brave";
     LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";
+    MAIN_SERVER_ADDR = server_vars.main_server_addr;
   };
 
   systemd.services.my_ssh_tunnel_service = {
     description = "ssh tunnel";
-    after = [ "network.target" ];
-    wantedBy = [ "default.target" ];
-    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 root@2a01:4f9:c012:ad1b::1 -NTg -o ServerAliveInterval=60";
+    after = [ "network-online.target" ];
+    wants= [ "network-online.target" "systemd-networkd-wait-online.service" ];
+    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 ${server_vars.main_server_addr} -NTg -o ServerAliveInterval=60";
     serviceConfig = {
       user = "mahmooz";
       type = "simple";
-      restart = lib.mkForce "always";
+      restart = "on-failure";
+      RestartSec = "5s";
     };
   };
 
