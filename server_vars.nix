@@ -72,5 +72,6 @@
     emacs
   ];
 
-  main_server_addr = "root@2a01:4f9:c012:ad1b::1";
+  main_server_addr = "2a01:4f9:c012:ad1b::1";
+  main_server_user = "root";
 }

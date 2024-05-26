@@ -181,7 +181,7 @@ in
     description = "ssh tunnel";
     after = [ "network-online.target" ];
     wants= [ "network-online.target" "systemd-networkd-wait-online.service" ];
-    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 ${server_vars.main_server_addr} -NTg -o ServerAliveInterval=60";
+    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 ${server_vars.main_server_user}@${server_vars.main_server_addr} -NTg -o ServerAliveInterval=60";
     serviceConfig = {
       user = "mahmooz";
       type = "simple";
