@@ -111,13 +111,13 @@ in
     };
   };
   services.displayManager = {
-    sddm = {
-      enable = true;
-      wayland.enable = false;
-      enableHidpi = true;
-    };
-    autoLogin.enable = true;
-    autoLogin.user = "mahmooz";
+    # sddm = {
+    #   enable = true;
+    #   wayland.enable = false;
+    #   enableHidpi = true;
+    # };
+    # autoLogin.enable = true;
+    # autoLogin.user = "mahmooz";
     defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
     # defaultSession = "xfce";
@@ -140,6 +140,7 @@ in
   #   # xdgOpenUsePortal = true;
   #   # config.common.default = "*";
   # };
+  # services.getty.autologinUser = "mahmooz";
 
   # tty configs
   console = {
@@ -445,6 +446,36 @@ in
     ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
   '';
 
+  # services.getty.autologinUser = "mahmooz";
+  # environment.loginShellInit = ''
+  #   if test "$(tty)" = "/dev/tty1" && ! pgrep -f xserver; then
+  #     startx &
+  #   fi
+  # '';
+  systemd.defaultUnit = "graphical.target";
+  systemd.services.autostartx = {
+    enable = true;
+    description = "X11 session for <user>";
+    after = [ "graphical.target" "systemd-user-sessions.service" ];
+    wantedBy = [ "graphical.target" ];
+    serviceConfig = {
+      User = "mahmooz";
+      WorkingDirectory = "~";
+      PAMName = "login";
+      Environment = [ "XDG_SESSION_TYPE=x11" ];
+      TTYPath = "/dev/tty8";
+      StandardInput = "tty";
+      UnsetEnvironment = "TERM";
+      UtmpIdentifier = "tty8";
+      UtmpMode = "user";
+      StandardOutput = "journal";
+      ExecStartPre = "${pkgs.kbd}/bin/chvt 8";
+      ExecStart = "${pkgs.xorg.xinit}/bin/startx";
+      Restart = "always";
+      RestartSec = "3";
+    };
+    restartIfChanged = false; # dont restart on nixos-rebuild
+  };
+
   system.stateVersion = "23.05"; # dont change
-  # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable"; # is this needed when using flakes?
 }

@@ -6,7 +6,7 @@
     graphviz flask-sqlalchemy flask-cors ariadne graphene nltk
     transformers diffusers spacy
   ]));
-  desktop_julia = (pkgs.julia_19.withPackages.override({ precompile = true; })([
+  desktop_julia = (pkgs.julia.withPackages.override({ precompile = true; })([
     # "TruthTables" "LinearSolve"
     # "LightGraphs" "HTTP" "OhMyREPL" "MLJ"
     # "Luxor" "ReinforcementLearningBase" "DataStructures" "RecipesBase"
