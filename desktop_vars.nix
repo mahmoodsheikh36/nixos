@@ -7,15 +7,29 @@
     transformers diffusers spacy
   ]));
   desktop_julia = (pkgs.julia.withPackages.override({ precompile = false; })([
-    "TruthTables" "LinearSolve"
-    "Plots" "Graphs" "CSV" "NetworkLayout" "SGtSNEpi" "Karnak" "DataFrames"
-    "TikzPictures" "Gadfly" "Makie" "Turing" "RecipesPipeline"
-    "LightGraphs" "JET" "HTTP" "LoopVectorization" "OhMyREPL" "MLJ"
-    "Luxor" "ReinforcementLearningBase" "Images" "Flux" "DataStructures" "RecipesBase"
-    "Latexify" "Distributions" "StatsPlots" "Gen" "Zygote" "UnicodePlots" "StaticArrays"
-    "Weave" "BrainFlow" "Genie" "WaterLily" "LanguageServer"
-    "Symbolics" "SymbolicUtils" "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
-    # "Transformers" "Optimization" "Knet" "ModelingToolkit"
+    # "TruthTables" "LinearSolve"
+    # "LightGraphs" "HTTP" "OhMyREPL" "MLJ"
+    # "Luxor" "ReinforcementLearningBase" "DataStructures" "RecipesBase"
+    # "Latexify" "Distributions" "Gen" "UnicodePlots" "StaticArrays"
+    # "Genie" "WaterLily"
+    # "Symbolics" "SymbolicUtils" "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
+    # "Transformers" "Optimization" "Knet" "ModelingToolkit" "StatsPlots" "GLMakie" "Zygote"
+    # "Flux" "JET" "LoopVectorization" "Weave" "BrainFlow"
     # "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
+    # "Gadfly" "Turing" "RecipesPipeline"
+
+    "LanguageServer"
+    "Images"
+
+    # math
+    "Graphs"
+
+    # data processing
+    "JSON" "DataFrames" "CSV"
+
+    # graphics
+    "Makie" "SGtSNEpi"
+    "NetworkLayout" "Karnak" "TikzPictures"
+    "Plots" "GraphRecipes"
   ]));
 }

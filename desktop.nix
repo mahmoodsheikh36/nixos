@@ -133,13 +133,13 @@ in
       naturalScrolling = false;
     };
   };
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    # lxqt.enable = true;
-    # xdgOpenUsePortal = true;
-    # config.common.default = "*";
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   # lxqt.enable = true;
+  #   # xdgOpenUsePortal = true;
+  #   # config.common.default = "*";
+  # };
 
   # tty configs
   console = {
