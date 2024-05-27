@@ -270,6 +270,7 @@ in
 
     # media tools
     mpv
+    vlc
     feh # i use it to set wallpaper
     my_sxiv qimgv
     telegram-desktop
@@ -353,7 +354,8 @@ in
     rustc meson ninja
     jupyter
     typescript
-    desktop_vars.desktop_julia
+    # desktop_vars.desktop_julia
+    julia
     python3Packages.west
     typst
     tailwindcss
