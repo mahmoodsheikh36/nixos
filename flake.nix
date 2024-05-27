@@ -2,8 +2,8 @@
   description = "nixos flake";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     home-manager.url = github:nix-community/home-manager;
   };
 
@@ -18,11 +18,9 @@
       ];
     };
     homeConfigurations = {
-      # FIXME replace with your username@hostname
       "mahmooz@mahmooz" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = { inherit inputs; };
-        # > Our main home-manager configuration file <
         modules = [ ./home.nix ];
       };
     };

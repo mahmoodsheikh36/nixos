@@ -1,3 +1,14 @@
+let
+    pkgs2 = import (builtins.fetchGit {
+         # Descriptive name to make the store path easier to identify
+         name = "my-old-revision";
+         url = "https://github.com/NixOS/nixpkgs/";
+         ref = "refs/heads/nixpkgs-unstable";
+         rev = "336eda0d07dc5e2be1f923990ad9fdb6bc8e28e3";
+     }) {};
+
+     my_julia = pkgs2.julia;
+in
 { pkgs, ... }: {
   desktop_python = (pkgs.python3.withPackages (ps: with ps; [
     matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
@@ -6,7 +17,7 @@
     graphviz flask-sqlalchemy flask-cors ariadne graphene nltk
     transformers diffusers spacy
   ]));
-  desktop_julia = (pkgs.julia.withPackages.override({ precompile = false; })([
+  desktop_julia = (my_julia.withPackages.override({ precompile = true; })([
     # "TruthTables" "LinearSolve"
     # "LightGraphs" "HTTP" "OhMyREPL" "MLJ"
     # "Luxor" "ReinforcementLearningBase" "DataStructures" "RecipesBase"
@@ -28,8 +39,8 @@
     "JSON" "DataFrames" "CSV"
 
     # graphics
-    "Makie" "SGtSNEpi"
-    "NetworkLayout" "Karnak" "TikzPictures"
-    "Plots" "GraphRecipes"
+    "Makie" "SGtSNEpi" "Karnak"
+    "Plots" "TikzPictures" "NetworkLayout"
+    "GraphRecipes"
   ]));
 }
