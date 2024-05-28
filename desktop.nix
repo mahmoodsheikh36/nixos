@@ -1,4 +1,4 @@
-{ config, pkgs, lib, options, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   server_vars = (import ./server_vars.nix { pkgs = pkgs; });
@@ -8,7 +8,6 @@ in
   imports =
     [
       ./server.nix
-      # ./home.nix # home-manager etc
     ];
 
   hardware.sensor.iio.enable = true;
@@ -92,7 +91,6 @@ in
       sessionCommands = ''
         # some of these commands dont work because $HOME isnt /home/mahmooz..
         ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
-        # ${lib.getExe pkgs.sxhkd}
         # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
         ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
       '';
@@ -106,18 +104,10 @@ in
       enable = true;
       luaModules = with pkgs.luaPackages; [
         luarocks
-        # luadbi-mysql
       ];
     };
   };
   services.displayManager = {
-    # sddm = {
-    #   enable = true;
-    #   wayland.enable = false;
-    #   enableHidpi = true;
-    # };
-    # autoLogin.enable = true;
-    # autoLogin.user = "mahmooz";
     defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
     # defaultSession = "xfce";
@@ -192,6 +182,7 @@ in
   # programs.firefox.enable = true;
   programs.dconf.enable = true;
   services.tumbler.enable = lib.mkForce false;
+  programs.light.enable = true;
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
