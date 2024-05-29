@@ -51,9 +51,8 @@ in
     networkmanager.enable = true;
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
-        192.168.1.150 server
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -175,6 +174,7 @@ in
     BROWSER = "brave";
     LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";
     MAIN_SERVER_ADDR = server_vars.main_server_addr;
+    HOME_SERVER_ADDR = server_vars.home_server_addr;
   };
 
   # note that you may have to ssh first manually for the main server to be inserted into known_hosts file so that this would work

@@ -75,4 +75,5 @@
 
   main_server_addr = "2a01:4f9:c012:ad1b::1";
   main_server_user = "root";
+  home_server_addr = "192.168.1.150";
 }
