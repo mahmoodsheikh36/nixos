@@ -190,7 +190,7 @@ in
       # Restart = "on-failure";
       # RestartSec = "5s";
       Restart = "always";
-      RuntimeMaxSec = "1h";
+      RuntimeMaxSec = "3600";
     };
   };
 
