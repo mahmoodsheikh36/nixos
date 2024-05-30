@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: rec {
 
   server_overlays = [
     (import (builtins.fetchTarball { # emacs master
@@ -76,4 +76,13 @@
   main_server_addr = "2a01:4f9:c012:ad1b::1";
   main_server_user = "root";
   home_server_addr = "192.168.1.150";
+  main_user = "mahmooz";
+  home_dir = "/home/mahmooz";
+  work_dir = "/home/${main_user}/work";
+  scripts_dir = "${work_dir}/scripts";
+  dotfiles_dir = "${work_dir}/otherdots";
+  blog_dir = "${work_dir}/blog";
+  brain_dir = "${home_dir}/brain";
+  music_dir = "${home_dir}/music";
+  notes_dir = "${brain_dir}/notes";
 }

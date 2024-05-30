@@ -51,8 +51,8 @@ in
     networkmanager.enable = true;
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
-        127.0.0.1 youtube.com
-        127.0.0.1 www.youtube.com
+        # 127.0.0.1 youtube.com
+        # 127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -161,14 +161,14 @@ in
     # this one fixes some problems with python matplotlib and probably some other qt applications
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins";
     PYTHON_HISTORY = "$HOME/brain/python_history";
-    BRAIN_DIR = "$HOME/brain";
-    MUSIC_DIR = "$HOME/music";
-    WORK_DIR = "$HOME/work";
-    NOTES_DIR = "$HOME/brain/notes/";
-    SCRIPTS_DIR = "$HOME/work/scripts/";
-    DOTFILES_DIR = "$HOME/work/otherdots/";
+    BRAIN_DIR = server_vars.brain_dir;
+    MUSIC_DIR = server_vars.music_dir;
+    WORK_DIR = server_vars.work_dir;
+    NOTES_DIR = server_vars.notes_dir;
+    SCRIPTS_DIR = server_vars.scripts_dir;
+    DOTFILES_DIR = server_vars.dotfiles_dir;
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
-    BLOG_DIR = "$HOME/work/blog/";
+    BLOG_DIR = server_vars.blog_dir;
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
     BROWSER = "brave";
@@ -191,6 +191,18 @@ in
       # RestartSec = "5s";
       Restart = "always";
       RuntimeMaxSec = "3600";
+    };
+  };
+
+  systemd.services.my_mpv_logger_service = {
+    description = "mpv logger";
+    wantedBy = [ "multi-user.target" ];
+    script = "${pkgs.dash}/bin/dash ${server_vars.scripts_dir}/mpv_logger.sh";
+    serviceConfig = {
+      User = "mahmooz";
+      Restart = "on-failure";
+      RestartSec = "5s";
+      # ExecStart = "${pkgs.coreutils}/bin/sh ${server_vars.scripts_dir}/mpv_logger.sh";
     };
   };
 
