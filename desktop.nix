@@ -123,14 +123,14 @@ in
       naturalScrolling = false;
     };
   };
-  # xdg.portal = {
-  #   enable = true;
-  #   wlr.enable = true;
-  #   # lxqt.enable = true;
-  #   # xdgOpenUsePortal = true;
-  #   # config.common.default = "*";
-  # };
-  # services.getty.autologinUser = "mahmooz";
+
+  # needed for flatpak
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+  };
 
   # tty configs
   console = {
@@ -167,7 +167,6 @@ in
 
   # enable some programs/services
   services.printing.enable = true; # CUPS
-  # services.flatpak.enable = true;
   services.touchegg.enable = true;
   programs.thunar = {
     enable = true;
@@ -183,6 +182,14 @@ in
   programs.dconf.enable = true;
   services.tumbler.enable = lib.mkForce false;
   programs.light.enable = true;
+
+  services.flatpak.enable = true;
+  services.flatpak.packages = [
+    # { appId = "com.brave.Browser"; origin = "flathub";  }
+    # "com.obsproject.Studio"
+    # "im.riot.Riot"
+    "com.jagex.RuneScape"
+  ];
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
