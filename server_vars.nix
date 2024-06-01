@@ -70,6 +70,12 @@
     nodejs
     yarn
 
+    # nix specific tools
+    nixos-generators
+    nix-prefetch-git
+    deploy-rs
+    nix-tree
+
     emacs
   ];
 

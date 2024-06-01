@@ -396,11 +396,6 @@ in
     # ruff # python code formatter
     black
 
-    # nix specific tools
-    nixos-generators
-    nix-prefetch-git
-    deploy-rs
-
     # lsp
     haskell-language-server emmet-language-server clojure-lsp llm-ls
     nodePackages.node2nix yaml-language-server postgres-lsp ansible-language-server
