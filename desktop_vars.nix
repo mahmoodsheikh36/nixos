@@ -1,10 +1,16 @@
 { pkgs, ... }: {
   desktop_python = (pkgs.python3.withPackages (ps: with ps; [
-    matplotlib flask requests panflute numpy jupyter jupyter-core pytorch pandas sympy scipy
-    scikit-learn torchvision beautifulsoup4 seaborn pillow dash mysql-connector
-    rich pyspark networkx dpkt python-lsp-server #opencv
-    graphviz flask-sqlalchemy flask-cors ariadne graphene nltk
-    transformers diffusers spacy
+    matplotlib flask requests panflute numpy jupyter jupyter-core pandas sympy scipy
+    beautifulsoup4 seaborn pillow dash mysql-connector
+    rich networkx dpkt python-lsp-server opencv4
+    graphviz flask-sqlalchemy flask-cors ariadne graphene
+
+    # machine learning
+    pytorch torchvision
+    scikit-learn
+    transformers
+    diffusers
+    spacy gensim nltk
   ]));
   desktop_julia = (pkgs.julia.withPackages.override({ precompile = true; })([
     # "TruthTables" "LinearSolve"

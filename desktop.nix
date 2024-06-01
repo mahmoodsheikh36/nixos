@@ -127,7 +127,7 @@ in
   # needed for flatpak
   xdg.portal = {
     enable = true;
-    # xdgOpenUsePortal = true;
+    # xdgOpenUsePortal = true; # may be causing issues with xdg-open, that or having * instead of gtk below caused it
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     config.common.default = "gtk";
   };
@@ -425,7 +425,7 @@ in
   };
   # services.monit.enable = true;
 
-  # run sxhkd when x11 starts
+  # run sxhkd when x11 starts, this may be obsolete
   systemd.user.services.my_sxhkd_service = {
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
@@ -445,6 +445,7 @@ in
   #     startx &
   #   fi
   # '';
+  # to auto login into an x11 session without a display manager
   systemd.defaultUnit = "graphical.target";
   systemd.services.autostartx = {
     enable = true;
