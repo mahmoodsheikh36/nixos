@@ -337,6 +337,9 @@ in
     python312Packages.google
     popcorntime
 
+    soulseekqt
+    nicotine-plus
+
     # for listening to radio music?
     strawberry
     shortwave
