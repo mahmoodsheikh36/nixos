@@ -127,9 +127,9 @@ in
   # needed for flatpak
   xdg.portal = {
     enable = true;
-    xdgOpenUsePortal = true;
+    # xdgOpenUsePortal = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
+    config.common.default = "gtk";
   };
 
   # tty configs
