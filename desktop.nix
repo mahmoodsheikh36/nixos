@@ -124,13 +124,13 @@ in
     };
   };
 
-  # needed for flatpak
-  xdg.portal = {
-    enable = true;
-    # xdgOpenUsePortal = true; # may be causing issues with xdg-open, that or having * instead of gtk below caused it
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "gtk";
-  };
+  # needed for flatpak, slows some apps startup time..
+  # xdg.portal = {
+  #   enable = true;
+  #   # xdgOpenUsePortal = true; # may be causing issues with xdg-open, that or having * instead of gtk below caused it
+  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #   config.common.default = "gtk";
+  # };
 
   # tty configs
   console = {
@@ -183,13 +183,10 @@ in
   services.tumbler.enable = lib.mkForce false;
   programs.light.enable = true;
 
-  services.flatpak.enable = true;
-  services.flatpak.packages = [
-    # { appId = "com.brave.Browser"; origin = "flathub";  }
-    # "com.obsproject.Studio"
-    # "im.riot.Riot"
-    "com.jagex.RuneScape"
-  ];
+  # services.flatpak.enable = true;
+  # services.flatpak.packages = [
+  #   "com.jagex.RuneScape"
+  # ];
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
@@ -335,7 +332,7 @@ in
     notmuch
     nuclear
     python312Packages.google
-    popcorntime
+    # popcorntime
 
     soulseekqt
     nicotine-plus
@@ -361,6 +358,7 @@ in
     python3Packages.west
     typst
     tailwindcss
+    poetry
     # python313
 
     # lisps
