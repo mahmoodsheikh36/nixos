@@ -32,12 +32,12 @@
     "Symbolics" "SymbolicUtils"
 
     # data processing
-    "JSON" "DataFrames" "CSV"
+    "JSON" "CSV" "DataFrames"
 
     # graphics
     "Makie" "GLMakie"
     "SGtSNEpi" "Karnak"
-    "Plots" "TikzPictures" "NetworkLayout"
+    "TikzPictures" "NetworkLayout" "Plots"
     "GraphRecipes"
   ]));
 }

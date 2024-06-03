@@ -353,7 +353,8 @@ in
     rustc meson ninja
     jupyter
     typescript
-    desktop_vars.desktop_julia
+    # desktop_vars.desktop_julia
+    julia
     python3Packages.west
     typst
     tailwindcss
