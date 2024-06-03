@@ -8,7 +8,7 @@
     home-manager.url = github:nix-community/home-manager;
 
     # https://github.com/gmodena/nix-flatpak?tab=readme-ov-file
-    # nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
+    nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
   };
 
   outputs = { self, nix-flatpak, nixpkgs, home-manager, ... }@inputs: {

@@ -290,7 +290,7 @@ in
     syncthing
 
     # commandline tools
-    kitty wezterm # terminal emulator
+    wezterm # terminal emulator
     pulsemixer # tui for pulseaudio control
     playerctl # media control
     gptfdisk parted
@@ -353,8 +353,7 @@ in
     rustc meson ninja
     jupyter
     typescript
-    # desktop_vars.desktop_julia
-    julia
+    desktop_vars.desktop_julia
     python3Packages.west
     typst
     tailwindcss
@@ -363,18 +362,18 @@ in
 
     # lisps
     # lispPackages.quicklisp
-    (sbcl.withPackages (ps: with ps; [
-      lem-opengl
-      serapeum
-      lparallel
-      cl-csv
-      hunchentoot
-      jsown
-      alexandria
-      # swank
-      # slynk
-      nyxt
-    ]))
+    # (sbcl.withPackages (ps: with ps; [
+    #   lem-opengl
+    #   serapeum
+    #   lparallel
+    #   cl-csv
+    #   hunchentoot
+    #   jsown
+    #   alexandria
+    #   # swank
+    #   # slynk
+    #   nyxt
+    # ]))
     # usage example:
     # $ sbcl
     # * (load (sb-ext:posix-getenv "ASDF"))

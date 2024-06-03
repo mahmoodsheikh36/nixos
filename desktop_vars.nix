@@ -18,8 +18,8 @@
     # "Luxor" "ReinforcementLearningBase" "DataStructures" "RecipesBase"
     # "Latexify" "Distributions" "Gen" "UnicodePlots" "StaticArrays"
     # "Genie" "WaterLily"
-    # "Symbolics" "SymbolicUtils" "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
-    # "Transformers" "Optimization" "Knet" "ModelingToolkit" "StatsPlots" "GLMakie" "Zygote"
+    # "ForwardDiff" "Metatheory" "TermInterface" "SymbolicRegression"
+    # "Transformers" "Optimization" "Knet" "ModelingToolkit" "StatsPlots" "Zygote"
     # "Flux" "JET" "LoopVectorization" "Weave" "BrainFlow"
     # "CUDA" "Javis" "GalacticOptim" "Dagger" "Interact"
     # "Gadfly" "Turing" "RecipesPipeline"
@@ -29,13 +29,15 @@
 
     # math
     "Graphs"
+    "Symbolics" "SymbolicUtils"
 
     # data processing
     "JSON" "DataFrames" "CSV"
 
     # graphics
-    # "Makie" "SGtSNEpi" "Karnak"
-    # "Plots" "TikzPictures" "NetworkLayout"
+    "Makie" "GLMakie"
+    "SGtSNEpi" "Karnak"
+    "Plots" "TikzPictures" "NetworkLayout"
     "GraphRecipes"
   ]));
 }
