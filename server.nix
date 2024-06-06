@@ -57,8 +57,8 @@ in
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
         127.0.0.1 www.discord.com
-        # 127.0.0.1 instagram.com
-        # 127.0.0.1 www.instagram.com
+        127.0.0.1 instagram.com
+        127.0.0.1 www.instagram.com
     '';
   };
 
@@ -175,6 +175,9 @@ in
     LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";
     MAIN_SERVER_ADDR = server_vars.main_server_addr;
     HOME_SERVER_ADDR = server_vars.home_server_addr;
+    DATA_DIR = server_vars.data_dir;
+    MPV_SOCKET_DIR = server_vars.mpv_socket_dir;
+    MPV_MAIN_SOCKET_PATH = server_vars.mpv_main_socket_path;
   };
 
   # note that you may have to ssh first manually for the main server to be inserted into known_hosts file so that this would work

@@ -91,4 +91,7 @@
   brain_dir = "${home_dir}/brain";
   music_dir = "${home_dir}/music";
   notes_dir = "${brain_dir}/notes";
+  data_dir = "${home_dir}/data";
+  mpv_socket_dir = "${data_dir}/mpv_data/sockets";
+  mpv_main_socket_path = "${data_dir}/mpv_data/sockets";
 }
