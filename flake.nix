@@ -2,8 +2,8 @@
   description = "nixos flake";
 
   inputs = {
-    # nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable; # use the unstable branch, usually behind masters by a few days
-    nixpkgs.url = github:NixOS/nixpkgs/master; # use the master branch
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable; # use the unstable branch, usually behind masters by a few days
+    # nixpkgs.url = github:NixOS/nixpkgs/master; # use the master branch
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     home-manager.url = github:nix-community/home-manager;
 

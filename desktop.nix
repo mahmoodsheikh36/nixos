@@ -360,6 +360,7 @@ in
     tailwindcss
     poetry
     # python313
+    desktop_vars.desktop_python
 
     # lisps
     # lispPackages.quicklisp

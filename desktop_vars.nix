@@ -4,6 +4,7 @@
     beautifulsoup4 seaborn pillow dash mysql-connector
     rich networkx dpkt python-lsp-server opencv4
     graphviz flask-sqlalchemy flask-cors ariadne graphene
+    python-magic
 
     # machine learning
     pytorch torchvision

@@ -44,7 +44,6 @@ in
         services.parcellite.enable = true;
 
         home.packages = [
-          desktop_vars.desktop_python
         ];
 
         programs.git = {
