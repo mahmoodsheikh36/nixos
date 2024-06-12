@@ -436,6 +436,18 @@ in
     };
   };
 
+  systemd.services.my_mpv_logger_service = {
+    description = "mpv logger";
+    wantedBy = [ "multi-user.target" ];
+    script = "${pkgs.dash}/bin/dash ${server_vars.scripts_dir}/mpv_logger.sh";
+    serviceConfig = {
+      User = "mahmooz";
+      Restart = "on-failure";
+      RestartSec = "5s";
+      # ExecStart = "${pkgs.coreutils}/bin/sh ${server_vars.scripts_dir}/mpv_logger.sh";
+    };
+  };
+
   # services.picom.enable = true;
   systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
     ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf

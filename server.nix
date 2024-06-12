@@ -197,18 +197,6 @@ in
     };
   };
 
-  systemd.services.my_mpv_logger_service = {
-    description = "mpv logger";
-    wantedBy = [ "multi-user.target" ];
-    script = "${pkgs.dash}/bin/dash ${server_vars.scripts_dir}/mpv_logger.sh";
-    serviceConfig = {
-      User = "mahmooz";
-      Restart = "on-failure";
-      RestartSec = "5s";
-      # ExecStart = "${pkgs.coreutils}/bin/sh ${server_vars.scripts_dir}/mpv_logger.sh";
-    };
-  };
-
   services.udev.extraRules = ''
     # Your rule goes here
     SUBSYSTEM=="block", ENV{ID_FS_UUID}=="777ddbd7-9692-45fb-977e-0d6678a4a213", RUN+="${pkgs.coreutils}/bin/mkdir -p /home/mahmooz/mnt" RUN+="${pkgs.systemd}/bin/systemd-mount $env{DEVNAME} /home/mahmooz/mnt/", RUN+="${lib.getExe pkgs.logger} --tag my-manual-usb-mount udev rule success, drive: %k with uuid $env{ID_FS_UUID}"
