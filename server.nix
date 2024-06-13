@@ -51,8 +51,8 @@ in
     networkmanager.enable = true;
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
-        # 127.0.0.1 youtube.com
-        # 127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
@@ -178,6 +178,7 @@ in
     DATA_DIR = server_vars.data_dir;
     MPV_SOCKET_DIR = server_vars.mpv_socket_dir;
     MPV_MAIN_SOCKET_PATH = server_vars.mpv_main_socket_path;
+    PERSONAL_WEBSITE = server_vars.personal_website;
   };
 
   # note that you may have to ssh first manually for the main server to be inserted into known_hosts file so that this would work
