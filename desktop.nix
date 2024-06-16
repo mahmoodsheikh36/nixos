@@ -90,12 +90,12 @@ in
     displayManager = {
       sessionCommands = ''
         # some of these commands dont work because $HOME isnt /home/mahmooz..
-        ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
+        # ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
         # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
-        ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
+        # ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
       '';
-      startx.enable = true;
-      sx.enable = true;
+      # startx.enable = true;
+      # sx.enable = true;
     };
     xkb.layout = "us";
     xkb.options = "caps:escape,ctrl:ralt_rctrl";
@@ -123,6 +123,12 @@ in
       naturalScrolling = false;
     };
   };
+  # You may need to comment out "services.displayManager.gdm.enable = true;"
+  # services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
 
   # needed for flatpak, slows some apps startup time..
   # xdg.portal = {
@@ -298,7 +304,6 @@ in
     xdotool
     btrfs-progs
     sshpass
-    inetutils # for ftp command
 
     # x11 tools
     rofi
@@ -454,38 +459,6 @@ in
   systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
     ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
   '';
-
-  # services.getty.autologinUser = "mahmooz";
-  # environment.loginShellInit = ''
-  #   if test "$(tty)" = "/dev/tty1" && ! pgrep -f xserver; then
-  #     startx &
-  #   fi
-  # '';
-  # to auto login into an x11 session without a display manager
-  systemd.defaultUnit = "graphical.target";
-  systemd.services.autostartx = {
-    enable = true;
-    description = "X11 session for <user>";
-    after = [ "graphical.target" "systemd-user-sessions.service" ];
-    wantedBy = [ "graphical.target" ];
-    serviceConfig = {
-      User = "mahmooz";
-      WorkingDirectory = "~";
-      PAMName = "login";
-      Environment = [ "XDG_SESSION_TYPE=x11" ];
-      TTYPath = "/dev/tty8";
-      StandardInput = "tty";
-      UnsetEnvironment = "TERM";
-      UtmpIdentifier = "tty8";
-      UtmpMode = "user";
-      StandardOutput = "journal";
-      ExecStartPre = "${pkgs.kbd}/bin/chvt 8";
-      ExecStart = "${pkgs.xorg.xinit}/bin/startx";
-      Restart = "always";
-      RestartSec = "3";
-    };
-    restartIfChanged = false; # dont restart on nixos-rebuild
-  };
 
   system.stateVersion = "23.05"; # dont change
 }

@@ -4,6 +4,7 @@ let
   desktop_vars = (import ./desktop_vars.nix { pkgs = pkgs; });
 in
 {
+
   home-manager = {
     users = let
       user_config = {

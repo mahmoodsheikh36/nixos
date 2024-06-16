@@ -48,6 +48,7 @@
 
     # networking tools
     curl wget nmap socat arp-scan tcpdump
+    inetutils ncftp
 
     file vifm zip unzip fzf p7zip unrar-wrapper
     transmission acpi gnupg tree-sitter lm_sensors
