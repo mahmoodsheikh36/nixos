@@ -12,6 +12,10 @@
     transformers
     diffusers
     spacy gensim nltk
+
+    # for homework
+    psutil
+    pynput
   ]));
   desktop_julia = (pkgs.julia.withPackages.override({ precompile = true; })([
     # "TruthTables" "LinearSolve"

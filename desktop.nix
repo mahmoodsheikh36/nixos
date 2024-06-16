@@ -298,6 +298,7 @@ in
     xdotool
     btrfs-progs
     sshpass
+    inetutils # for ftp command
 
     # x11 tools
     rofi
@@ -333,6 +334,7 @@ in
     nuclear
     python312Packages.google
     # popcorntime
+    stremio
 
     soulseekqt
     nicotine-plus
