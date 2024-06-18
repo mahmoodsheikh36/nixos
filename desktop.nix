@@ -108,9 +108,9 @@ in
     };
   };
   services.displayManager = {
-    defaultSession = "none+awesome";
+    # defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
-    # defaultSession = "xfce";
+    defaultSession = "xfce";
     # defaultSession = "gnome";
     # defaultSession = "plasma";
   };
