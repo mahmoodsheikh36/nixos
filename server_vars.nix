@@ -3,16 +3,21 @@
   server_overlays = [
     (import (builtins.fetchTarball { # emacs master
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-      sha256 = "1h8glxvkqvjvp1d3gi49q7swj5xi6456vw5xj5h9mrbfzgqn7ihg"; # to avoid an error
+      sha256 = "00wfi5mm31ciliydl50h329ia1d1rxmf52qyl2z9w9in3wfqmb12"; # to avoid an error
     }))
-    (self: super:
-      {
-        my_emacs_git = super.emacs-git.overrideAttrs (oldAttrs: rec {
-          configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules" "--with-widgets" "--with-imagemagick"];
-          patches = [];
-          imagemagick = pkgs.imagemagickBig;
-        });
-      })
+    # (self: super:
+    #   {
+    #     my_emacs_git = super.emacs-git.overrideAttrs (oldAttrs: rec {
+    #       configureFlags = oldAttrs.configureFlags ++ ["--with-json" "--with-tree-sitter" "--with-native-compilation" "--with-modules" "--with-widgets" "--with-imagemagick"];
+    #       patches = [];
+    #       imagemagick = pkgs.imagemagickBig;
+    #     });
+    #   })
+    (self: super: {
+      my_emacs_git = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
+        imagemagick = pkgs.imagemagickBig;
+      });
+    })
     (self: super: {
       my_emacs = (super.emacs.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
         imagemagick = pkgs.imagemagickBig;
@@ -77,7 +82,8 @@
     deploy-rs
     nix-tree
 
-    emacs
+    # my_emacs
+    my_emacs_git
   ];
 
   main_server_addr = "2a01:4f9:c012:ad1b::1";

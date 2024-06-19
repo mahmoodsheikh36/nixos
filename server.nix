@@ -142,7 +142,7 @@ in
   users.users.mahmooz = {
     isNormalUser = true;
     extraGroups = [ "audio" "wheel" ];
-    shell = pkgs.zsh;
+    shell = pkgs.nushell; # pkgs.zsh;
     password = "mahmooz";
     packages = with pkgs; [
     ];
