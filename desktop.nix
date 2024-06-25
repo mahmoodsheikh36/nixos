@@ -228,7 +228,7 @@ in
       inconsolata-nerdfont
       iosevka
       fira-code
-      # nerdfonts
+      nerdfonts
       ubuntu_font_family
       noto-fonts
       noto-fonts-cjk

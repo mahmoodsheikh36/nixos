@@ -14,7 +14,7 @@
     #     });
     #   })
     (self: super: {
-      my_emacs_git = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall=false; withTreeSitter=true; }).overrideAttrs (oldAttrs: rec {
+      my_emacs_git = (super.emacs-git.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; withNativeCompilation = true; withCompressInstall = false; withTreeSitter = true; }).overrideAttrs (oldAttrs: rec {
         imagemagick = pkgs.imagemagickBig;
       });
     })
