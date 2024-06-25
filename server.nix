@@ -191,10 +191,10 @@ in
     serviceConfig = {
       User = "mahmooz";
       Type = "simple";
-      # Restart = "on-failure";
-      # RestartSec = "5s";
-      Restart = "always";
+      Restart = "on-failure";
+      RestartSec = "5s";
       RuntimeMaxSec = "3600";
+      # Restart = "always";
     };
   };
 
