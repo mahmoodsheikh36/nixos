@@ -52,7 +52,7 @@
     gcc clang gdb clang-tools
 
     # networking tools
-    curl wget nmap socat arp-scan tcpdump
+    curl wget nmap socat arp-scan tcpdump iftop
     inetutils ncftp
 
     file vifm zip unzip fzf p7zip unrar-wrapper

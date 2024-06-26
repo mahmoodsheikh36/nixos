@@ -289,7 +289,7 @@ in
 
     # general tools
     # google-chrome nyxt tor-browser-bundle-bin # qutebrowser
-    brave tor-browser-bundle-bin
+    brave tor-browser-bundle-bin google-chrome
     scrcpy
     pavucontrol
     libreoffice
