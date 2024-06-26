@@ -113,6 +113,10 @@ in
     defaultSession = "xfce";
     # defaultSession = "gnome";
     # defaultSession = "plasma";
+    autoLogin = {
+      enable = true;
+      user = "mahmooz";
+    };
   };
   services.libinput = {
     enable = true;
