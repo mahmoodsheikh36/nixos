@@ -16,6 +16,7 @@ in
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    setLdLibraryPath = true;
   };
 
   # enable sound and bluetooth
@@ -124,10 +125,8 @@ in
     };
   };
   # You may need to comment out "services.displayManager.gdm.enable = true;"
-  # services.displayManager.sddm.enable = true;
-  # services.desktopManager.plasma6.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "mahmooz";
   services.xserver.desktopManager.xfce.enable = true;
 
   # needed for flatpak, slows some apps startup time..
@@ -434,7 +433,7 @@ in
   };
   # services.monit.enable = true;
 
-  # run sxhkd when x11 starts, this may be obsolete
+  # run sxhkd when x11 starts
   systemd.user.services.my_sxhkd_service = {
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
