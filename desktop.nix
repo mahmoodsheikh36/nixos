@@ -447,8 +447,8 @@ in
     script = "${pkgs.dash}/bin/dash ${server_vars.scripts_dir}/mpv_logger.sh";
     serviceConfig = {
       User = "mahmooz";
-      Restart = "on-failure";
-      RestartSec = "5s";
+      Restart = "always";
+      RuntimeMaxSec = 3600
       # ExecStart = "${pkgs.coreutils}/bin/sh ${server_vars.scripts_dir}/mpv_logger.sh";
     };
   };

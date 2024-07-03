@@ -56,7 +56,7 @@
     inetutils ncftp
 
     file vifm zip unzip fzf p7zip unrar-wrapper
-    transmission acpi gnupg tree-sitter lm_sensors
+    transmission_4 acpi gnupg tree-sitter lm_sensors
     cryptsetup
     openssl
     yt-dlp you-get
