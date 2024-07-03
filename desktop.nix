@@ -12,11 +12,9 @@ in
 
   hardware.sensor.iio.enable = true;
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    setLdLibraryPath = true;
+    enable32Bit = true;
   };
 
   # enable sound and bluetooth
@@ -366,7 +364,8 @@ in
     tailwindcss
     poetry
     # python313
-    desktop_vars.desktop_python
+    # desktop_vars.desktop_python
+    python3
 
     # lisps
     # lispPackages.quicklisp
