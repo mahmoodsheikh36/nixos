@@ -448,7 +448,7 @@ in
     serviceConfig = {
       User = "mahmooz";
       Restart = "always";
-      RuntimeMaxSec = 3600
+      RuntimeMaxSec = "3600";
       # ExecStart = "${pkgs.coreutils}/bin/sh ${server_vars.scripts_dir}/mpv_logger.sh";
     };
   };
