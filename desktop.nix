@@ -18,7 +18,7 @@ in
   };
 
   # enable sound and bluetooth
-  services.blueman.enable = true;
+  # services.blueman.enable = true;
   hardware.bluetooth = {
     enable = true;
     settings = {
@@ -295,6 +295,7 @@ in
     # commandline tools
     wezterm # terminal emulator
     pulsemixer # tui for pulseaudio control
+    alsa-utils
     playerctl # media control
     gptfdisk parted
     libtool # to compile vterm
