@@ -127,14 +127,6 @@ in
   services.displayManager.autoLogin.user = "mahmooz";
   services.xserver.desktopManager.xfce.enable = true;
 
-  # needed for flatpak, slows some apps startup time..
-  # xdg.portal = {
-  #   enable = true;
-  #   # xdgOpenUsePortal = true; # may be causing issues with xdg-open, that or having * instead of gtk below caused it
-  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  #   config.common.default = "gtk";
-  # };
-
   # tty configs
   console = {
     #earlySetup = true;
@@ -185,11 +177,6 @@ in
   programs.dconf.enable = true;
   services.tumbler.enable = lib.mkForce false;
   programs.light.enable = true;
-
-  # services.flatpak.enable = true;
-  # services.flatpak.packages = [
-  #   "com.jagex.RuneScape"
-  # ];
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
@@ -278,7 +265,7 @@ in
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
     lollypop clementine
-    ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample calibre
+    ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample #calibre
     djvulibre
 
     # media manipulation tools
@@ -349,6 +336,7 @@ in
     # science
     gnuplot
     lean
+    sentencepiece
     # sageWithDoc sagetex
 
     # some programming languages/environments
@@ -369,23 +357,6 @@ in
     python3
 
     # lisps
-    # lispPackages.quicklisp
-    # (sbcl.withPackages (ps: with ps; [
-    #   lem-opengl
-    #   serapeum
-    #   lparallel
-    #   cl-csv
-    #   hunchentoot
-    #   jsown
-    #   alexandria
-    #   # swank
-    #   # slynk
-    #   nyxt
-    # ]))
-    # usage example:
-    # $ sbcl
-    # * (load (sb-ext:posix-getenv "ASDF"))
-    # * (asdf:load-system 'alexandria)
     babashka
     chicken
     guile
