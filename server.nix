@@ -10,7 +10,7 @@ in
       ./hardware-configuration.nix # hardware scan results
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_1; # pkgs.linuxPackages_latest;
   boot.tmp.cleanOnBoot = true;
   # use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -51,14 +51,14 @@ in
     networkmanager.enable = true;
     # block some hosts by redirecting to the loopback interface
     extraHosts = ''
-        #127.0.0.1 youtube.com
-        #127.0.0.1 www.youtube.com
+        127.0.0.1 youtube.com
+        127.0.0.1 www.youtube.com
         # 127.0.0.1 reddit.com
         # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
-        127.0.0.1 instagram.com
-        127.0.0.1 www.instagram.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
+        # 127.0.0.1 instagram.com
+        # 127.0.0.1 www.instagram.com
     '';
   };
 

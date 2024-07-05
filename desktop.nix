@@ -32,6 +32,7 @@ in
     };
     powerOnBoot = true;
   };
+  security.rtkit.enable = true; # Realtime audio support
   hardware.pulseaudio = {
     enable = true;
     # extraModules = [ pkgs.pulseaudio-modules-bt ];
