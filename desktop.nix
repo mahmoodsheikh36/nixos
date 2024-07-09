@@ -181,8 +181,8 @@ in
 
   # hybrid sleep when press power button
   services.logind.extraConfig = ''
-    HandlePowerKey=suspend
-    IdleAction=suspend
+    HandlePowerKey=ignore
+    IdleAction=ignore
     IdleActionSec=1m
   '';
   # dont hibernate when lid is closed
@@ -338,7 +338,7 @@ in
     gnuplot
     lean
     sentencepiece
-    # sageWithDoc sagetex
+    sageWithDoc sagetex
 
     # some programming languages/environments
     (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
@@ -391,8 +391,6 @@ in
     nodePackages_latest.typescript-language-server
     nodePackages_latest.eslint
 
-    # (callPackage ./firefox.nix {})
-
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     # enchant.dev # for emacs jinx-mode
@@ -427,9 +425,9 @@ in
   };
 
   # services.picom.enable = true;
-  systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
-    ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
-  '';
+  # systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
+  #   ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
+  # '';
 
   system.stateVersion = "23.05"; # dont change
 }

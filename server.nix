@@ -18,6 +18,7 @@ in
 
   nixpkgs.config.allowUnfree = true;
   time.timeZone = "Asia/Jerusalem";
+  # system.etc.overlay.enable = true;
 
   # packages cache
   nix = {
@@ -57,8 +58,8 @@ in
         # 127.0.0.1 www.reddit.com
         127.0.0.1 discord.com
         127.0.0.1 www.discord.com
-        # 127.0.0.1 instagram.com
-        # 127.0.0.1 www.instagram.com
+        127.0.0.1 instagram.com
+        127.0.0.1 www.instagram.com
     '';
   };
 
