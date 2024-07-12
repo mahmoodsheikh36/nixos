@@ -145,7 +145,7 @@ in
     isNormalUser = true;
     extraGroups = [ "audio" "wheel" ];
     shell = pkgs.zsh;
-    password = "mahmooz";
+    initialPassword = "123";
     packages = with pkgs; [
     ];
   };
@@ -207,4 +207,5 @@ in
   '';
 
   environment.systemPackages = server_vars.server_packages;
+  nixpkgs.overlays = server_vars.server_overlays;
 }

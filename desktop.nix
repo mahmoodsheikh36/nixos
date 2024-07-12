@@ -194,6 +194,7 @@ in
     style = "adwaita-dark";
   };
 
+  # virtualization
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
@@ -201,8 +202,9 @@ in
       ovmf.enable = true;
     };
   };
-  # virtualisation.waydroid.enable = true;
   programs.virt-manager.enable = true;
+  services.qemuGuest.enable = true;
+  # virtualisation.waydroid.enable = true;
 
   fonts = {
     enableDefaultPackages = true;
@@ -339,6 +341,10 @@ in
     lean
     sentencepiece
     sageWithDoc sagetex
+    kaggle
+
+    # quickly start VMs
+    quickemu
 
     # some programming languages/environments
     (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
