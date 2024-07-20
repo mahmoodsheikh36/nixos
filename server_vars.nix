@@ -3,7 +3,7 @@
   server_overlays = [
     (import (builtins.fetchTarball { # emacs master
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-      sha256 = "18w6f089fkzvlw5bmkdd8bhhvbykfpx3x09r1rkkzb27s6837a7y"; # to avoid an error
+      sha256 = "0qxrjpjg8pkvn1j1wlz9j9barwwywi60q9fbfhxdm5gzfvsdk056"; # to avoid an error
     }))
     # (self: super:
     #   {
@@ -83,7 +83,8 @@
     nix-tree
 
     # my_emacs
-    my_emacs_git
+    emacs
+    # my_emacs_git
   ];
 
   main_server_addr = "2a01:4f9:c012:ad1b::1";

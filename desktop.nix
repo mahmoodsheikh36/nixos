@@ -262,7 +262,7 @@ in
     vlc
     feh # i use it to set wallpaper
     my_sxiv qimgv
-    telegram-desktop
+    # telegram-desktop
     youtube-music
     okular zathura foliate mupdf
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
@@ -281,6 +281,7 @@ in
     pavucontrol
     libreoffice
     syncthing
+    neovide
 
     # commandline tools
     wezterm # terminal emulator
