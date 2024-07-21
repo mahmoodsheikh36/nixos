@@ -5,10 +5,9 @@ let
   desktop_vars = (import ./desktop_vars.nix { pkgs = pkgs; });
 in
 {
-  imports =
-    [
-      ./server.nix
-    ];
+  imports = [
+    ./server.nix
+  ];
 
   hardware.sensor.iio.enable = true;
 
