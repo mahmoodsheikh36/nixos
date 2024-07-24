@@ -83,8 +83,8 @@
     nix-tree
 
     # my_emacs
-    emacs
-    # my_emacs_git
+    # emacs
+    my_emacs_git
   ];
 
   main_server_addr = "2a01:4f9:c012:ad1b::1";
