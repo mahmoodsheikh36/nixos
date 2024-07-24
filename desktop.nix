@@ -11,10 +11,10 @@ in
 
   hardware.sensor.iio.enable = true;
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  # hardware.graphics = {
+  #   enable = true;
+  #   enable32Bit = true;
+  # };
 
   # enable sound and bluetooth
   # services.blueman.enable = true;
@@ -266,7 +266,7 @@ in
     okular zathura foliate mupdf
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
-    lollypop clementine
+    # lollypop clementine
     ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample #calibre
     djvulibre
 
