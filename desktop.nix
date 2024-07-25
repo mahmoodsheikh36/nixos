@@ -85,13 +85,13 @@ in
   # x11 and awesomewm
   services.xserver = {
     enable = true;
-    # wacom.enable = true;
+    wacom.enable = true;
     displayManager = {
       sessionCommands = ''
         # some of these commands dont work because $HOME isnt /home/mahmooz..
         # ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
         # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
-        # ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
+        ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
       '';
       # startx.enable = true;
       # sx.enable = true;
@@ -107,9 +107,9 @@ in
     };
   };
   services.displayManager = {
-    # defaultSession = "none+awesome";
+    defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
-    defaultSession = "xfce";
+    # defaultSession = "xfce";
     # defaultSession = "gnome";
     # defaultSession = "plasma";
   };
@@ -185,7 +185,7 @@ in
     IdleActionSec=1m
   '';
   # dont hibernate when lid is closed
-  # services.logind.lidSwitch = "ignore";
+  services.logind.lidSwitch = "ignore";
 
   qt = {
     enable = true;
@@ -261,7 +261,7 @@ in
     vlc
     feh # i use it to set wallpaper
     my_sxiv qimgv
-    # telegram-desktop
+    telegram-desktop
     youtube-music
     okular zathura foliate mupdf
     xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes

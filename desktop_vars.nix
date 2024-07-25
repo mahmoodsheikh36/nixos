@@ -12,6 +12,7 @@
     transformers
     diffusers
     spacy gensim nltk
+    datasets
 
     # for homework
     psutil
