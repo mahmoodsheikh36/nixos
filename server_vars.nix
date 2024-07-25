@@ -3,7 +3,7 @@
   server_overlays = [
     (import (builtins.fetchTarball { # emacs master
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-      sha256 = "0hh1vwy4dlxq8mj4vh1q1346y3n10zimj53ifh83j4s9mcc578ja"; # to avoid an error
+      sha256 = "1b63vnf6pby23ghj5cbwaxypkz5lz4fq3k42rrz5vdalc9y29d5b"; # to avoid an error
     }))
     # (self: super:
     #   {
