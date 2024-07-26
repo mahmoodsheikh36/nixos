@@ -86,6 +86,10 @@ in
   services.xserver = {
     enable = true;
     wacom.enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    desktopManager.xfce.enable = true;
+    desktopManager.plasma5.enable = true;
     displayManager = {
       sessionCommands = ''
         # some of these commands dont work because $HOME isnt /home/mahmooz..
@@ -107,11 +111,11 @@ in
     };
   };
   services.displayManager = {
-    defaultSession = "none+awesome";
+    # defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
     # defaultSession = "xfce";
     # defaultSession = "gnome";
-    # defaultSession = "plasma";
+    defaultSession = "plasma";
   };
   services.libinput = {
     enable = true;
@@ -122,10 +126,17 @@ in
       naturalScrolling = false;
     };
   };
-  # You may need to comment out "services.displayManager.gdm.enable = true;"
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "mahmooz";
-  services.xserver.desktopManager.xfce.enable = true;
+  # services.displayManager.autoLogin.enable = true;
+  # services.displayManager.autoLogin.user = "mahmooz";
+  environment = {
+    etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
+      "Basic Settings" = {
+        "Indexing-Enabled" = false;
+      };
+    };
+  };
+
+  environment.plasma5.excludePackages = [ pkgs.kdePackages.baloo ];
 
   # tty configs
   console = {

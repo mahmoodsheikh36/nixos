@@ -70,6 +70,20 @@ in
           mimeType = [ "x-scheme-handler/magnet" ];
         };
 
+        home-manager.users.myuser = {
+          dconf = {
+            enable = true;
+            settings."org/gnome/shell" = {
+              disable-user-extensions = false;
+              enabled-extensions = with pkgs.gnomeExtensions; [
+                blur-my-shell.extensionUuid
+                gsconnect.extensionUuid
+                paperwm.extensionUuid
+              ];
+            };
+          };
+        };
+
         # set a variable for dotfiles repo, not necessary but convenient
         # home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
         # home.file = {
