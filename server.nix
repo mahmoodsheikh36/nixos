@@ -171,7 +171,7 @@ in
     DOTFILES_DIR = server_vars.dotfiles_dir;
     NIX_CONFIG_DIR = "$HOME/work/nixos/";
     BLOG_DIR = server_vars.blog_dir;
-    QT_SCALE_FACTOR = "2";
+    # QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
     BROWSER = "brave";
     LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";

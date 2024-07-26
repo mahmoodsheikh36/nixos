@@ -86,10 +86,10 @@ in
   services.xserver = {
     enable = true;
     wacom.enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    # displayManager.gdm.enable = true;
+    # desktopManager.gnome.enable = true;
     desktopManager.xfce.enable = true;
-    desktopManager.plasma5.enable = true;
+    # desktopManager.plasma6.enable = true;
     displayManager = {
       sessionCommands = ''
         # some of these commands dont work because $HOME isnt /home/mahmooz..
@@ -111,11 +111,11 @@ in
     };
   };
   services.displayManager = {
-    # defaultSession = "none+awesome";
+    defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
     # defaultSession = "xfce";
     # defaultSession = "gnome";
-    defaultSession = "plasma";
+    # defaultSession = "plasma";
   };
   services.libinput = {
     enable = true;
@@ -126,17 +126,25 @@ in
       naturalScrolling = false;
     };
   };
-  # services.displayManager.autoLogin.enable = true;
-  # services.displayManager.autoLogin.user = "mahmooz";
-  environment = {
-    etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
-      "Basic Settings" = {
-        "Indexing-Enabled" = false;
-      };
-    };
-  };
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "mahmooz";
+  # environment = {
+  #   etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
+  #     "Basic Settings" = {
+  #       "Indexing-Enabled" = false;
+  #     };
+  #   };
+  # };
 
-  environment.plasma5.excludePackages = [ pkgs.kdePackages.baloo ];
+  # environment.plasma5.excludePackages = [
+  #         pkgs.kdePackages.baloo
+  #         pkgs.libsForQt5.plasma-browser-integration
+  # ];
+  # environment.plasma6.excludePackages = with pkgs.kdePackages; [
+  #   plasma-browser-integration
+  #   konsole
+  #   oxygen
+  # ];
 
   # tty configs
   console = {
