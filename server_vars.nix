@@ -53,7 +53,7 @@
 
     # networking tools
     curl wget nmap socat arp-scan tcpdump iftop
-    inetutils ncftp
+    inetutils ncftp # samba4Full
 
     file vifm zip unzip fzf p7zip unrar-wrapper
     transmission_4 acpi gnupg tree-sitter lm_sensors

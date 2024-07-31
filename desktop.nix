@@ -370,7 +370,7 @@ in
     flutter dart android-studio android-tools genymotion
     texlive.combined.scheme-full
     rustc meson ninja
-    jupyter
+    # jupyter
     typescript
     # desktop_vars.desktop_julia
     julia-bin

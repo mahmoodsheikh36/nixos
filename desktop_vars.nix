@@ -17,6 +17,8 @@
     # for homework
     psutil
     pynput
+
+    firebase_admin
   ]));
   desktop_julia = (pkgs.julia.withPackages.override({ precompile = true; })([
     # "TruthTables" "LinearSolve"

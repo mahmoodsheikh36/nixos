@@ -54,10 +54,10 @@ in
     extraHosts = ''
         127.0.0.1 youtube.com
         127.0.0.1 www.youtube.com
-        # 127.0.0.1 reddit.com
-        # 127.0.0.1 www.reddit.com
-        # 127.0.0.1 discord.com
-        # 127.0.0.1 www.discord.com
+        127.0.0.1 reddit.com
+        127.0.0.1 www.reddit.com
+        127.0.0.1 discord.com
+        127.0.0.1 www.discord.com
         127.0.0.1 instagram.com
         127.0.0.1 www.instagram.com
     '';
@@ -82,6 +82,7 @@ in
   programs.sniffnet.enable = true;
   programs.wireshark.enable = true;
   # services.atuin.enable = true;
+  services.samba.enable = true;
 
   services.mysql = {
     enable = true;
