@@ -397,7 +397,7 @@ in
     pulseaudioFull
     prettierd # for emacs apheleia
     nodePackages.prettier # for emacs apheleia
-    python3Packages.huggingface-hub # huggingface commandline
+    python3Packages.huggingface-hub python3Packages.datasets # huggingface commandline
     # ruff # python code formatter
     black
 
