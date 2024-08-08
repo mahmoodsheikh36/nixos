@@ -47,6 +47,7 @@
     lsof
     exiftool
     distrobox
+    tree
 
     openjdk
     gcc clang gdb clang-tools
