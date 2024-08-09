@@ -3,11 +3,12 @@
 let
   server_vars = (import ./server_vars.nix { pkgs = pkgs; });
   desktop_vars = (import ./desktop_vars.nix { pkgs = pkgs; });
+  per_machine_vars = (import ./per_machine_vars.nix {});
 in
 {
   imports = [
     ./server.nix
-  ];
+  ] ++ lib.optional (per_machine_vars.enable_nvidia) ./nvidia.nix;
 
   hardware.sensor.iio.enable = true;
 
