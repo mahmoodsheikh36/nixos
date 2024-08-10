@@ -53,6 +53,8 @@ in
   services.iptsd.enable = true;
   services.iptsd.config.Touch.DisableOnStylus = true;
 
+  nixpkgs.config.cudaSupport = per_machine_vars.enable_nvidia;
+
   # my overlays
   nixpkgs.overlays = [
     (self: super:
@@ -421,7 +423,7 @@ in
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     # enchant.dev # for emacs jinx-mode
 
-  ] ++ server_vars.server_packages ++ lib.optional (per_machine_vars.enable_nvidia) [ cudatoolkit ];
+  ] ++ server_vars.server_packages;
 
   services.prometheus = {
     enable = true;
