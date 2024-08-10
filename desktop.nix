@@ -421,7 +421,7 @@ in
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     # enchant.dev # for emacs jinx-mode
 
-  ] ++ server_vars.server_packages;
+  ] ++ server_vars.server_packages ++ lib.optional (per_machine_vars.enable_nvidia) [ pkgs.cudatookit ];
 
   services.prometheus = {
     enable = true;
