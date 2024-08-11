@@ -423,7 +423,8 @@ in
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     # enchant.dev # for emacs jinx-mode
 
-  ] ++ server_vars.server_packages ++ lib.optional (per_machine_vars.enable_nvidia) [ pkgs.cudaPackages.cudatoolkit ];
+    cudatoolkit # although i should only enable it if per_machine_vars.enable_nvidia is true
+  ] ++ server_vars.server_packages;
 
   services.prometheus = {
     enable = true;
