@@ -10,12 +10,13 @@ in
     ./server.nix
   ] ++ lib.optional (per_machine_vars.enable_nvidia) ./nvidia.nix;
 
+  # automatic screen rotation?
   hardware.sensor.iio.enable = true;
 
-  # hardware.graphics = {
-  #   enable = true;
-  #   enable32Bit = true;
-  # };
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   # enable sound and bluetooth
   # services.blueman.enable = true;
@@ -89,8 +90,8 @@ in
   services.xserver = {
     enable = true;
     wacom.enable = true;
-    # displayManager.gdm.enable = true;
-    # desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
     desktopManager.xfce.enable = true;
     # desktopManager.plasma6.enable = true;
     displayManager = {
@@ -98,7 +99,7 @@ in
         # some of these commands dont work because $HOME isnt /home/mahmooz..
         # ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
         # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
-        ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
+        # ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
       '';
       # startx.enable = true;
       # sx.enable = true;
@@ -129,8 +130,8 @@ in
       naturalScrolling = false;
     };
   };
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "mahmooz";
+  # services.displayManager.autoLogin.enable = true;
+  # services.displayManager.autoLogin.user = "mahmooz";
   # environment = {
   #   etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
   #     "Basic Settings" = {
@@ -226,6 +227,8 @@ in
   programs.virt-manager.enable = true;
   services.qemuGuest.enable = true;
   # virtualisation.waydroid.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
 
   fonts = {
     enableDefaultPackages = true;
@@ -331,7 +334,7 @@ in
     # zoom-us, do i realy want this running natively?
     hugo
     adb-sync
-    woeusb-ng
+    # woeusb-ng
     ntfs3g
     gnupg1orig
     SDL2
@@ -362,8 +365,8 @@ in
     gnuplot
     lean
     sentencepiece
-    sageWithDoc sagetex
-    kaggle
+    # sageWithDoc sagetex
+    kaggle google-cloud-sdk python3Packages.huggingface-hub python3Packages.datasets
 
     # quickly start VMs
     quickemu
@@ -381,9 +384,8 @@ in
     typst
     tailwindcss
     poetry
-    # python313
     # desktop_vars.desktop_python
-    python3
+    # python3
 
     # lisps
     babashka
@@ -400,12 +402,11 @@ in
     pulseaudioFull
     prettierd # for emacs apheleia
     nodePackages.prettier # for emacs apheleia
-    python3Packages.huggingface-hub python3Packages.datasets # huggingface commandline
     # ruff # python code formatter
     black
 
     # lsp
-    haskell-language-server emmet-language-server clojure-lsp llm-ls
+    haskell-language-server emmet-language-server clojure-lsp #llm-ls
     nodePackages.node2nix yaml-language-server postgres-lsp ansible-language-server
     asm-lsp typst-lsp htmx-lsp cmake-language-server lua-language-server java-language-server
     tailwindcss-language-server

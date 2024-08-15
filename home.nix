@@ -4,7 +4,6 @@ let
   desktop_vars = (import ./desktop_vars.nix { pkgs = pkgs; });
 in
 {
-
   home-manager = {
     users = let
       user_config = {
@@ -73,19 +72,24 @@ in
         home-manager.users.myuser = {
           dconf = {
             enable = true;
-            settings."org/gnome/shell" = {
-              disable-user-extensions = false;
-              enabled-extensions = with pkgs.gnomeExtensions; [
-                blur-my-shell.extensionUuid
-                gsconnect.extensionUuid
-                paperwm.extensionUuid
-              ];
-            };
+            settings = {
+              "org/gnome/shell" = {
+                disable-user-extensions = false;
+                enabled-extensions = with pkgs.gnomeExtensions; [
+                  blur-my-shell.extensionUuid
+                  gsconnect.extensionUuid
+                  paperwm.extensionUuid
+                ];
+              };
+              # You need quotes to escape '/'
+              "org/gnome/desktop/interface" = {
+                clock-show-weekday = true;
+                color-scheme = "prefer-dark";
+              };
+            }
           };
         };
 
-        # set a variable for dotfiles repo, not necessary but convenient
-        # home.sessionVariables.DOTS = "/home/mahmooz/work/dotfiles";
         # home.file = {
         #   # "git/config".source = ./dotfiles/git/config;
         #   ".config/backup/dotfiles" = {
