@@ -11,7 +11,7 @@ in
   ] ++ lib.optional (per_machine_vars.enable_nvidia) ./nvidia.nix;
 
   # automatic screen rotation?
-  hardware.sensor.iio.enable = true;
+  # hardware.sensor.iio.enable = true;
 
   hardware.graphics = {
     enable = true;
@@ -49,10 +49,11 @@ in
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 
-  hardware.opentabletdriver.enable = true;
-  hardware.opentabletdriver.daemon.enable = true;
-  services.iptsd.enable = true;
-  services.iptsd.config.Touch.DisableOnStylus = true;
+  # hardware.opentabletdriver.enable = true;
+  # hardware.opentabletdriver.daemon.enable = true;
+
+  # services.iptsd.enable = true;
+  # services.iptsd.config.Touch.DisableOnStylus = true;
 
   nixpkgs.config.cudaSupport = per_machine_vars.enable_nvidia;
 
@@ -115,9 +116,9 @@ in
     };
   };
   services.displayManager = {
-    defaultSession = "none+awesome";
+    # defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
-    # defaultSession = "xfce";
+    defaultSession = "xfce";
     # defaultSession = "gnome";
     # defaultSession = "plasma";
   };
@@ -220,12 +221,16 @@ in
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
+      package = pkgs.qemu_kvm;
       runAsRoot = true;
-      ovmf.enable = true;
+      ovmf = {
+        enable = true;
+        packages = with pkgs; [ OVMFFull.fd ];
+      };
+      swtpm.enable = true;
     };
   };
   programs.virt-manager.enable = true;
-  services.qemuGuest.enable = true;
   # virtualisation.waydroid.enable = true;
   virtualisation.virtualbox.host.enable = true;
   virtualisation.virtualbox.host.enableExtensionPack = true;
@@ -308,7 +313,8 @@ in
     neovide
 
     # commandline tools
-    wezterm # terminal emulator
+    #wezterm # terminal emulator
+    kitty
     pulsemixer # tui for pulseaudio control
     alsa-utils
     playerctl # media control
@@ -369,7 +375,7 @@ in
     kaggle google-cloud-sdk python3Packages.huggingface-hub python3Packages.datasets
 
     # quickly start VMs
-    quickemu
+    # quickemu
 
     # some programming languages/environments
     (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
@@ -408,7 +414,7 @@ in
     # lsp
     haskell-language-server emmet-language-server clojure-lsp #llm-ls
     nodePackages.node2nix yaml-language-server postgres-lsp ansible-language-server
-    asm-lsp typst-lsp htmx-lsp cmake-language-server lua-language-server java-language-server
+    asm-lsp htmx-lsp cmake-language-server lua-language-server java-language-server # typst-lsp
     tailwindcss-language-server
     nodePackages.vim-language-server
     nodePackages.bash-language-server

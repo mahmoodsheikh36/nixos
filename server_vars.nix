@@ -3,7 +3,7 @@
   server_overlays = [
     (import (builtins.fetchTarball { # emacs master
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-      sha256 = "0c93nniahzsqmq4ryjwj0qnbgvab3id9236f9ic0f0fp5zwplpqc"; # to avoid an error
+      sha256 = "1h9my9dq1l3mmbvlqlpxpl6ma3hmglgcmjd39rc48pr11aspkbp2"; # to avoid an error
     }))
     # (self: super:
     #   {
@@ -54,7 +54,7 @@
 
     # networking tools
     curl wget nmap socat arp-scan tcpdump iftop
-    inetutils ncftp # samba4Full
+    inetutils ncftp samba # samba4Full
 
     file vifm zip unzip fzf p7zip unrar-wrapper
     transmission_4 acpi gnupg tree-sitter lm_sensors
