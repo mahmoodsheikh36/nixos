@@ -49,12 +49,6 @@ in
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 
-  # hardware.opentabletdriver.enable = true;
-  # hardware.opentabletdriver.daemon.enable = true;
-
-  # services.iptsd.enable = true;
-  # services.iptsd.config.Touch.DisableOnStylus = true;
-
   nixpkgs.config.cudaSupport = per_machine_vars.enable_nvidia;
 
   # my overlays
@@ -131,25 +125,6 @@ in
       naturalScrolling = false;
     };
   };
-  # services.displayManager.autoLogin.enable = true;
-  # services.displayManager.autoLogin.user = "mahmooz";
-  # environment = {
-  #   etc."xdg/baloofilerc".source = (pkgs.formats.ini {}).generate "baloorc" {
-  #     "Basic Settings" = {
-  #       "Indexing-Enabled" = false;
-  #     };
-  #   };
-  # };
-
-  # environment.plasma5.excludePackages = [
-  #         pkgs.kdePackages.baloo
-  #         pkgs.libsForQt5.plasma-browser-integration
-  # ];
-  # environment.plasma6.excludePackages = with pkgs.kdePackages; [
-  #   plasma-browser-integration
-  #   konsole
-  #   oxygen
-  # ];
 
   # tty configs
   console = {
@@ -197,7 +172,7 @@ in
   };
   # programs.xfconf.enable = true;
   # programs.nm-applet.enable = true; # this thing is annoying lol (send notifications and stuff..)
-  # programs.firefox.enable = true;
+  programs.firefox.enable = true;
   programs.dconf.enable = true;
   services.tumbler.enable = lib.mkForce false;
   programs.light.enable = true;
