@@ -68,6 +68,7 @@
     bc # for arithmetic in shell
     ttags
     diffsitter
+    mongosh
 
     # some build systems
     cmake gnumake autoconf

@@ -141,6 +141,8 @@ in
     }];
   };
 
+  services.mongodb.enable = true;
+
   # users
   users.users.mahmooz = {
     isNormalUser = true;

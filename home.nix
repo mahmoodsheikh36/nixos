@@ -35,7 +35,7 @@ in
 
         home.pointerCursor = {
           name = "Adwaita";
-          package = pkgs.gnome.adwaita-icon-theme;
+          package = pkgs.adwaita-icon-theme;
           size = 64;
         };
 
@@ -90,23 +90,14 @@ in
           };
         };
 
-        # home.file = {
-        #   # "git/config".source = ./dotfiles/git/config;
-        #   ".config/backup/dotfiles" = {
-        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/dotfiles";
-        #     onChange = "${pkgs.writeShellScript "dotfiles-change" ''
-        #     ''}";
-        #   };
-        #   ".config/backup/scripts" = {
-        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/scripts";
-        #   };
-        #   ".config/backup/nixos" = {
-        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/nixos";
-        #   };
-        #   ".config/backup/otherdots" = {
-        #     source = builtins.fetchGit "https://github.com/mahmoodsheikh36/otherdots";
-        #   };
-        # };
+        gtk = {
+          enable = true;
+          font.name = "Victor Mono SemiBold 12";
+          theme = {
+            name = "SolArc-Dark";
+            package = pkgs.solarc-gtk-theme;
+          };
+        };
       };
     in {
       mahmooz = user_config;
