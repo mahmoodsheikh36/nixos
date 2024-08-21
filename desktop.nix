@@ -269,7 +269,7 @@ in
     telegram-desktop
     youtube-music
     okular zathura foliate mupdf
-    xournalpp gnome.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
+    xournalpp pkgs.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
     # lollypop clementine
     ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample #calibre
@@ -434,11 +434,6 @@ in
       # ExecStart = "${pkgs.coreutils}/bin/sh ${server_vars.scripts_dir}/mpv_logger.sh";
     };
   };
-
-  # services.picom.enable = true;
-  # systemd.user.services.picom.serviceConfig.ExecStart = lib.mkForce ''
-  #   ${pkgs.picom}/bin/picom --config /home/mahmooz/.config/compton.conf
-  # '';
 
   system.stateVersion = "23.05"; # dont change
 }
