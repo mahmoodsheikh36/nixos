@@ -89,9 +89,10 @@
     my_emacs_git
   ];
 
-  main_server_addr = "2a01:4f9:c012:ad1b::1";
+  main_server_ipv6 = "2a01:4f9:c012:ad1b::1";
   main_server_user = "root";
-  home_server_addr = "192.168.1.150";
+  main_server_ip = "95.217.0.99";
+  home_server_ip = "192.168.1.150";
   main_user = "mahmooz";
   home_dir = "/home/mahmooz";
   work_dir = "/home/${main_user}/work";

@@ -178,8 +178,8 @@ in
     EDITOR = "nvim";
     BROWSER = "brave";
     LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";
-    MAIN_SERVER_ADDR = server_vars.main_server_addr;
-    HOME_SERVER_ADDR = server_vars.home_server_addr;
+    MAIN_SERVER_IP = server_vars.main_server_ip;
+    HOME_SERVER_IP = server_vars.home_server_ip;
     DATA_DIR = server_vars.data_dir;
     MPV_SOCKET_DIR = server_vars.mpv_socket_dir;
     MPV_MAIN_SOCKET_PATH = server_vars.mpv_main_socket_path;
@@ -191,7 +191,7 @@ in
     description = "ssh tunnel";
     after = [ "network.target" "network-online.target" ];
     wants = [ "network-online.target" ];
-    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' -6 ${server_vars.main_server_user}@${server_vars.main_server_addr} -NTg -o ServerAliveInterval=60";
+    script = "${pkgs.openssh}/bin/ssh -i /home/mahmooz/brain/keys/hetzner1 -R '*:${toString per_machine_vars.remote_tunnel_port}:*:22' ${server_vars.main_server_user}@${server_vars.main_server_ip} -NTg -o ServerAliveInterval=60";
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       User = "mahmooz";
