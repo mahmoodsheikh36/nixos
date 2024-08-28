@@ -18,6 +18,7 @@ in
             nvim-treesitter.withAllGrammars
             coc-nvim coc-css coc-explorer coc-git coc-go coc-html coc-json coc-prettier coc-pyright coc-rust-analyzer coc-tsserver coc-yaml
             coc-clangd
+            sqlite-lua
             coc-vimtex
             neoformat
             vim-commentary

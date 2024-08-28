@@ -312,7 +312,7 @@ in
     xorg.xauth
 
     # other
-    # zoom-us, do i realy want this running natively?
+    zoom-us #, do i realy want this running natively?
     hugo
     adb-sync
     # woeusb-ng
