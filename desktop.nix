@@ -33,7 +33,7 @@ in
     };
     powerOnBoot = true;
   };
-  security.rtkit.enable = true; # Realtime audio support
+  #security.rtkit.enable = true; # Realtime audio support
   hardware.pulseaudio = {
     enable = true;
     # extraModules = [ pkgs.pulseaudio-modules-bt ];
@@ -207,8 +207,8 @@ in
   };
   programs.virt-manager.enable = true;
   # virtualisation.waydroid.enable = true;
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   fonts = {
     enableDefaultPackages = true;
@@ -260,6 +260,8 @@ in
   environment.systemPackages = with pkgs; [
     # text editors
     vscode
+    emacs
+    neovim
 
     # media tools
     mpv
@@ -269,7 +271,7 @@ in
     # telegram-desktop
     youtube-music
     okular zathura foliate mupdf
-    xournalpp pkgs.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
+    xournalpp # pkgs.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
     krita
     # lollypop clementine
     ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample #calibre
@@ -435,5 +437,5 @@ in
     };
   };
 
-  system.stateVersion = "23.05"; # dont change
+  system.stateVersion = "24.05"; # dont change
 }
