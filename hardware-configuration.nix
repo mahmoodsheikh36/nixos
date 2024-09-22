@@ -24,11 +24,6 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/home/mahmooz/mnt" =
-    { device = "/dev/disk/by-uuid/be5af23f-da6d-42ee-a346-5ad3af1a299a";
-      fsType = "btrfs";
-    };
-
   swapDevices =
     [ { device = "/dev/disk/by-uuid/4fc6a291-6e7a-4f27-a7c4-c49c711b8a4e"; }
     ];

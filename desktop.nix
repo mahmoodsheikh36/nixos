@@ -17,6 +17,7 @@ in
     enable = true;
     enable32Bit = true;
   };
+  hardware.nvidia.open = false;
 
   # enable sound and bluetooth
   # services.blueman.enable = true;
@@ -33,7 +34,8 @@ in
     };
     powerOnBoot = true;
   };
-  #security.rtkit.enable = true; # Realtime audio support
+  security.rtkit.enable = true; # Realtime audio support
+  services.pipewire.enable = false;
   hardware.pulseaudio = {
     enable = true;
     # extraModules = [ pkgs.pulseaudio-modules-bt ];
@@ -79,25 +81,26 @@ in
         };
       });
     })
+    (final: prev: { cudaPackages = final.cudaPackages_12_3; })
   ] ++ server_vars.server_overlays;
 
   # x11 and awesomewm
   services.xserver = {
     enable = true;
     wacom.enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    #displayManager.gdm.enable = true;
+    #desktopManager.gnome.enable = true;
     desktopManager.xfce.enable = true;
     # desktopManager.plasma6.enable = true;
     displayManager = {
       sessionCommands = ''
         # some of these commands dont work because $HOME isnt /home/mahmooz..
         # ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
-        # ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
+        ${lib.getExe pkgs.xorg.xrdb} -load /home/mahmooz/.Xresources
         # ${lib.getExe pkgs.feh} --bg-fill /home/mahmooz/.cache/wallpaper
       '';
-      # startx.enable = true;
-      # sx.enable = true;
+      startx.enable = true;
+      sx.enable = true;
     };
     xkb.layout = "us";
     xkb.options = "caps:escape,ctrl:ralt_rctrl";
@@ -267,7 +270,7 @@ in
     mpv
     vlc
     feh # i use it to set wallpaper
-    my_sxiv qimgv
+    my_sxiv # qimgv
     # telegram-desktop
     youtube-music
     okular zathura foliate mupdf
@@ -290,7 +293,7 @@ in
     neovide
 
     # commandline tools
-    #wezterm # terminal emulator
+    wezterm # terminal emulator
     kitty
     pulsemixer # tui for pulseaudio control
     alsa-utils
@@ -368,7 +371,8 @@ in
     tailwindcss
     poetry
     # desktop_vars.desktop_python
-    # python3
+    python3
+    neo4j
 
     # lisps
     babashka
