@@ -55,6 +55,11 @@ in
 
   # my overlays
   nixpkgs.overlays = [
+    (self: super: {
+      mypython = super.python3.withPackages (ps: with ps; [
+        python-magic
+      ]);
+    })
     (self: super:
     {
       my_sxiv = super.sxiv.overrideAttrs (oldAttrs: rec {
@@ -282,7 +287,7 @@ in
   environment.systemPackages = with pkgs; [
     (pkgs.writeShellScriptBin "python" ''
       export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
-      exec ${pkgs.python3}/bin/python "$@"
+      exec ${pkgs.mypython}/bin/python "$@"
     '')
 
     # text editors

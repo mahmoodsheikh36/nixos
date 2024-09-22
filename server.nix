@@ -10,7 +10,7 @@ in
       ./hardware-configuration.nix # hardware scan results
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_6_1; # pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_6; # pkgs.linuxPackages_latest;
   boot.tmp.cleanOnBoot = true;
   # use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
