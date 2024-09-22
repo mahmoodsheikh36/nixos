@@ -259,8 +259,32 @@ in
 
   documentation.dev.enable = true;
 
+  programs.nix-ld = {
+    enable = true;
+    # include libstdc++ in the nix-ld profile
+    libraries = [
+      pkgs.stdenv.cc.cc
+      pkgs.zlib
+      pkgs.fuse3
+      pkgs.icu
+      pkgs.nss
+      pkgs.openssl
+      pkgs.curl
+      pkgs.expat
+      pkgs.xorg.libX11
+      pkgs.vulkan-headers
+      pkgs.vulkan-loader
+      pkgs.vulkan-tools
+    ];
+  };
+
   # packages
   environment.systemPackages = with pkgs; [
+    (pkgs.writeShellScriptBin "python" ''
+      export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
+      exec ${pkgs.python3}/bin/python "$@"
+    '')
+
     # text editors
     vscode
     emacs
@@ -275,13 +299,13 @@ in
     youtube-music
     okular zathura foliate mupdf
     xournalpp # pkgs.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
-    krita
+    # krita
     # lollypop clementine
     ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample #calibre
     djvulibre
 
     # media manipulation tools
-    gimp inkscape
+    inkscape gimp
 
     # general tools
     # google-chrome nyxt tor-browser-bundle-bin # qutebrowser
@@ -355,7 +379,7 @@ in
     kaggle google-cloud-sdk python3Packages.huggingface-hub python3Packages.datasets
 
     # quickly start VMs
-    # quickemu
+    quickemu
 
     # some programming languages/environments
     (lua.withPackages(ps: with ps; [ busted luafilesystem luarocks ]))
@@ -371,7 +395,7 @@ in
     tailwindcss
     poetry
     # desktop_vars.desktop_python
-    python3
+    #python3
     neo4j
 
     # lisps
