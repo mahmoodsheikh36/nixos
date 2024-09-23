@@ -58,6 +58,7 @@ in
     (self: super: {
       mypython = super.python3.withPackages (ps: with ps; [
         python-magic
+        requests
       ]);
     })
     (self: super:
