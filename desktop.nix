@@ -35,7 +35,7 @@ in
     powerOnBoot = true;
   };
   security.rtkit.enable = true; # Realtime audio support
-  services.pipewire.enable = false;
+  services.pipewire.enable = lib.mkForce false;
   hardware.pulseaudio = {
     enable = true;
     # extraModules = [ pkgs.pulseaudio-modules-bt ];
@@ -93,9 +93,9 @@ in
   # x11 and awesomewm
   services.xserver = {
     enable = true;
-    wacom.enable = true;
+    # wacom.enable = true;
     #displayManager.gdm.enable = true;
-    #desktopManager.gnome.enable = true;
+    desktopManager.gnome.enable = true;
     desktopManager.xfce.enable = true;
     # desktopManager.plasma6.enable = true;
     displayManager = {
@@ -301,7 +301,7 @@ in
     vlc
     feh # i use it to set wallpaper
     my_sxiv # qimgv
-    # telegram-desktop
+    telegram-desktop
     youtube-music
     okular zathura foliate mupdf
     xournalpp # pkgs.adwaita-icon-theme # the icon theme is needed for xournalpp to work otherwise it crashes
