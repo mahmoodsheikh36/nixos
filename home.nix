@@ -58,8 +58,10 @@ in
           genericName = "mympv";
           exec = "mympv.sh %F";
           terminal = false;
-          categories = [];
-          # mimeType = [ "video/mp4" ];
+          icon = "mpv";
+          categories="AudioVideo;Audio;Video;Player;TV";
+          type = "Application";
+          mimeTypes = [ "video/mp4" ];
         };
         xdg.desktopEntries.add_magnet = {
           name = "add_magnet";

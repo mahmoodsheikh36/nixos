@@ -99,6 +99,8 @@ in
     desktopManager.xfce.enable = true;
     # desktopManager.plasma6.enable = true;
     displayManager = {
+      # autoLogin.enable = true;
+      # autoLogin.user = "mahmooz";
       sessionCommands = ''
         # some of these commands dont work because $HOME isnt /home/mahmooz..
         # ${lib.getExe pkgs.hsetroot} -solid '#222222' # incase wallpaper isnt set
@@ -108,7 +110,7 @@ in
       startx.enable = true;
       sx.enable = true;
     };
-    xkb.layout = "us";
+    xkb.layout = "us,il,ara";
     xkb.options = "caps:escape,ctrl:ralt_rctrl";
     windowManager.awesome = {
       package = with pkgs; my_awesome;
@@ -388,7 +390,7 @@ in
     gnuplot
     lean
     sentencepiece
-    # sageWithDoc sagetex
+    sageWithDoc sagetex
     kaggle google-cloud-sdk python3Packages.huggingface-hub python3Packages.datasets
 
     # quickly start VMs
