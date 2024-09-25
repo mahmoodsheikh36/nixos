@@ -121,7 +121,8 @@ in
   services.displayManager = {
     # defaultSession = "none+awesome";
     # defaultSession = "xfce+awesome";
-    defaultSession = "xfce";
+    # defaultSession = "xfce";
+    defaultSession = "hyprland";
     # defaultSession = "gnome";
     # defaultSession = "plasma";
   };
@@ -347,7 +348,10 @@ in
     xorg.xwininfo
     xorg.xauth
 
+    #wayland
     gnomeExtensions.xremap
+    wl-clipboard
+    waybar
 
     # other
     zoom-us #, do i realy want this running natively?
