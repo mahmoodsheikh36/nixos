@@ -94,8 +94,8 @@ in
   services.xserver = {
     enable = true;
     # wacom.enable = true;
-    #displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
+    # desktopManager.gnome.enable = true;
     desktopManager.xfce.enable = true;
     # desktopManager.plasma6.enable = true;
     displayManager = {
@@ -134,6 +134,7 @@ in
       naturalScrolling = false;
     };
   };
+  programs.hyprland.enable = true;
 
   # tty configs
   console = {
@@ -345,6 +346,8 @@ in
     sxhkd
     xorg.xwininfo
     xorg.xauth
+
+    gnomeExtensions.xremap
 
     # other
     zoom-us #, do i realy want this running natively?
