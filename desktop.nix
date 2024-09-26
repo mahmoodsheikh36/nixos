@@ -355,6 +355,7 @@ in
     wl-clipboard
     waybar
     grim slurp # for screenshots
+    wofi
 
     # other
     zoom-us #, do i realy want this running natively?
@@ -379,6 +380,10 @@ in
     python312Packages.google
     # popcorntime
     stremio
+
+    # local model stuff?
+    koboldcpp
+    jan
 
     soulseekqt
     nicotine-plus
