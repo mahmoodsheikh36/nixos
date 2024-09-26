@@ -350,10 +350,11 @@ in
     xorg.xwininfo
     xorg.xauth
 
-    #wayland
+    # wayland
     gnomeExtensions.xremap
     wl-clipboard
     waybar
+    grim slurp # for screenshots
 
     # other
     zoom-us #, do i realy want this running natively?
