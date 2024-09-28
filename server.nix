@@ -177,7 +177,7 @@ in
     BLOG_DIR = server_vars.blog_dir;
     QT_SCALE_FACTOR = "2";
     EDITOR = "nvim";
-    BROWSER = "brave";
+    BROWSER = "firefox";
     LIB_PATH = "$HOME/mnt2/my/lib/:$HOME/mnt/vol1/lib/";
     MAIN_SERVER_IP = server_vars.main_server_ip;
     HOME_SERVER_IP = server_vars.home_server_ip;

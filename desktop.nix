@@ -294,6 +294,10 @@ in
       export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
       exec ${pkgs.mypython}/bin/python "$@"
     '')
+    (pkgs.writeShellScriptBin "python3" ''
+      export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
+      exec ${pkgs.mypython}/bin/python "$@"
+    '')
 
     # text editors
     vscode
@@ -313,6 +317,7 @@ in
     # lollypop clementine
     ocrmypdf pdftk pdfgrep poppler_utils djvu2pdf fntsample #calibre
     djvulibre
+    qimgv
 
     # media manipulation tools
     inkscape gimp
@@ -356,6 +361,7 @@ in
     waybar
     grim slurp # for screenshots
     wofi
+    eww
 
     # other
     zoom-us #, do i realy want this running natively?
@@ -392,11 +398,11 @@ in
     strawberry
     shortwave
 
-    # science
+    # scientific computation?
     gnuplot
     lean
     sentencepiece
-    sageWithDoc sagetex
+    # sageWithDoc sagetex
     kaggle google-cloud-sdk python3Packages.huggingface-hub python3Packages.datasets
 
     # quickly start VMs
