@@ -301,7 +301,6 @@ in
 
     # text editors
     vscode
-    emacs
     neovim
 
     # media tools
