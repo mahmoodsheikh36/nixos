@@ -462,6 +462,7 @@ in
     # enchant.dev # for emacs jinx-mode
 
     cudatoolkit # although i should only enable it if per_machine_vars.enable_nvidia is true
+    nvtop
   ] ++ server_vars.server_packages;
 
   services.prometheus = {
