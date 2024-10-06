@@ -30,6 +30,7 @@
     ffmpeg-full.bin untrunc-anthwlock
     sqlite
     silver-searcher
+    rx
     docker
     jq
     ripgrep

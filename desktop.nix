@@ -59,6 +59,7 @@ in
       mypython = super.python3.withPackages (ps: with ps; [
         python-magic
         requests
+        numpy
       ]);
     })
     (self: super:
@@ -458,6 +459,7 @@ in
     python3Packages.python-lsp-server
     nodePackages_latest.typescript-language-server
     nodePackages_latest.eslint
+    vscode-langservers-extracted
 
     # dictionary
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
